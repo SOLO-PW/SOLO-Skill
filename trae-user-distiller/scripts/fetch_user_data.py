@@ -20,6 +20,7 @@ import time
 from collections import Counter
 from pathlib import Path
 from datetime import datetime
+from typing import Optional, Dict, List
 from urllib.parse import urljoin
 
 import requests
@@ -67,7 +68,7 @@ def _create_session() -> requests.Session:
     return session
 
 
-def _api_get(session: requests.Session, path: str, params: dict = None, _depth: int = 0) -> dict | None:
+def _api_get(session: requests.Session, path: str, params: dict = None, _depth: int = 0) -> Optional[dict]:
     """发起 API GET 请求，返回 JSON 或 None。429 限流自动重试（最多 3 次）"""
     url = urljoin(BASE_URL, path)
     try:
@@ -773,8 +774,14 @@ def main():
     # 一键模式：自动调用生成器
     if args.generate:
         print("\n[一键模式] 自动生成个性化技能...")
-        # 延迟导入避免循环依赖
-        from generate_persona_skill import PersonaSkillGenerator
+        # 动态导入生成器模块，确保跨平台兼容
+        import importlib.util
+        generator_path = Path(__file__).parent / "generate_persona_skill.py"
+        spec = importlib.util.spec_from_file_location("generate_persona_skill", generator_path)
+        generator_module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(generator_module)
+        PersonaSkillGenerator = generator_module.PersonaSkillGenerator
+        
         gen = PersonaSkillGenerator(str(json_path), args.output)
         result = gen.generate()
         if not result:

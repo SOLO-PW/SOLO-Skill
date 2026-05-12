@@ -13,7 +13,7 @@ import sys
 from collections import Counter
 from pathlib import Path
 from datetime import datetime
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 MIN_TOTAL_ITEMS = 3
 MIN_TOTAL_CHARS = 200
@@ -336,8 +336,8 @@ class PersonaSkillGenerator:
 
         parts: List[str] = []
 
-        # Frontmatter
-        parts.append(f"---\nname: {self.skill_name}\ndescription: {desc}\n---")
+        # Frontmatter - YAML格式，description用引号包裹防止特殊字符解析失败
+        parts.append(f'---\nname: {self.skill_name}\ndescription: "{desc}"\n---')
 
         # 标题 + 一句话概述
         parts.append(f"# @{self.username} 的数字人格")
@@ -460,7 +460,7 @@ class PersonaSkillGenerator:
         print(f"  └── references/conversation_history.md")
         return skill_dir
 
-    def generate(self) -> Path | None:
+    def generate(self) -> Optional[Path]:
         """执行完整的生成流程"""
         print("生成个性化技能...")
         print(f"  数据: {self.user_data_path}")
