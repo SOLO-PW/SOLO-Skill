@@ -12,7 +12,11 @@
 4. [ComfyUI / Automatic1111](#comfyui--automatic1111)
 5. [Flux](#flux)
 6. [NijiJourney](#nijijourney)
-7. [通用提示词结构](#通用提示词结构)
+7. [Leonardo.ai](#leonardoai)
+8. [InvokeAI](#invokeai)
+9. [Playground AI](#playground-ai)
+10. [Ideogram](#ideogram)
+11. [通用提示词结构](#通用提示词结构)
 
 ---
 
@@ -76,6 +80,8 @@
 | `--style` | 风格变体 | `--style raw` |
 | `--iw` | 图片权重 (0-2) | `--iw 1.5` |
 | `--seed` | 种子值 | `--seed 12345` |
+| `--tile` | 无缝纹理 | `--tile` |
+| `--video` | 生成视频 | `--video` |
 
 ### 语法特点
 
@@ -133,13 +139,14 @@ A photorealistic image of a serene Japanese garden at dawn, with cherry blossoms
 - **区域控制**: 使用Regional Prompter扩展
 - **ControlNet提示**: 结合ControlNet条件
 - **LoRA触发词**: `<lora:name:weight>` 后跟触发词
+- **Embedding**: `(embedding:name:weight)` 负面提示嵌入
 
 ### 示例
 
 ```
 正向: masterpiece, best quality, ultra highres, 1girl, solo, white dress, standing in flower field, sunlight, soft lighting, intricate details, <lora:add_detail:0.5>
 
-反向: (worst quality:1.4), (low quality:1.4), (normal quality:1.4), lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, jpeg artifacts, signature, watermark, username, blurry
+反向: (worst quality:1.4), (low quality:1.4), (normal quality:1.4), lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, jpeg artifacts, signature, watermark, username, blurry, (ng_deepnegative_v1_75t:1.2)
 ```
 
 ---
@@ -158,11 +165,19 @@ A photorealistic image of a serene Japanese garden at dawn, with cherry blossoms
 - 对提示词理解能力强
 - 原生高分辨率输出
 - 较少需要质量修饰词
+- 支持简单权重语法
+
+### 最佳实践
+
+- 详细描述主体和场景
+- 明确指定艺术风格
+- 描述光照和氛围
+- 可适当添加质量词增强效果
 
 ### 示例
 
 ```
-A professional portrait photograph of a young woman with auburn hair, wearing an elegant black dress, standing in a modern art gallery. Soft diffused lighting from large windows, shallow depth of field, shot on medium format camera, editorial style
+A professional portrait photograph of a young woman with auburn hair, wearing an elegant black dress, standing in a modern art gallery. Soft diffused lighting from large windows, shallow depth of field, shot on medium format camera, editorial style, highly detailed, photorealistic
 ```
 
 ---
@@ -172,19 +187,165 @@ A professional portrait photograph of a young woman with auburn hair, wearing an
 ### 基本格式
 
 ```
-<动漫风格描述>, --niji <版本>
+<动漫风格描述>, --niji <版本> [参数]
 ```
 
 ### 语法特点
 
 - 专为动漫/插画风格优化
 - 支持Midjourney大部分参数
-- `--style cute` 或 `--style scenic` 风格变体
+- `--style` 参数控制风格变体
+
+### 风格变体
+
+| 参数 | 说明 |
+|------|------|
+| `--style cute` | 可爱风格，适合萌系角色 |
+| `--style scenic` | 风景风格，适合场景插画 |
+| `--style expressive` | 表现风格，适合情感表达 |
+| `--style original` | 原始风格，MJ V5类似效果 |
 
 ### 示例
 
 ```
 anime girl with pink hair, wearing school uniform, cherry blossoms background, soft pastel colors, detailed illustration, studio ghibli style --niji 6 --ar 2:3 --style cute
+```
+
+---
+
+## Leonardo.ai
+
+### 基本格式
+
+```
+<主体描述>, <风格描述>, <质量词>
+```
+
+### 语法特点
+
+- 支持自然语言和标签混合
+- 内置多种预设风格
+- 支持负面提示词
+- 支持Alchemy高清增强
+
+### 内置风格预设
+
+| 风格 | 关键词 |
+|------|--------|
+| Dynamic | 动态风格，适合动作场景 |
+| Cinematic | 电影感，适合场景和氛围 |
+| Vibrant | 鲜艳风格，高饱和度 |
+| Creative | 创意风格，艺术化表现 |
+| Photography | 摄影风格，写实感 |
+
+### 示例
+
+```
+正向: cinematic portrait of a warrior princess, intricate armor design, dramatic lighting, epic fantasy atmosphere, highly detailed, 8k, masterpiece
+
+反向: blurry, low quality, distorted, bad anatomy, watermark
+```
+
+---
+
+## InvokeAI
+
+### 基本格式
+
+```
+<主体描述>, <风格描述>, <质量词>
+```
+
+### 语法特点
+
+- 基于Stable Diffusion
+- 支持权重语法 `(word:1.2)`
+- 支持负面提示词
+- 支持ControlNet
+- 支持模型融合
+
+### 特殊功能
+
+- **Unified Canvas**: 统一画布编辑
+- **Node Editor**: 节点式工作流
+- **Model Manager**: 模型管理
+
+### 示例
+
+```
+正向: (masterpiece:1.2), (best quality:1.2), detailed fantasy landscape, floating islands, waterfalls, magical atmosphere, ethereal lighting
+
+反向: (worst quality:1.4), (low quality:1.4), blurry, bad anatomy
+```
+
+---
+
+## Playground AI
+
+### 基本格式
+
+```
+<主体描述>, <风格描述>, <质量词>
+```
+
+### 语法特点
+
+- 支持自然语言描述
+- 内置多种滤镜风格
+- 支持负面提示词
+- 支持图像混合
+
+### 滤镜风格
+
+| 滤镜 | 效果 |
+|------|------|
+| Cinematic | 电影感 |
+| Analogue | 胶片感 |
+| Volumetric | 体积光效果 |
+| Epic | 史诗感 |
+| Line Art | 线稿风格 |
+
+### 示例
+
+```
+正向: cinematic portrait of a cyberpunk character, neon lights, futuristic city background, highly detailed, 8k
+
+反向: blurry, low quality, distorted
+```
+
+---
+
+## Ideogram
+
+### 基本格式
+
+```
+<主体描述>, <风格描述>, <质量词>
+```
+
+### 语法特点
+
+- **擅长文字渲染**: 在图片中生成清晰文字
+- 支持自然语言描述
+- 支持多种风格预设
+- 支持负面提示词
+
+### 风格预设
+
+| 风格 | 说明 |
+|------|------|
+| Auto | 自动选择 |
+| Design | 设计风格 |
+| Realistic | 写实风格 |
+| 3D | 3D渲染风格 |
+| Anime | 动漫风格 |
+
+### 示例
+
+```
+正向: Typography poster design with text "DREAM BIG", modern minimalist style, gradient background, professional graphic design
+
+反向: blurry text, distorted letters, low quality
 ```
 
 ---
@@ -209,7 +370,27 @@ anime girl with pink hair, wearing school uniform, cherry blossoms background, s
 
 ### 权重分配原则
 
-- 核心元素权重最高: `(main subject:1.3)`
-- 风格词中等权重: `(art style:1.1)`
-- 质量词默认或略高: `(masterpiece:1.2)`
-- 背景元素可降低: `(background:0.9)`
+| 模型 | 核心主体 | 风格词 | 质量词 | 背景 |
+|------|----------|--------|--------|------|
+| SD/SDXL | 1.3-1.5 | 1.1-1.2 | 1.1-1.3 | 0.8-1.0 |
+| Midjourney | ::3-5 | ::1-2 | 自然融入 | ::0.5-1 |
+| DALL-E 3 | 详细描述 | 详细描述 | 可选 | 详细描述 |
+| Flux | 详细描述 | 明确指定 | 可选 | 详细描述 |
+| NijiJourney | ::3-5 | ::1-2 | 自然融入 | ::0.5-1 |
+| Leonardo.ai | 1.2-1.4 | 1.1-1.2 | 1.1-1.3 | 0.9-1.1 |
+| InvokeAI | 1.3-1.5 | 1.1-1.2 | 1.1-1.3 | 0.8-1.0 |
+| Playground | 详细描述 | 滤镜选择 | 可选 | 详细描述 |
+| Ideogram | 详细描述 | 风格选择 | 可选 | 详细描述 |
+
+### 模型选择建议
+
+| 需求 | 推荐模型 |
+|------|----------|
+| 写实人像 | SDXL, Midjourney V6, Flux |
+| 动漫插画 | NijiJourney, SD+动漫模型 |
+| 风景摄影 | Midjourney, SDXL, Leonardo.ai |
+| 概念艺术 | Midjourney, SDXL, InvokeAI |
+| 商业产品 | DALL-E 3, Flux, SDXL |
+| 文字设计 | Ideogram |
+| 快速原型 | Playground AI, Leonardo.ai |
+| 精细控制 | ComfyUI, Automatic1111 |
