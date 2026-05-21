@@ -1,0 +1,153 @@
+{
+  "version": "2.0",
+  "update_frequency": "weekly",
+  "last_update": null,
+  "last_check": null,
+  "next_scheduled_check": null,
+  "auto_update_enabled": false,
+  "update_history": [],
+  "check_history": [],
+  "providers": {
+    "openai": {
+      "status": "active",
+      "last_verified": null,
+      "model_count": 0,
+      "deprecated_count": 0,
+      "issues": []
+    },
+    "anthropic": {
+      "status": "active",
+      "last_verified": null,
+      "model_count": 0,
+      "deprecated_count": 0,
+      "issues": []
+    },
+    "deepseek": {
+      "status": "active",
+      "last_verified": null,
+      "model_count": 0,
+      "deprecated_count": 0,
+      "issues": []
+    },
+    "智谱": {
+      "status": "active",
+      "last_verified": null,
+      "model_count": 0,
+      "deprecated_count": 0,
+      "issues": []
+    },
+    "通义千问": {
+      "status": "active",
+      "last_verified": null,
+      "model_count": 0,
+      "deprecated_count": 0,
+      "issues": []
+    },
+    "kimi": {
+      "status": "active",
+      "last_verified": null,
+      "model_count": 0,
+      "deprecated_count": 0,
+      "issues": []
+    },
+    "硅基流动": {
+      "status": "active",
+      "last_verified": null,
+      "model_count": 0,
+      "deprecated_count": 0,
+      "issues": []
+    },
+    "零一万物": {
+      "status": "active",
+      "last_verified": null,
+      "model_count": 0,
+      "deprecated_count": 0,
+      "issues": []
+    }
+  },
+  "model_count": 0,
+  "deprecated_models": [
+    {
+      "model_id": "deepseek-chat",
+      "deprecated_date": "2026-07-24",
+      "replacement": "deepseek-v4-pro",
+      "reason": "V4系列上线",
+      "confidence": "confirmed"
+    },
+    {
+      "model_id": "deepseek-reasoner",
+      "deprecated_date": "2026-07-24",
+      "replacement": "deepseek-v4-flash",
+      "reason": "V4系列上线",
+      "confidence": "confirmed"
+    },
+    {
+      "model_id": "gpt-4o",
+      "deprecated_date": "2026-02",
+      "replacement": "gpt-5.5",
+      "reason": "GPT-5系列上线",
+      "confidence": "confirmed"
+    },
+    {
+      "model_id": "gpt-4o-mini",
+      "deprecated_date": "2026-02",
+      "replacement": "gpt-5.5",
+      "reason": "GPT-5系列上线",
+      "confidence": "confirmed"
+    },
+    {
+      "model_id": "gpt-4-turbo",
+      "deprecated_date": "2026-02",
+      "replacement": "gpt-5.5",
+      "reason": "GPT-5系列上线",
+      "confidence": "confirmed"
+    },
+    {
+      "model_id": "o1-preview",
+      "deprecated_date": "2026-02",
+      "replacement": "gpt-5.5",
+      "reason": "统一到GPT-5系列",
+      "confidence": "confirmed"
+    },
+    {
+      "model_id": "o1-mini",
+      "deprecated_date": "2026-02",
+      "replacement": "gpt-5.5",
+      "reason": "统一到GPT-5系列",
+      "confidence": "confirmed"
+    },
+    {
+      "model_id": "claude-3-5-sonnet-20241022",
+      "deprecated_date": "2026-04",
+      "replacement": "claude-opus-4.7",
+      "reason": "Claude 4系列上线",
+      "confidence": "confirmed"
+    },
+    {
+      "model_id": "claude-3-opus-20240229",
+      "deprecated_date": "2026-04",
+      "replacement": "claude-opus-4.7",
+      "reason": "Claude 4系列上线",
+      "confidence": "confirmed"
+    },
+    {
+      "model_id": "kimi-for-coding",
+      "deprecated_date": "2026-04",
+      "replacement": "kimi-k2.6",
+      "reason": "K2系列上线",
+      "confidence": "confirmed"
+    }
+  ],
+  "new_models_found": [],
+  "quality_metrics": {
+    "total_checks": 0,
+    "successful_updates": 0,
+    "errors": []
+  },
+  "settings": {
+    "preserve_history_days": 90,
+    "max_history_records": 100,
+    "auto_backup": true,
+    "notify_on_change": false
+  }
+}
