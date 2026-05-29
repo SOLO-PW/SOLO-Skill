@@ -7,19 +7,23 @@
 ## 功能特性
 
 - **图片深度分析** — 采用五层分析法，从整体印象到技术细节系统化提取视觉元素
-- **精准性别识别** — 多重验证机制，避免常见误认，不确定时明确标注
-- **场景专项识别** — 针对人物、动漫、风景、城市、静物、幻想等场景的专项分析
+- **场景专项识别** — 针对人物、动漫、风景、城市、静物、美食、动物等场景的专项分析
 - **多模型格式输出** — 一键适配 Stable Diffusion、Midjourney、DALL-E 3、Flux、NijiJourney 等 10+ 种主流 AI 绘图模型
-- **角色与名人识别** — 识别常见动漫角色和明星，生成精准角色描述提示词
+- **角色与IP识别** — 识别常见动漫角色、明星和知名IP品牌
+- **构图分析** — 深度分析三分法、黄金分割、对称性等构图细节
+- **色彩分析** — 提取主色调、配色方案、色彩和谐度
+- **交互式精调** — 支持用户指定区域重点分析和提示词微调
+- **提示词解释** — 为每个关键提示词提供含义、作用和视觉效果解释
 - **质量词推荐** — 自动生成配套正向质量词和反向提示词
 
 ---
 
-## 支持的 AI 绘图模型
+## 支持的 AI 模型
 
 | 模型 | 特点 | 适用场景 |
 |------|------|----------|
 | Stable Diffusion | 权重语法，高度可控 | 精细调整、专业创作 |
+| Stable Diffusion 3 | 自然语言，T5编码器 | 高质量写实，复杂场景 |
 | Midjourney | 自然语言 + 参数 | 艺术风格、概念设计 |
 | DALL-E 3 | 纯自然语言 | 商业应用、文字理解 |
 | Flux | 自然语言 + 风格词 | 写实人像、高质量输出 |
@@ -31,17 +35,7 @@
 
 ---
 
-## 安装步骤
-
-本技能为 Agent Skill，无需额外安装依赖。确保你的 AI Agent 环境已加载本技能即可使用。
-
-1. 将 `image-prompt-reverse` 文件夹放入你的 Agent Skills 目录
-2. Agent 会自动识别 `SKILL.md` 中的触发条件
-3. 当用户提到"反推图片提示词"、"分析图片生成提示词"、"图片转提示词"等需求时自动激活
-
----
-
-## 使用方法
+## 快速开始
 
 ### 基本用法
 
@@ -55,35 +49,113 @@
 
 ### 工作流程
 
-1. **接收图片** — 确认用户已上传图片
-2. **场景类型识别** — 判断图片类型（人物肖像 / 动漫 / 风景 / 城市 / 静物 / 幻想等）
-3. **角色识别**（如适用）— 尝试识别已知动漫角色或明星
-4. **深度分析** — 使用五层分析法系统化分析图片内容
-5. **验证结果** — 交叉验证性别、风格、光照等关键特征
-6. **生成提示词** — 基于场景类型选择对应模板生成提示词
-7. **模型适配输出** — 自动转换为各模型的专用格式
-8. **输出质量词** — 推荐正向质量词和反向提示词
+```
+上传图片 → 场景识别 → 主体分析 → 深度分析 → 生成提示词 → 模型适配 → 质量词推荐
+```
+
+**30秒快速流程**:
+1. 识别场景类型（人物/风景/动漫/产品等）
+2. 提取主体特征（外观/姿态/表情）
+3. 分析光影色彩（光源/色调/氛围）
+4. 生成提示词（按模板组织）
 
 ---
 
-## 参数说明
+## 支持的场景类型
 
-### 场景类型判断
+| 场景类型 | 分析重点 | 参考文档 |
+|----------|----------|----------|
+| 人物肖像 | 面部/表情/服装/姿态 | [pose.md](references/pose.md) |
+| 动漫/二次元 | 角色/画风/特征 | [character-recognition.md](references/character-recognition.md) |
+| 风景/自然 | 天气/光线/季节 | [nature.md](references/nature.md) |
+| 城市/建筑 | 风格/材质/构图 | [architecture.md](references/architecture.md) |
+| 美食 | 摆盘/质感/氛围 | [food-photography.md](references/food-photography.md) |
+| 动物 | 品种/姿态/环境 | [animals.md](references/animals.md) |
+| 车辆 | 类型/品牌/风格 | [vehicles.md](references/vehicles.md) |
+| 科技产品 | 设计/材质/风格 | [tech-products.md](references/tech-products.md) |
+| 游戏 | 场景/角色/风格 | [gaming.md](references/gaming.md) |
+| 音乐 | 乐器/演奏/氛围 | [music.md](references/music.md) |
+| 演出 | 舞台/灯光/表演 | [performance.md](references/performance.md) |
+| 时尚 | 服装/配饰/风格 | [fashion.md](references/fashion.md) |
+| 室内 | 设计/家具/软装 | [interior-design.md](references/interior-design.md) |
 
-| 场景类型 | 判断标准 |
-|----------|----------|
-| 人物肖像 | 人物占比 > 50%，面部清晰 |
-| 环境人像 | 人物占比 20-50%，环境可见 |
-| 动漫/二次元 | 线条清晰，大眼睛，简化特征 |
-| 风景/自然 | 自然景观为主，人物占比 < 20% |
-| 城市/建筑 | 建筑结构，几何线条 |
-| 静物/产品 | 单一物体，专业布光 |
-| 幻想/科幻 | 超现实元素，CG 渲染感 |
+---
 
-### 权重分配策略
+## 参考文档
 
-| 元素类型 | SD 权重 | MJ 权重 | 说明 |
-|----------|---------|---------|------|
+### 核心分析方法
+
+| 文档 | 说明 |
+|------|------|
+| [SKILL.md](SKILL.md) | 技能主定义文件，包含完整工作流程和触发条件 |
+| [references/analysis-method.md](references/analysis-method.md) | 图片分析方法论（五层分析法、描述词选择原则） |
+| [references/precision-checklist.md](references/precision-checklist.md) | 精准分析检查清单 |
+| [references/gender-identification.md](references/gender-identification.md) | 性别识别精准指南 |
+
+### 场景与主体识别
+
+| 文档 | 说明 |
+|------|------|
+| [references/scene-recognition.md](references/scene-recognition.md) | 场景识别专项指南 |
+| [references/character-recognition.md](references/character-recognition.md) | 动漫角色识别指南（含2023-2025热门角色） |
+| [references/celebrity-recognition.md](references/celebrity-recognition.md) | 明星/名人识别指南 |
+| [references/ip-brand-recognition.md](references/ip-brand-recognition.md) | IP/品牌识别指南 |
+| [references/animals.md](references/animals.md) | 宠物动物分析专项指南 |
+| [references/vehicles.md](references/vehicles.md) | 车辆交通分析专项指南 |
+
+### 视觉元素分析
+
+| 文档 | 说明 |
+|------|------|
+| [references/composition.md](references/composition.md) | 构图分析专项指南 |
+| [references/color-palette.md](references/color-palette.md) | 色彩分析专项指南 |
+| [references/lighting.md](references/lighting.md) | 光影效果专项指南 |
+| [references/material.md](references/material.md) | 材质识别专项指南 |
+| [references/camera-lens.md](references/camera-lens.md) | 镜头语言专项指南 |
+| [references/weather.md](references/weather.md) | 天气氛围专项指南 |
+| [references/emotion.md](references/emotion.md) | 情绪氛围专项指南 |
+| [references/pose.md](references/pose.md) | 人物姿态专项指南 |
+| [references/effects.md](references/effects.md) | 特效后期专项指南 |
+
+### 专业领域分析
+
+| 文档 | 说明 |
+|------|------|
+| [references/food-photography.md](references/food-photography.md) | 美食摄影分析专项指南 |
+| [references/interior-design.md](references/interior-design.md) | 室内设计分析专项指南 |
+| [references/fashion.md](references/fashion.md) | 时尚穿搭分析专项指南 |
+| [references/sports.md](references/sports.md) | 运动场景分析专项指南 |
+| [references/architecture.md](references/architecture.md) | 建筑风格分析专项指南 |
+| [references/art-styles.md](references/art-styles.md) | 艺术风格分析专项指南 |
+| [references/nature.md](references/nature.md) | 自然景观分析专项指南 |
+| [references/tech-products.md](references/tech-products.md) | 科技产品分析专项指南 |
+| [references/music.md](references/music.md) | 音乐乐器分析专项指南 |
+| [references/performance.md](references/performance.md) | 舞台演出分析专项指南 |
+| [references/gaming.md](references/gaming.md) | 游戏场景分析专项指南 |
+
+### 提示词生成
+
+| 文档 | 说明 |
+|------|------|
+| [references/prompt-templates.md](references/prompt-templates.md) | 提示词生成策略与模板 |
+| [references/models.md](references/models.md) | 各模型提示词格式详细规范（含SD3） |
+| [references/quality-words.md](references/quality-words.md) | 质量词库和反向提示词 |
+| [references/prompt-explanation.md](references/prompt-explanation.md) | 提示词解释功能指南 |
+| [references/interactive-refinement.md](references/interactive-refinement.md) | 交互式精调功能指南 |
+
+---
+
+## 提示词编写原则
+
+- **具体优于抽象**："flowing silver hair" > "nice hair"
+- **可量化优于模糊**："35mm lens" > "normal lens"
+- **专业术语增强准确性**："chiaroscuro lighting" > "dramatic lighting"
+- **避免主观描述**：不描述 "beautiful"，而是描述 "symmetrical facial features"
+
+### 权重分配建议
+
+| 元素类型 | SD权重 | MJ权重 | 说明 |
+|----------|--------|--------|------|
 | 核心主体 | 1.3-1.5 | ::3-5 | 最重要的识别特征 |
 | 关键特征 | 1.2-1.3 | ::2-3 | 重要的外貌/特征描述 |
 | 风格词 | 1.1-1.2 | ::1-2 | 艺术风格修饰 |
@@ -102,129 +174,28 @@
 
 ---
 
-## 输出格式示例
+## 常见问题
 
-### 标准输出模板
+### 如何提高提示词准确性？
 
-```markdown
-## 图片分析结果
+1. **使用具体描述**：避免"beautiful"等主观词汇，使用"symmetrical facial features"等客观描述
+2. **交叉验证特征**：确保描述的特征在图片中都能看到
+3. **参考检查清单**：使用 [precision-checklist.md](references/precision-checklist.md) 确保全面性
 
-### 整体描述
-[一句话概括图片内容]
+### 如何处理不确定的特征？
 
-### 场景类型
-[识别的场景类型]
+- **性别不确定**：使用"a person"或"androgynous appearance"
+- **年龄不确定**：使用"young adult"
+- **细节不清**：标注"细节模糊，可能为..."
+- **遮挡严重**：标注"部分被遮挡，可见..."
 
-### 详细分析
-- **主体**: [主体描述]
-- **角色识别**: [识别到的角色名或"未识别"]
-- **风格**: [艺术风格]
-- **光照**: [光照类型]
-- **视角**: [视角构图]
-- **氛围**: [情绪氛围]
+### 如何针对特定模型优化？
 
----
-
-## 提示词输出
-
-### Stable Diffusion
-**正向提示词:**
-```
-[SD 格式提示词]
-```
-
-**反向提示词:**
-```
-[反向提示词]
-```
-
-### Midjourney
-```
-[Midjourney 格式提示词]
-```
-
-### DALL-E 3
-```
-[自然语言描述]
-```
-
-### Flux
-```
-[Flux 格式提示词]
-```
-
-### NijiJourney
-```
-[NijiJourney 格式提示词]
-```
+- **Stable Diffusion**：使用权重语法`(word:1.2)`，添加反向提示词
+- **Midjourney**：添加参数`--ar 16:9 --v 6 --s 250`
+- **DALL-E 3**：使用自然语言，详细描述场景
+- **Flux**：简化权重，保留风格词
 
 ---
 
-## 质量词推荐
-
-### 正向质量词
-```
-[推荐的质量增强词]
-```
-
-### 反向提示词模板
-```
-[通用反向提示词]
-```
-```
-
----
-
-## 注意事项
-
-### 性别识别
-
-- **多重验证原则**：不要依赖单一特征，需要至少 2-3 个特征交叉验证
-- **服装优先原则**：服装款式通常是最明显的性别指示器
-- **不确定性标注**：当无法确定时，使用中性描述或明确标注不确定性
-
-### 常见误认场景
-
-| 场景 | 处理方式 |
-|------|----------|
-| 动漫风格人物 | 优先查看服装，结合发型，避免仅凭面部判断 |
-| 中性服装 | 依赖发型和配饰，不确定时使用中性描述 |
-| 背影/侧影 | 依赖发型轮廓和身体轮廓，标注"从背影看..." |
-| 非传统性别表达 | 描述可见的性别表达特征，避免假设生理性别 |
-
-### 风格判断
-
-- 查看纹理细节（笔触、像素、光滑度）
-- 检查边缘处理方式
-- 观察光影的物理准确性
-- 注意色彩的自然度
-
----
-
-## 参考文档
-
-| 文档 | 说明 |
-|------|------|
-| [SKILL.md](SKILL.md) | 技能主定义文件，包含完整工作流程和触发条件 |
-| [references/analysis-method.md](references/analysis-method.md) | 图片分析方法论（五层分析法、描述词选择原则） |
-| [references/character-recognition.md](references/character-recognition.md) | 动漫角色识别指南 |
-| [references/celebrity-recognition.md](references/celebrity-recognition.md) | 明星/名人识别指南 |
-| [references/scene-recognition.md](references/scene-recognition.md) | 场景识别专项指南 |
-| [references/gender-identification.md](references/gender-identification.md) | 性别识别精准指南 |
-| [references/precision-checklist.md](references/precision-checklist.md) | 精准分析检查清单 |
-| [references/prompt-templates.md](references/prompt-templates.md) | 提示词生成策略与模板 |
-| [references/models.md](references/models.md) | 各模型提示词格式详细规范 |
-| [references/quality-words.md](references/quality-words.md) | 质量词库和反向提示词 |
-
----
-
-## 提示词编写原则
-
-- **具体优于抽象**："flowing silver hair" > "nice hair"
-- **可量化优于模糊**："35mm lens" > "normal lens"
-- **专业术语增强准确性**："chiaroscuro lighting" > "dramatic lighting"
-- **避免主观描述**：不描述 "beautiful"，而是描述 "symmetrical facial features"
-
----
-
-*本技能遵循系统化分析方法，通过分层检查清单确保分析全面性，帮助用户在不同 AI 绘图平台上复现类似效果的图像。*
+*本技能遵循系统化分析方法，通过分层检查清单确保分析全面性，具备IP/品牌识别能力，支持交互式精调，帮助用户在不同AI平台上复现类似效果的图像。*

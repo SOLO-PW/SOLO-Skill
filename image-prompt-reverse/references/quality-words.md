@@ -206,3 +206,143 @@ shallow depth of field, deep focus, bokeh, background blur, foreground blur, foc
 ```
 rule of thirds, golden ratio, centered composition, symmetrical composition, leading lines, framing, negative space, dynamic composition
 ```
+
+---
+
+## 专业领域质量词
+
+### 人像摄影质量词
+
+```
+professional portrait, studio portrait, fashion photography, beauty shot, headshot, editorial photography, magazine quality, Vogue style, professional model, stunning, gorgeous, flawless skin, perfect lighting
+```
+
+### 风景摄影质量词
+
+```
+landscape photography, nature photography, scenic view, panoramic, breathtaking, stunning vista, National Geographic style, award-winning landscape, dramatic sky, golden hour, professional landscape
+```
+
+### 美食摄影质量词
+
+```
+food photography, appetizing, delicious, professional food shot, culinary art, gourmet, plating art, food styling, magazine food photo, mouth-watering, fresh ingredients
+```
+
+### 产品摄影质量词
+
+```
+product photography, commercial photography, advertising, professional product shot, clean background, studio shot, high-end product, luxury brand style, catalog photography
+```
+
+### 建筑摄影质量词
+
+```
+architectural photography, interior design, real estate photography, professional architecture, structural beauty, geometric, clean lines, modern architecture, classic architecture
+```
+
+### 动物摄影质量词
+
+```
+wildlife photography, animal photography, nature documentary, National Geographic style, pet photography, cute animal, detailed fur, expressive eyes, professional animal shot
+```
+
+### 概念艺术质量词
+
+```
+concept art, digital painting, matte painting, environment design, character design, game art, movie poster, album cover, professional illustration, award-winning art
+```
+
+### 动漫/插画质量词
+
+```
+high quality anime, detailed anime art, professional illustration, manga quality, clean lineart, vibrant colors, anime masterpiece, studio quality, official art style, beautiful anime
+```
+
+---
+
+## 按模型优化质量词
+
+### Stable Diffusion 专用
+
+```
+正向: masterpiece, best quality, (high quality:1.2), (ultra highres:1.1), 8k, highly detailed, sharp focus, professional, award winning, intricate details, fine details, detailed texture
+
+反向: (worst quality:1.4), (low quality:1.4), (normal quality:1.4), lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer digits, cropped, jpeg artifacts, signature, watermark, username, blurry
+```
+
+### Midjourney 专用
+
+```
+--quality 2 --stylize 250 --v 6
+
+关键词: professional, award-winning, stunning, breathtaking, masterpiece, highly detailed, photorealistic, cinematic, dramatic, epic
+```
+
+### DALL-E 3 专用
+
+```
+自然语言描述，不需要特殊质量词，但可以使用：
+A highly detailed, professional quality image of... The image should be photorealistic with stunning clarity and beautiful lighting.
+```
+
+### Flux 专用
+
+```
+关键词: highly detailed, professional quality, stunning, beautiful, photorealistic, 8k, masterpiece, award-winning
+```
+
+---
+
+## 质量词组合示例
+
+### 写实人像组合
+
+```
+masterpiece, best quality, 8k, ultra highres, photorealistic, raw photo, professional portrait photography, studio lighting, sharp focus, intricate details, beautiful face, stunning, gorgeous, flawless
+```
+
+### 动漫角色组合
+
+```
+masterpiece, best quality, high quality anime, detailed anime art, vibrant colors, clean lines, beautiful illustration, studio quality, professional anime art, detailed eyes, beautiful character
+```
+
+### 风景摄影组合
+
+```
+masterpiece, best quality, 8k, ultra highres, landscape photography, professional, award-winning, breathtaking view, dramatic lighting, golden hour, scenic, panoramic, highly detailed
+```
+
+### 概念艺术组合
+
+```
+masterpiece, best quality, concept art, digital painting, professional illustration, trending on artstation, highly detailed, intricate design, stunning, epic, dramatic lighting
+```
+
+---
+
+## 质量词使用建议
+
+### 权重分配
+
+| 元素类型 | 建议权重 | 说明 |
+|----------|----------|------|
+| 核心质量词 | 1.2-1.4 | masterpiece, best quality |
+| 细节词 | 1.1-1.3 | highly detailed, intricate |
+| 风格词 | 1.0-1.2 | photorealistic, anime style |
+| 氛围词 | 0.9-1.1 | dramatic, serene |
+
+### 避免的问题
+
+1. **过度堆砌** - 不要添加太多质量词，会导致提示词过长
+2. **矛盾词汇** - 不要同时使用写实和动漫风格词
+3. **无效词汇** - 避免使用过于抽象的词如"beautiful"
+4. **忽略反向** - SD模型需要反向提示词来排除不良输出
+
+### 最佳实践
+
+1. **精选核心词** - 选择3-5个最相关的质量词
+2. **匹配风格** - 质量词要与目标风格一致
+3. **适度权重** - 不要给质量词过高权重
+4. **测试优化** - 根据生成效果调整质量词

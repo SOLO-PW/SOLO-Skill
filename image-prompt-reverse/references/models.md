@@ -7,16 +7,17 @@
 ## 目录
 
 1. [Stable Diffusion (SD/SDXL)](#stable-diffusion-sdsdxl)
-2. [Midjourney](#midjourney)
-3. [DALL-E 3](#dall-e-3)
-4. [ComfyUI / Automatic1111](#comfyui--automatic1111)
-5. [Flux](#flux)
-6. [NijiJourney](#nijijourney)
-7. [Leonardo.ai](#leonardoai)
-8. [InvokeAI](#invokeai)
-9. [Playground AI](#playground-ai)
-10. [Ideogram](#ideogram)
-11. [通用提示词结构](#通用提示词结构)
+2. [Stable Diffusion 3 (SD3)](#stable-diffusion-3-sd3)
+3. [Midjourney](#midjourney)
+4. [DALL-E 3](#dall-e-3)
+5. [ComfyUI / Automatic1111](#comfyui--automatic1111)
+6. [Flux](#flux)
+7. [NijiJourney](#nijijourney)
+8. [Leonardo.ai](#leonardoai)
+9. [InvokeAI](#invokeai)
+10. [Playground AI](#playground-ai)
+11. [Ideogram](#ideogram)
+12. [通用提示词结构](#通用提示词结构)
 
 ---
 
@@ -54,6 +55,57 @@
 正向: a beautiful woman with long silver hair, intricate fantasy armor, glowing blue eyes, standing in enchanted forest, magical particles floating, cinematic lighting, 8k, highly detailed, masterpiece, best quality, sharp focus
 
 反向: ugly, deformed, noisy, blurry, low contrast, bad anatomy, extra limbs, poorly drawn face, mutation, watermark, text
+```
+
+---
+
+## Stable Diffusion 3 (SD3)
+
+### 基本格式
+
+```
+<自然语言描述>, <风格描述>, <质量词>
+```
+
+### 语法特点
+
+- **自然语言优先**: SD3对自然语言理解能力更强
+- **权重语法简化**: 权重语法仍然支持，但不那么必要
+- **T5文本编码器**: 使用T5XXL文本编码器，理解更复杂描述
+- **多模态理解**: 能更好地理解空间关系和构图
+
+### SD3 与 SDXL 的区别
+
+| 特性 | SDXL | SD3 |
+|------|------|-----|
+| 文本编码器 | CLIP | CLIP + T5 |
+| 提示词风格 | 标签+权重 | 自然语言 |
+| 理解能力 | 中等 | 强 |
+| 推荐长度 | 50-150 tokens | 100-300 tokens |
+| 权重语法 | 必要 | 可选 |
+
+### 最佳实践
+
+1. **使用自然语言**: 像描述图片一样写提示词
+2. **详细描述**: SD3能理解更详细的描述
+3. **空间关系**: 明确描述物体的位置关系
+4. **风格描述**: 可以使用更艺术化的描述
+
+### 示例
+
+```
+正向: A beautiful young woman with flowing silver hair stands in an enchanted forest. She wears intricate fantasy armor with glowing blue runes. Magical particles float around her, catching the golden sunlight filtering through the canopy. The scene is captured with cinematic lighting, creating a magical atmosphere. Highly detailed, 8k resolution, photorealistic rendering.
+
+反向: ugly, deformed, blurry, low quality, watermark, text, bad anatomy
+```
+
+### SD3 提示词模板
+
+```
+[详细场景描述], [主体位置和特征], [光照和氛围], [风格和质量]
+
+示例:
+A serene Japanese garden at dawn, with cherry blossoms gently falling. A traditional wooden bridge arches over a crystal-clear koi pond in the center of the scene. Soft morning mist rises between carefully pruned pine trees. Golden sunlight filters through the branches, creating dappled light patterns. Photorealistic, highly detailed, 8k, cinematic composition
 ```
 
 ---
@@ -373,6 +425,7 @@ anime girl with pink hair, wearing school uniform, cherry blossoms background, s
 | 模型 | 核心主体 | 风格词 | 质量词 | 背景 |
 |------|----------|--------|--------|------|
 | SD/SDXL | 1.3-1.5 | 1.1-1.2 | 1.1-1.3 | 0.8-1.0 |
+| SD3 | 详细描述 | 明确指定 | 可选 | 详细描述 |
 | Midjourney | ::3-5 | ::1-2 | 自然融入 | ::0.5-1 |
 | DALL-E 3 | 详细描述 | 详细描述 | 可选 | 详细描述 |
 | Flux | 详细描述 | 明确指定 | 可选 | 详细描述 |
@@ -386,11 +439,11 @@ anime girl with pink hair, wearing school uniform, cherry blossoms background, s
 
 | 需求 | 推荐模型 |
 |------|----------|
-| 写实人像 | SDXL, Midjourney V6, Flux |
+| 写实人像 | SD3, SDXL, Midjourney V6, Flux |
 | 动漫插画 | NijiJourney, SD+动漫模型 |
-| 风景摄影 | Midjourney, SDXL, Leonardo.ai |
-| 概念艺术 | Midjourney, SDXL, InvokeAI |
+| 风景摄影 | SD3, Midjourney, SDXL, Leonardo.ai |
+| 概念艺术 | SD3, Midjourney, SDXL, InvokeAI |
 | 商业产品 | DALL-E 3, Flux, SDXL |
 | 文字设计 | Ideogram |
 | 快速原型 | Playground AI, Leonardo.ai |
-| 精细控制 | ComfyUI, Automatic1111 |
+| 精细控制 | SD3, ComfyUI, Automatic1111 |
