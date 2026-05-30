@@ -1,0 +1,5447 @@
+{
+  "version": "2.0.0",
+  "last_updated": "2026-05-30",
+  "total_entries": 493,
+  "domains": [
+    "entertainment",
+    "gaming",
+    "lifestyle",
+    "tech",
+    "anime",
+    "finance",
+    "academic",
+    "unknown"
+  ],
+  "entries": [
+    {
+      "abbreviation": "ba",
+      "full_form": "bachelor of arts",
+      "meaning": "文学学士",
+      "domain": "academic",
+      "confidence": 0.85,
+      "examples": [
+        "ba学位"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "bs",
+      "full_form": "bachelor of science",
+      "meaning": "理学学士",
+      "domain": "academic",
+      "confidence": 0.85,
+      "examples": [
+        "bs学位"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "cssci",
+      "full_form": "chinese social sciences citation index",
+      "meaning": "中文社会科学引文索引",
+      "domain": "academic",
+      "confidence": 0.85,
+      "examples": [
+        "cssci来源期刊"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "dissertation",
+      "full_form": "dissertation",
+      "meaning": "博士论文",
+      "domain": "academic",
+      "confidence": 0.85,
+      "examples": [
+        "dissertation答辩"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ei",
+      "full_form": "engineering index",
+      "meaning": "工程索引",
+      "domain": "academic",
+      "confidence": 0.8,
+      "examples": [
+        "ei检索"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "gmat",
+      "full_form": "graduate management admission test",
+      "meaning": "管理学研究生入学考试",
+      "domain": "academic",
+      "confidence": 0.85,
+      "examples": [
+        "gmat考了700"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "gpa",
+      "full_form": "grade point average",
+      "meaning": "绩点/平均成绩",
+      "domain": "academic",
+      "confidence": 0.95,
+      "examples": [
+        "gpa要3.5以上"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "gre",
+      "full_form": "graduate record examination",
+      "meaning": "美国研究生入学考试",
+      "domain": "academic",
+      "confidence": 0.9,
+      "examples": [
+        "考gre"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ielts",
+      "full_form": "international english language testing system",
+      "meaning": "雅思考试",
+      "domain": "academic",
+      "confidence": 0.95,
+      "examples": [
+        "ielts 7分"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "lsat",
+      "full_form": "law school admission test",
+      "meaning": "法学院入学考试",
+      "domain": "academic",
+      "confidence": 0.8,
+      "examples": [
+        "lsat分数"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ma",
+      "full_form": "master of arts",
+      "meaning": "文学硕士",
+      "domain": "academic",
+      "confidence": 0.85,
+      "examples": [
+        "ma学位"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "mba",
+      "full_form": "master of business administration",
+      "meaning": "工商管理硕士",
+      "domain": "academic",
+      "confidence": 0.95,
+      "examples": [
+        "读mba"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ms",
+      "full_form": "master of science",
+      "meaning": "理学硕士",
+      "domain": "academic",
+      "confidence": 0.85,
+      "examples": [
+        "ms学位"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "peer review",
+      "full_form": "peer review",
+      "meaning": "同行评审",
+      "domain": "academic",
+      "confidence": 0.85,
+      "examples": [
+        "过了peer review"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "phd",
+      "full_form": "doctor of philosophy",
+      "meaning": "博士学位",
+      "domain": "academic",
+      "confidence": 0.95,
+      "examples": [
+        "他在读phd"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "pi",
+      "full_form": "principal investigator",
+      "meaning": "首席研究员/课题负责人",
+      "domain": "academic",
+      "confidence": 0.8,
+      "examples": [
+        "pi是谁"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ra",
+      "full_form": "research assistant",
+      "meaning": "研究助理",
+      "domain": "academic",
+      "confidence": 0.85,
+      "examples": [
+        "做ra"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "sat",
+      "full_form": "scholastic assessment test",
+      "meaning": "美国大学入学考试",
+      "domain": "academic",
+      "confidence": 0.9,
+      "examples": [
+        "sat满分"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "sci",
+      "full_form": "science citation index",
+      "meaning": "科学引文索引",
+      "domain": "academic",
+      "confidence": 0.9,
+      "examples": [
+        "发了一篇sci"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ssci",
+      "full_form": "social sciences citation index",
+      "meaning": "社会科学引文索引",
+      "domain": "academic",
+      "confidence": 0.85,
+      "examples": [
+        "ssci期刊"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ta",
+      "full_form": "teaching assistant",
+      "meaning": "助教",
+      "domain": "academic",
+      "confidence": 0.85,
+      "examples": [
+        "当ta"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "thesis",
+      "full_form": "thesis",
+      "meaning": "论文/学位论文",
+      "domain": "academic",
+      "confidence": 0.9,
+      "examples": [
+        "写thesis"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "toefl",
+      "full_form": "test of english as a foreign language",
+      "meaning": "托福考试",
+      "domain": "academic",
+      "confidence": 0.95,
+      "examples": [
+        "toefl考了100分"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "anime",
+      "full_form": "动画",
+      "meaning": "日本动画",
+      "domain": "anime",
+      "confidence": 0.95,
+      "examples": [
+        "看anime"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "bd",
+      "full_form": "blu-ray disc",
+      "meaning": "蓝光碟",
+      "domain": "anime",
+      "confidence": 0.85,
+      "examples": [
+        "买bd支持"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "chibi",
+      "full_form": "Q版",
+      "meaning": "Q版/缩小版角色",
+      "domain": "anime",
+      "confidence": 0.8,
+      "examples": [
+        "chibi好可爱"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "cos",
+      "full_form": "cosplay",
+      "meaning": "角色扮演",
+      "domain": "anime",
+      "confidence": 0.9,
+      "examples": [
+        "cos这个角色"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "coser",
+      "full_form": "cosplayer",
+      "meaning": "角色扮演者",
+      "domain": "anime",
+      "confidence": 0.9,
+      "examples": [
+        "这个coser好还原"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "cv",
+      "full_form": "character voice",
+      "meaning": "声优/配音演员",
+      "domain": "anime",
+      "confidence": 0.85,
+      "examples": [
+        "这个cv很厉害"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "dakimakura",
+      "full_form": "抱枕",
+      "meaning": "等身抱枕",
+      "domain": "anime",
+      "confidence": 0.75,
+      "examples": [
+        "dakimakura到了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ed",
+      "full_form": "ending",
+      "meaning": "片尾曲",
+      "domain": "anime",
+      "confidence": 0.85,
+      "examples": [
+        "ed也很好听"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "figma",
+      "full_form": "可动手办",
+      "meaning": "一种可动关节手办",
+      "domain": "anime",
+      "confidence": 0.75,
+      "examples": [
+        "买了一个figma"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "gacha",
+      "full_form": "抽卡",
+      "meaning": "随机抽取机制",
+      "domain": "anime",
+      "confidence": 0.85,
+      "examples": [
+        "gacha抽到了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "husbando",
+      "full_form": "老公",
+      "meaning": "最喜欢的男性角色",
+      "domain": "anime",
+      "confidence": 0.8,
+      "examples": [
+        "这是我husbando"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "isekai",
+      "full_form": "异世界",
+      "meaning": "穿越到异世界题材",
+      "domain": "anime",
+      "confidence": 0.85,
+      "examples": [
+        "isekai番"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "josei",
+      "full_form": "女性",
+      "meaning": "女性向作品",
+      "domain": "anime",
+      "confidence": 0.75,
+      "examples": [
+        "josei漫画"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "kawaii",
+      "full_form": "可爱",
+      "meaning": "可爱",
+      "domain": "anime",
+      "confidence": 0.85,
+      "examples": [
+        "好kawaii"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "kohai",
+      "full_form": "后辈",
+      "meaning": "日语'后辈'",
+      "domain": "anime",
+      "confidence": 0.75,
+      "examples": [
+        "kohai你好"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "manga",
+      "full_form": "漫画",
+      "meaning": "日本漫画",
+      "domain": "anime",
+      "confidence": 0.9,
+      "examples": [
+        "看manga"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "mecha",
+      "full_form": "机甲",
+      "meaning": "机器人/机甲题材",
+      "domain": "anime",
+      "confidence": 0.85,
+      "examples": [
+        "mecha番"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "moe",
+      "full_form": "萌",
+      "meaning": "可爱/萌",
+      "domain": "anime",
+      "confidence": 0.85,
+      "examples": [
+        "好moe"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "nani",
+      "full_form": "什么",
+      "meaning": "日语'什么'的空耳",
+      "domain": "anime",
+      "confidence": 0.85,
+      "examples": [
+        "nani？！"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "nendoroid",
+      "full_form": "黏土人",
+      "meaning": "Q版手办品牌",
+      "domain": "anime",
+      "confidence": 0.75,
+      "examples": [
+        "nendoroid好可爱"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "op",
+      "full_form": "opening",
+      "meaning": "片头曲",
+      "domain": "anime",
+      "confidence": 0.85,
+      "examples": [
+        "op很好听"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "otaku",
+      "full_form": "御宅族",
+      "meaning": "动漫/游戏重度爱好者",
+      "domain": "anime",
+      "confidence": 0.9,
+      "examples": [
+        "他是otaku"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ova",
+      "full_form": "original video animation",
+      "meaning": "原创动画录影带",
+      "domain": "anime",
+      "confidence": 0.9,
+      "examples": [
+        "ova出了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "seinen",
+      "full_form": "青年",
+      "meaning": "青年向作品",
+      "domain": "anime",
+      "confidence": 0.8,
+      "examples": [
+        "seinen番"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "senpai",
+      "full_form": "前辈",
+      "meaning": "日语'前辈'",
+      "domain": "anime",
+      "confidence": 0.85,
+      "examples": [
+        "senpai注意我"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "sensei",
+      "full_form": "老师",
+      "meaning": "日语'老师'",
+      "domain": "anime",
+      "confidence": 0.85,
+      "examples": [
+        "sensei好"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "shonen",
+      "full_form": "少年",
+      "meaning": "少年向作品",
+      "domain": "anime",
+      "confidence": 0.8,
+      "examples": [
+        "shonen漫画"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "shoujo",
+      "full_form": "少女",
+      "meaning": "少女向作品",
+      "domain": "anime",
+      "confidence": 0.8,
+      "examples": [
+        "shoujo漫画"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "sugoi",
+      "full_form": "厉害",
+      "meaning": "很厉害/很棒",
+      "domain": "anime",
+      "confidence": 0.8,
+      "examples": [
+        "sugoi！"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "tsundere",
+      "full_form": "傲娇",
+      "meaning": "外冷内热的性格",
+      "domain": "anime",
+      "confidence": 0.9,
+      "examples": [
+        "她很tsundere"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "waifu",
+      "full_form": "老婆",
+      "meaning": "最喜欢的女性角色",
+      "domain": "anime",
+      "confidence": 0.85,
+      "examples": [
+        "这是我waifu"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "weeaboo",
+      "full_form": "精日",
+      "meaning": "过度迷恋日本文化的人",
+      "domain": "anime",
+      "confidence": 0.75,
+      "examples": [
+        "别做weeaboo"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "yandere",
+      "full_form": "病娇",
+      "meaning": "因爱生恨的性格",
+      "domain": "anime",
+      "confidence": 0.85,
+      "examples": [
+        "这个角色是yandere"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "awsl",
+      "full_form": "啊我死了",
+      "meaning": "表示被萌到或震惊",
+      "domain": "entertainment",
+      "confidence": 0.9,
+      "examples": [
+        "小猫太可爱了awsl"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "bbl",
+      "full_form": "求求了",
+      "meaning": "拜托拜托",
+      "domain": "entertainment",
+      "confidence": 0.8,
+      "examples": [
+        "bbl，给我签个名吧"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "bdjw",
+      "full_form": "不懂就问",
+      "meaning": "表示请教/提问",
+      "domain": "entertainment",
+      "confidence": 0.85,
+      "examples": [
+        "bdjw，这是什么梗"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "bgm",
+      "full_form": "background music",
+      "meaning": "背景音乐",
+      "domain": "entertainment",
+      "confidence": 0.9,
+      "examples": [
+        "这段bgm很感人"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "bhs",
+      "full_form": "不好笑",
+      "meaning": "表示不好笑",
+      "domain": "entertainment",
+      "confidence": 0.85,
+      "examples": [
+        "这个梗bhs"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "bhys",
+      "full_form": "不好意思",
+      "meaning": "表示抱歉",
+      "domain": "entertainment",
+      "confidence": 0.85,
+      "examples": [
+        "bhys，我来晚了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "blx",
+      "full_form": "玻璃心",
+      "meaning": "心理承受能力差",
+      "domain": "entertainment",
+      "confidence": 0.8,
+      "examples": [
+        "别blx了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "bp",
+      "full_form": "白嫖",
+      "meaning": "不花钱/不付出",
+      "domain": "entertainment",
+      "confidence": 0.8,
+      "examples": [
+        "bp粉"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "db",
+      "full_form": "大吧",
+      "meaning": "粉丝大吧主",
+      "domain": "entertainment",
+      "confidence": 0.7,
+      "examples": [
+        "db发帖了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "dbq",
+      "full_form": "对不起",
+      "meaning": "表示道歉",
+      "domain": "entertainment",
+      "confidence": 0.9,
+      "examples": [
+        "dbq我迟到了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "dd",
+      "full_form": "弟弟/顶顶",
+      "meaning": "弟弟或顶帖",
+      "domain": "entertainment",
+      "confidence": 0.8,
+      "examples": [
+        "dd帮忙顶一下"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "drl",
+      "full_form": "打扰了",
+      "meaning": "表示打扰或告辞",
+      "domain": "entertainment",
+      "confidence": 0.85,
+      "examples": [
+        "价格太高，drl"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ep",
+      "full_form": "extended play",
+      "meaning": "迷你专辑/单集",
+      "domain": "entertainment",
+      "confidence": 0.85,
+      "examples": [
+        "新ep销量很好"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "gck",
+      "full_form": "滚出克",
+      "meaning": "滚出去（方言谐音）",
+      "domain": "entertainment",
+      "confidence": 0.75,
+      "examples": [
+        "黑粉gck"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "giegie",
+      "full_form": "哥哥（嗲叫）",
+      "meaning": "对男艺人的昵称（带调侃）",
+      "domain": "entertainment",
+      "confidence": 0.85,
+      "examples": [
+        "giegie好帅"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "hjj",
+      "full_form": "好家伙",
+      "meaning": "表示惊讶/感叹",
+      "domain": "entertainment",
+      "confidence": 0.8,
+      "examples": [
+        "hjj，这也太厉害了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "hyh",
+      "full_form": "后援会",
+      "meaning": "粉丝后援会",
+      "domain": "entertainment",
+      "confidence": 0.8,
+      "examples": [
+        "hyh公告"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "hyq",
+      "full_form": "好友圈",
+      "meaning": "微信好友可见的朋友圈",
+      "domain": "entertainment",
+      "confidence": 0.75,
+      "examples": [
+        "发hyq了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "jiejie",
+      "full_form": "姐姐",
+      "meaning": "对女艺人的昵称",
+      "domain": "entertainment",
+      "confidence": 0.85,
+      "examples": [
+        "jiejie好美"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "jjz",
+      "full_form": "绝绝子",
+      "meaning": "表示太绝了/太棒了",
+      "domain": "entertainment",
+      "confidence": 0.8,
+      "examples": [
+        "这个造型jjz"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "kb",
+      "full_form": "控评",
+      "meaning": "控制评论区",
+      "domain": "entertainment",
+      "confidence": 0.75,
+      "examples": [
+        "kb走起"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "kswl",
+      "full_form": "磕死我了",
+      "meaning": "表示对CP很上头",
+      "domain": "entertainment",
+      "confidence": 0.9,
+      "examples": [
+        "他们互动kswl！"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "meimei",
+      "full_form": "妹妹",
+      "meaning": "对年轻女艺人的昵称",
+      "domain": "entertainment",
+      "confidence": 0.85,
+      "examples": [
+        "这个meimei很可爱"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "mv",
+      "full_form": "music video",
+      "meaning": "音乐视频",
+      "domain": "entertainment",
+      "confidence": 0.95,
+      "examples": [
+        "新mv发布了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "nbcs",
+      "full_form": "nobody cares",
+      "meaning": "没人在意",
+      "domain": "entertainment",
+      "confidence": 0.85,
+      "examples": [
+        "他的回应nbcs"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "nsdd",
+      "full_form": "你说得对",
+      "meaning": "表示认同",
+      "domain": "entertainment",
+      "confidence": 0.9,
+      "examples": [
+        "nsdd，我也这么觉得"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ost",
+      "full_form": "original soundtrack",
+      "meaning": "原声带",
+      "domain": "entertainment",
+      "confidence": 0.9,
+      "examples": [
+        "这部剧ost很好听"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "plgg",
+      "full_form": "漂亮哥哥",
+      "meaning": "帅哥哥",
+      "domain": "entertainment",
+      "confidence": 0.75,
+      "examples": [
+        "plgg好帅"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "plmm",
+      "full_form": "漂亮妹妹",
+      "meaning": "美女",
+      "domain": "entertainment",
+      "confidence": 0.75,
+      "examples": [
+        "plmm好美"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "pyu",
+      "full_form": "朋友圈权限",
+      "meaning": "朋友圈可见范围",
+      "domain": "entertainment",
+      "confidence": 0.7,
+      "examples": [
+        "pyu设置一下"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "rnb",
+      "full_form": "real nb",
+      "meaning": "真厉害",
+      "domain": "entertainment",
+      "confidence": 0.8,
+      "examples": [
+        "他唱歌rnb"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "rnm",
+      "full_form": "饶命/退网",
+      "meaning": "网络用语",
+      "domain": "entertainment",
+      "confidence": 0.75,
+      "examples": [
+        "rnm别再说了"
+      ],
+      "source": "builtin",
+      "notes": "该缩写在网络语境中可能包含粗俗含义"
+    },
+    {
+      "abbreviation": "rs",
+      "full_form": "热搜",
+      "meaning": "微博热搜",
+      "domain": "entertainment",
+      "confidence": 0.8,
+      "examples": [
+        "上rs了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "sj",
+      "full_form": "数据",
+      "meaning": "粉丝刷数据",
+      "domain": "entertainment",
+      "confidence": 0.75,
+      "examples": [
+        "做sj"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "sjd",
+      "full_form": "是假的",
+      "meaning": "表示否定",
+      "domain": "entertainment",
+      "confidence": 0.85,
+      "examples": [
+        "这个传闻sjd"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ssfd",
+      "full_form": "瑟瑟发抖",
+      "meaning": "表示害怕或紧张",
+      "domain": "entertainment",
+      "confidence": 0.85,
+      "examples": [
+        "看到那个画面ssfd"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ssmy",
+      "full_form": "盛世美颜",
+      "meaning": "形容颜值很高",
+      "domain": "entertainment",
+      "confidence": 0.8,
+      "examples": [
+        "ssmyyyds"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "szd",
+      "full_form": "是真的",
+      "meaning": "表示确认",
+      "domain": "entertainment",
+      "confidence": 0.9,
+      "examples": [
+        "这对CP szd！"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "tkl",
+      "full_form": "泰裤辣",
+      "meaning": "太酷了（谐音）",
+      "domain": "entertainment",
+      "confidence": 0.8,
+      "examples": [
+        "这个舞台tkl"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "txl",
+      "full_form": "通讯录",
+      "meaning": "指同性恋群体",
+      "domain": "entertainment",
+      "confidence": 0.7,
+      "examples": [
+        "txl圈子"
+      ],
+      "source": "builtin",
+      "notes": "涉及敏感群体话题"
+    },
+    {
+      "abbreviation": "u1s1",
+      "full_form": "有一说一",
+      "meaning": "客观评价",
+      "domain": "entertainment",
+      "confidence": 0.9,
+      "examples": [
+        "u1s1，这个演技确实不错"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "wf",
+      "full_form": "王法",
+      "meaning": "饭圈规则/秩序",
+      "domain": "entertainment",
+      "confidence": 0.7,
+      "examples": [
+        "wf是什么"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "wlsw",
+      "full_form": "圈外人",
+      "meaning": "指不了解圈内的人",
+      "domain": "entertainment",
+      "confidence": 0.85,
+      "examples": [
+        "wlsw不懂这个梗"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "wyz",
+      "full_form": "无语子",
+      "meaning": "表示无语/无奈",
+      "domain": "entertainment",
+      "confidence": 0.75,
+      "examples": [
+        "看到这个消息wyz"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "xfxy",
+      "full_form": "腥风血雨",
+      "meaning": "饭圈激烈争斗",
+      "domain": "entertainment",
+      "confidence": 0.8,
+      "examples": [
+        "今天又是xfxy的一天"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "xgg",
+      "full_form": "小哥哥",
+      "meaning": "对年轻男性的称呼",
+      "domain": "entertainment",
+      "confidence": 0.85,
+      "examples": [
+        "那个xgg好帅"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "xjj",
+      "full_form": "小姐姐",
+      "meaning": "对年轻女性的称呼",
+      "domain": "entertainment",
+      "confidence": 0.85,
+      "examples": [
+        "那个xjj好可爱"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "xswl",
+      "full_form": "笑死我了",
+      "meaning": "表示非常好笑",
+      "domain": "entertainment",
+      "confidence": 0.95,
+      "examples": [
+        "这个段子xswl"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "xzf",
+      "full_form": "小作坊",
+      "meaning": "指小团队/非官方",
+      "domain": "entertainment",
+      "confidence": 0.7,
+      "examples": [
+        "这个xzf做的"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "yjjc",
+      "full_form": "一骑绝尘",
+      "meaning": "遥遥领先/非常突出",
+      "domain": "entertainment",
+      "confidence": 0.8,
+      "examples": [
+        "实力yjjc"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "yxh",
+      "full_form": "营销号",
+      "meaning": "营销性质的账号",
+      "domain": "entertainment",
+      "confidence": 0.85,
+      "examples": [
+        "yxh又在造谣"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "yyds",
+      "full_form": "永远的神",
+      "meaning": "表示某人/某物很厉害",
+      "domain": "entertainment",
+      "confidence": 0.95,
+      "examples": [
+        "这首歌真是yyds！"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "zf",
+      "full_form": "转发",
+      "meaning": "转发内容",
+      "domain": "entertainment",
+      "confidence": 0.8,
+      "examples": [
+        "zf一下"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "zqnr",
+      "full_form": "真情实感",
+      "meaning": "投入真感情",
+      "domain": "entertainment",
+      "confidence": 0.75,
+      "examples": [
+        "zqnr追星"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "zqsg",
+      "full_form": "真情实感",
+      "meaning": "表示投入真感情",
+      "domain": "entertainment",
+      "confidence": 0.9,
+      "examples": [
+        "zqsg追了这部剧"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "airdrop",
+      "full_form": "空投",
+      "meaning": "免费分发代币",
+      "domain": "finance",
+      "confidence": 0.85,
+      "examples": [
+        "收到airdrop"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "altcoin",
+      "full_form": "山寨币",
+      "meaning": "非比特币的加密货币",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "买了altcoin"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "apy",
+      "full_form": "annual percentage yield",
+      "meaning": "年化收益率",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "apy很高"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ath",
+      "full_form": "all time high",
+      "meaning": "历史最高价",
+      "domain": "finance",
+      "confidence": 0.85,
+      "examples": [
+        "突破ath"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "atl",
+      "full_form": "all time low",
+      "meaning": "历史最低价",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "跌到atl"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "aum",
+      "full_form": "assets under management",
+      "meaning": "管理资产规模",
+      "domain": "finance",
+      "confidence": 0.75,
+      "examples": [
+        "aum多大"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "bear",
+      "full_form": "熊市",
+      "meaning": "市场下跌",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "bear market"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "bearish",
+      "full_form": "看跌",
+      "meaning": "看空后市",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "有点bearish"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "bull",
+      "full_form": "牛市",
+      "meaning": "市场上升",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "bull run"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "bullish",
+      "full_form": "看涨",
+      "meaning": "看好后市",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "很bullish"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "cefi",
+      "full_form": "centralized finance",
+      "meaning": "中心化金融",
+      "domain": "finance",
+      "confidence": 0.75,
+      "examples": [
+        "cefi平台"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "cex",
+      "full_form": "centralized exchange",
+      "meaning": "中心化交易所",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "在cex交易"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "dao",
+      "full_form": "decentralized autonomous organization",
+      "meaning": "去中心化自治组织",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "加入dao"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "defi",
+      "full_form": "decentralized finance",
+      "meaning": "去中心化金融",
+      "domain": "finance",
+      "confidence": 0.85,
+      "examples": [
+        "defi项目"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "dex",
+      "full_form": "decentralized exchange",
+      "meaning": "去中心化交易所",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "在dex交易"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "dump",
+      "full_form": "砸盘",
+      "meaning": "价格暴跌",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "dump了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "dyor",
+      "full_form": "do your own research",
+      "meaning": "自己做研究",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "记得dyor"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "etf",
+      "full_form": "exchange traded fund",
+      "meaning": "交易所交易基金",
+      "domain": "finance",
+      "confidence": 0.85,
+      "examples": [
+        "买etf"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "fiat",
+      "full_form": "法定货币",
+      "meaning": "政府发行的货币",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "换成fiat"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "fomo",
+      "full_form": "fear of missing out",
+      "meaning": "害怕错过",
+      "domain": "finance",
+      "confidence": 0.85,
+      "examples": [
+        "fomo入场"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "gas",
+      "full_form": "gas fee",
+      "meaning": "交易手续费",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "gas好贵"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "hedge",
+      "full_form": "对冲",
+      "meaning": "风险对冲",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "做hedge"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "hodl",
+      "full_form": "hold on for dear life",
+      "meaning": "坚定持有",
+      "domain": "finance",
+      "confidence": 0.85,
+      "examples": [
+        "hodl不卖"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ipo",
+      "full_form": "initial public offering",
+      "meaning": "首次公开募股",
+      "domain": "finance",
+      "confidence": 0.9,
+      "examples": [
+        "公司要ipo了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "lambo",
+      "full_form": "lamborghini",
+      "meaning": "兰博基尼/暴富",
+      "domain": "finance",
+      "confidence": 0.75,
+      "examples": [
+        "when lambo"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "leverage",
+      "full_form": "杠杆",
+      "meaning": "杠杆交易",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "用leverage"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "long",
+      "full_form": "做多",
+      "meaning": "看涨买入",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "做long"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "mainnet",
+      "full_form": "主网",
+      "meaning": "正式运行的区块链网络",
+      "domain": "finance",
+      "confidence": 0.75,
+      "examples": [
+        "上mainnet"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "margin",
+      "full_form": "保证金",
+      "meaning": "保证金交易",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "margin call"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "moon",
+      "full_form": "暴涨",
+      "meaning": "价格飞涨",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "to the moon"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "nft",
+      "full_form": "non-fungible token",
+      "meaning": "非同质化代币",
+      "domain": "finance",
+      "confidence": 0.9,
+      "examples": [
+        "买了一个nft"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "otc",
+      "full_form": "over the counter",
+      "meaning": "场外交易",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "otc交易"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "pb",
+      "full_form": "price to book",
+      "meaning": "市净率",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "pb比率"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "pe",
+      "full_form": "price to earnings",
+      "meaning": "市盈率",
+      "domain": "finance",
+      "confidence": 0.85,
+      "examples": [
+        "pe很高"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "pump",
+      "full_form": "拉盘",
+      "meaning": "价格暴涨",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "pump了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "rekt",
+      "full_form": "wrecked",
+      "meaning": "亏惨了",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "rekt了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "roi",
+      "full_form": "return on investment",
+      "meaning": "投资回报率",
+      "domain": "finance",
+      "confidence": 0.9,
+      "examples": [
+        "roi是多少"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "rug",
+      "full_form": "rug pull",
+      "meaning": "跑路/抽底",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "被rug了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "short",
+      "full_form": "做空",
+      "meaning": "看跌卖出",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "做short"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "stablecoin",
+      "full_form": "稳定币",
+      "meaning": "锚定法币的加密货币",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "用stablecoin"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "staking",
+      "full_form": "质押",
+      "meaning": "锁仓赚收益",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "做staking"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "testnet",
+      "full_form": "测试网",
+      "meaning": "测试用区块链网络",
+      "domain": "finance",
+      "confidence": 0.75,
+      "examples": [
+        "在testnet试"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "tvl",
+      "full_form": "total value locked",
+      "meaning": "总锁仓量",
+      "domain": "finance",
+      "confidence": 0.75,
+      "examples": [
+        "tvl增长"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "vc",
+      "full_form": "venture capital",
+      "meaning": "风险投资",
+      "domain": "finance",
+      "confidence": 0.9,
+      "examples": [
+        "找vc融资"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "whale",
+      "full_form": "大户",
+      "meaning": "持有大量资产的人",
+      "domain": "finance",
+      "confidence": 0.85,
+      "examples": [
+        "whale入场"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "yield",
+      "full_form": "收益",
+      "meaning": "投资收益",
+      "domain": "finance",
+      "confidence": 0.8,
+      "examples": [
+        "yield farming"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ace",
+      "full_form": "团灭",
+      "meaning": "团灭对方全队",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "我们ace了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ad",
+      "full_form": "attack damage",
+      "meaning": "物理攻击",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "ad伤害"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "adc",
+      "full_form": "attack damage carry",
+      "meaning": "射手",
+      "domain": "gaming",
+      "confidence": 0.9,
+      "examples": [
+        "我玩adc"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "afk",
+      "full_form": "away from keyboard",
+      "meaning": "暂时离开",
+      "domain": "gaming",
+      "confidence": 0.9,
+      "examples": [
+        "我去afk一下"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "aggro",
+      "full_form": "aggression",
+      "meaning": "仇恨值",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "拉aggro"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "aoe",
+      "full_form": "area of effect",
+      "meaning": "范围伤害",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "aoe技能"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ap",
+      "full_form": "ability power",
+      "meaning": "法术强度",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "ap伤害"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "brb",
+      "full_form": "be right back",
+      "meaning": "马上回来",
+      "domain": "gaming",
+      "confidence": 0.9,
+      "examples": [
+        "brb，接个电话"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "buff",
+      "full_form": "增强",
+      "meaning": "游戏平衡调整",
+      "domain": "gaming",
+      "confidence": 0.9,
+      "examples": [
+        "获得攻击力buff"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "carry",
+      "full_form": "带飞",
+      "meaning": "带领队伍获胜",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "他carry全场"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "cc",
+      "full_form": "crowd control",
+      "meaning": "控制技能",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "被cc住了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "cd",
+      "full_form": "cooldown",
+      "meaning": "冷却时间",
+      "domain": "gaming",
+      "confidence": 0.9,
+      "examples": [
+        "技能还在cd"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "clutch",
+      "full_form": "关键时刻",
+      "meaning": "关键时刻的表现",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "这波clutch太帅了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "cs",
+      "full_form": "creep score",
+      "meaning": "补刀数",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "cs不够"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "dc",
+      "full_form": "disconnect",
+      "meaning": "掉线/断开连接",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "我dc了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "debuff",
+      "full_form": "负面效果",
+      "meaning": "减益效果",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "中了debuff"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "defend",
+      "full_form": "防守",
+      "meaning": "防守基地/防御",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "defend基地"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "dot",
+      "full_form": "damage over time",
+      "meaning": "持续伤害",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "dot伤害"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "dps",
+      "full_form": "damage per second",
+      "meaning": "输出/秒伤",
+      "domain": "gaming",
+      "confidence": 0.9,
+      "examples": [
+        "dps不够"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "eco",
+      "full_form": "economic round",
+      "meaning": "经济局",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "eco一把"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ez",
+      "full_form": "easy",
+      "meaning": "轻松",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "ez win"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "farm",
+      "full_form": "刷钱发育",
+      "meaning": "打怪发育/刷钱",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "先farm一下"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "feed",
+      "full_form": "送人头",
+      "meaning": "养肥对手",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "别feed了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "fps",
+      "full_form": "frames per second",
+      "meaning": "帧率",
+      "domain": "gaming",
+      "confidence": 0.9,
+      "examples": [
+        "fps好低"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "gank",
+      "full_form": "游走抓人",
+      "meaning": "偷袭/抓人",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "来gank中路"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "gg",
+      "full_form": "good game",
+      "meaning": "游戏结束/认输",
+      "domain": "gaming",
+      "confidence": 0.9,
+      "examples": [
+        "gg，这局输了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ggez",
+      "full_form": "good game easy",
+      "meaning": "赢得很轻松（嘲讽）",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "ggez noobs"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "glhf",
+      "full_form": "good luck have fun",
+      "meaning": "祝好运",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "glhf，大家加油"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "grind",
+      "full_form": "刷",
+      "meaning": "重复刷怪/刷任务",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "grind等级"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "hold",
+      "full_form": "架枪/守点",
+      "meaning": "防守要点",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "hold住"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "hot",
+      "full_form": "heal over time",
+      "meaning": "持续治疗",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "hot效果"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "hp",
+      "full_form": "health points",
+      "meaning": "生命值",
+      "domain": "gaming",
+      "confidence": 0.9,
+      "examples": [
+        "hp快没了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "hs",
+      "full_form": "headshot",
+      "meaning": "爆头",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "hs率很高"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "int",
+      "full_form": "intentional feeding",
+      "meaning": "故意送人头",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "他在int"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "jungle",
+      "full_form": "打野",
+      "meaning": "打野位置",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "jungle在哪"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "kda",
+      "full_form": "kill death assist",
+      "meaning": "击杀死亡助攻比",
+      "domain": "gaming",
+      "confidence": 0.9,
+      "examples": [
+        "kda很好看"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "lag",
+      "full_form": "延迟",
+      "meaning": "网络延迟/卡顿",
+      "domain": "gaming",
+      "confidence": 0.9,
+      "examples": [
+        "好lag，卡死了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "lane",
+      "full_form": "兵线/分路",
+      "meaning": "对线路",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "回lane"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "loot",
+      "full_form": "战利品",
+      "meaning": "掉落物/奖励",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "分loot"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "lv",
+      "full_form": "level",
+      "meaning": "等级",
+      "domain": "gaming",
+      "confidence": 0.9,
+      "examples": [
+        "升lv了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "mp",
+      "full_form": "mana points",
+      "meaning": "魔法值",
+      "domain": "gaming",
+      "confidence": 0.9,
+      "examples": [
+        "mp不足"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "mvp",
+      "full_form": "most valuable player",
+      "meaning": "最有价值玩家",
+      "domain": "gaming",
+      "confidence": 0.95,
+      "examples": [
+        "这局我是mvp"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "nerf",
+      "full_form": "削弱",
+      "meaning": "游戏平衡调整",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "这个英雄被nerf了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "noob",
+      "full_form": "newbie",
+      "meaning": "新手/菜鸟",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "别欺负noob"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "npc",
+      "full_form": "non-player character",
+      "meaning": "非玩家角色",
+      "domain": "gaming",
+      "confidence": 0.9,
+      "examples": [
+        "npc对话"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "op",
+      "full_form": "overpowered",
+      "meaning": "太强/超模",
+      "domain": "gaming",
+      "confidence": 0.9,
+      "examples": [
+        "这个英雄太op了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "peek",
+      "full_form": "拉出去看",
+      "meaning": "探头/预瞄",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "peek一下"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ping",
+      "full_form": "网络延迟",
+      "meaning": "网络延迟数值",
+      "domain": "gaming",
+      "confidence": 0.9,
+      "examples": [
+        "ping好高"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "pog",
+      "full_form": "play of the game",
+      "meaning": "精彩操作",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "这波操作pog！"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "pos",
+      "full_form": "position",
+      "meaning": "位置/角色",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "什么pos"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "pov",
+      "full_form": "point of view",
+      "meaning": "视角/第一人称",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "选手pov"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "pro",
+      "full_form": "professional",
+      "meaning": "专业玩家/高手",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "他是pro"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "proc",
+      "full_form": "process",
+      "meaning": "触发效果",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "proc了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "push",
+      "full_form": "推进",
+      "meaning": "推塔/推进",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "push中路"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "pve",
+      "full_form": "player vs environment",
+      "meaning": "玩家对环境",
+      "domain": "gaming",
+      "confidence": 0.9,
+      "examples": [
+        "pve副本"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "pvp",
+      "full_form": "player vs player",
+      "meaning": "玩家对战",
+      "domain": "gaming",
+      "confidence": 0.9,
+      "examples": [
+        "pvp模式"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "quest",
+      "full_form": "任务",
+      "meaning": "游戏任务",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "做quest"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "raid",
+      "full_form": "团队副本",
+      "meaning": "团队挑战",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "打raid"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "respawn",
+      "full_form": "重生",
+      "meaning": "角色复活",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "等respawn"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "rng",
+      "full_form": "random number generator",
+      "meaning": "随机数/运气",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "rng不好"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "roam",
+      "full_form": "游走",
+      "meaning": "游走支援",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "support在roam"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "rotate",
+      "full_form": "转点",
+      "meaning": "转移位置",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "rotate到B"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "rush",
+      "full_form": "冲点",
+      "meaning": "快速进攻",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "rush B"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "salty",
+      "full_form": "输不起",
+      "meaning": "生气/不服",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "别salty了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "smurf",
+      "full_form": "炸鱼小号",
+      "meaning": "高手玩低分段",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "对面有smurf"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "sub",
+      "full_form": "subscribe",
+      "meaning": "订阅/订阅者",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "感谢sub"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "sup",
+      "full_form": "support",
+      "meaning": "辅助",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "我玩sup"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "tank",
+      "full_form": "坦克",
+      "meaning": "肉盾/前排",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "我玩tank"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "toxic",
+      "full_form": "有毒行为",
+      "meaning": "负面行为",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "这人好toxic"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "troll",
+      "full_form": "捣乱",
+      "meaning": "故意捣乱",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "别troll了，认真玩"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ult",
+      "full_form": "ultimate",
+      "meaning": "大招",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "放ult"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "up",
+      "full_form": "underpowered",
+      "meaning": "太弱，需要加强",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "这个技能太up了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "vod",
+      "full_form": "video on demand",
+      "meaning": "录像回放",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "看vod学习"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "wipe",
+      "full_form": "团灭",
+      "meaning": "全队阵亡",
+      "domain": "gaming",
+      "confidence": 0.8,
+      "examples": [
+        "wipe了重来"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "wp",
+      "full_form": "well played",
+      "meaning": "打得好",
+      "domain": "gaming",
+      "confidence": 0.85,
+      "examples": [
+        "wp，对手很强"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "xp",
+      "full_form": "experience points",
+      "meaning": "经验值",
+      "domain": "gaming",
+      "confidence": 0.9,
+      "examples": [
+        "获得xp"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "af",
+      "full_form": "as f**k",
+      "meaning": "非常/极其",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "cool af"
+      ],
+      "source": "builtin",
+      "notes": "包含粗俗用语"
+    },
+    {
+      "abbreviation": "asap",
+      "full_form": "as soon as possible",
+      "meaning": "尽快",
+      "domain": "lifestyle",
+      "confidence": 0.95,
+      "examples": [
+        "请asap回复"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "atm",
+      "full_form": "at the moment",
+      "meaning": "此刻",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "atm不方便"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "bc",
+      "full_form": "because",
+      "meaning": "因为",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "bc why not"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "bet",
+      "full_form": "好的",
+      "meaning": "没问题/好的",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "bet，就这么办"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "bogo",
+      "full_form": "buy one get one",
+      "meaning": "买一送一",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "bogo活动"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "bruh",
+      "full_form": "brother",
+      "meaning": "兄弟/无语",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "bruh moment"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "btw",
+      "full_form": "by the way",
+      "meaning": "顺便说一下",
+      "domain": "lifestyle",
+      "confidence": 0.95,
+      "examples": [
+        "btw，你吃饭了吗"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "cap",
+      "full_form": "撒谎",
+      "meaning": "撒谎/假的",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "no cap（真的）"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "cod",
+      "full_form": "cash on delivery",
+      "meaning": "货到付款",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "支持cod吗"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "dm",
+      "full_form": "direct message",
+      "meaning": "私信",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "dm我详情"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "eod",
+      "full_form": "end of day",
+      "meaning": "今天结束前",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "eod前给我"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "eom",
+      "full_form": "end of month",
+      "meaning": "本月结束",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "eom截止"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "eow",
+      "full_form": "end of week",
+      "meaning": "本周结束",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "eow前完成"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "eta",
+      "full_form": "estimated time of arrival",
+      "meaning": "预计到达时间",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "eta是几点"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "fam",
+      "full_form": "family",
+      "meaning": "家人/老铁",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "what's up fam"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "fml",
+      "full_form": "f**k my life",
+      "meaning": "我太难了",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "迟到again，fml"
+      ],
+      "source": "builtin",
+      "notes": "包含粗俗用语"
+    },
+    {
+      "abbreviation": "fomo",
+      "full_form": "fear of missing out",
+      "meaning": "害怕错过",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "fomo了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "fr",
+      "full_form": "for real",
+      "meaning": "真的/确实",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "fr fr"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ftl",
+      "full_form": "for the loss",
+      "meaning": "失败/不好",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "这操作ftl"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ftw",
+      "full_form": "for the win",
+      "meaning": "必胜/支持",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "Python ftw！"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "fwiw",
+      "full_form": "for what it's worth",
+      "meaning": "不管有没有用",
+      "domain": "lifestyle",
+      "confidence": 0.75,
+      "examples": [
+        "fwiw，我觉得"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "fyi",
+      "full_form": "for your information",
+      "meaning": "供你参考",
+      "domain": "lifestyle",
+      "confidence": 0.95,
+      "examples": [
+        "fyi，会议改时间了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "gimme",
+      "full_form": "give me",
+      "meaning": "给我",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "gimme that"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "gl",
+      "full_form": "good luck",
+      "meaning": "祝好运",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "gl考试"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "gm",
+      "full_form": "good morning",
+      "meaning": "早安",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "gm！"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "gn",
+      "full_form": "good night",
+      "meaning": "晚安",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "gn～"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "goals",
+      "full_form": "目标/羡慕",
+      "meaning": "让人羡慕的事",
+      "domain": "lifestyle",
+      "confidence": 0.75,
+      "examples": [
+        "couple goals"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "goat",
+      "full_form": "greatest of all time",
+      "meaning": "史上最佳",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "他是goat"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "gonna",
+      "full_form": "going to",
+      "meaning": "将要",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "gonna go"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "gotta",
+      "full_form": "got to",
+      "meaning": "必须",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "gotta go"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "hbd",
+      "full_form": "happy birthday",
+      "meaning": "生日快乐",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "hbd！"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "hbu",
+      "full_form": "how about you",
+      "meaning": "你呢",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "我很好，hbu"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "hf",
+      "full_form": "have fun",
+      "meaning": "玩得开心",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "hf！"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "highkey",
+      "full_form": "高调地",
+      "meaning": "很明显/非常",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "highkey想要"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "hmu",
+      "full_form": "hit me up",
+      "meaning": "联系我",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "有事hmu"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "icymi",
+      "full_form": "in case you missed it",
+      "meaning": "以防你错过",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "icymi，通知一下"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "idc",
+      "full_form": "I don't care",
+      "meaning": "我不在乎",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "idc，随你便"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "idgt",
+      "full_form": "I don't get tired",
+      "meaning": "我不累",
+      "domain": "lifestyle",
+      "confidence": 0.7,
+      "examples": [
+        "idgt"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "idk",
+      "full_form": "I don't know",
+      "meaning": "我不知道",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "idk，你问别人吧"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ig",
+      "full_form": "I guess",
+      "meaning": "我猜",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "ig是吧"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ik",
+      "full_form": "I know",
+      "meaning": "我知道",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "ik，不用说了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ikr",
+      "full_form": "I know right",
+      "meaning": "我知道对吧",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "ikr！我也这么觉得"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ily",
+      "full_form": "I love you",
+      "meaning": "我爱你",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "ily"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ily2",
+      "full_form": "I love you too",
+      "meaning": "我也爱你",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "ily2"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ima",
+      "full_form": "I'm gonna",
+      "meaning": "我将要",
+      "domain": "lifestyle",
+      "confidence": 0.75,
+      "examples": [
+        "ima go"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "imho",
+      "full_form": "in my humble opinion",
+      "meaning": "依我拙见",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "imho，这样不太好"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "imo",
+      "full_form": "in my opinion",
+      "meaning": "在我看来",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "imo，这个更好"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ion",
+      "full_form": "I don't",
+      "meaning": "我不",
+      "domain": "lifestyle",
+      "confidence": 0.75,
+      "examples": [
+        "ion know"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "irl",
+      "full_form": "in real life",
+      "meaning": "现实生活中",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "irl没见过面"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "istg",
+      "full_form": "I swear to god",
+      "meaning": "我发誓",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "istg"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "iykyk",
+      "full_form": "if you know you know",
+      "meaning": "懂的都懂",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "iykyk"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "kinda",
+      "full_form": "kind of",
+      "meaning": "有点",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "kinda cool"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "lemme",
+      "full_form": "let me",
+      "meaning": "让我",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "lemme see"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "lit",
+      "full_form": "很嗨",
+      "meaning": "很棒/很嗨",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "party is lit"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "lmao",
+      "full_form": "laugh my ass off",
+      "meaning": "笑死我了",
+      "domain": "lifestyle",
+      "confidence": 0.95,
+      "examples": [
+        "lmao哈哈哈"
+      ],
+      "source": "builtin",
+      "notes": "包含粗俗用语"
+    },
+    {
+      "abbreviation": "lmk",
+      "full_form": "let me know",
+      "meaning": "告诉我",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "lmk你的决定"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "lol",
+      "full_form": "laugh out loud",
+      "meaning": "大笑",
+      "domain": "lifestyle",
+      "confidence": 0.95,
+      "examples": [
+        "lol太好笑了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "lowkey",
+      "full_form": "低调地",
+      "meaning": "悄悄地/有点",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "lowkey喜欢"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "mood",
+      "full_form": "心情",
+      "meaning": "状态/共鸣",
+      "domain": "lifestyle",
+      "confidence": 0.75,
+      "examples": [
+        "big mood"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ngl",
+      "full_form": "not gonna lie",
+      "meaning": "说实话",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "ngl，我挺喜欢的"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "nm",
+      "full_form": "not much",
+      "meaning": "没什么",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "nm，你呢"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "np",
+      "full_form": "no problem",
+      "meaning": "没问题",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "np，小事"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "nvm",
+      "full_form": "never mind",
+      "meaning": "没关系",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "nvm，没事了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "omfg",
+      "full_form": "oh my f**king god",
+      "meaning": "我的天（更强语气）",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "omfg！"
+      ],
+      "source": "builtin",
+      "notes": "包含粗俗用语"
+    },
+    {
+      "abbreviation": "omg",
+      "full_form": "oh my god",
+      "meaning": "我的天",
+      "domain": "lifestyle",
+      "confidence": 0.95,
+      "examples": [
+        "omg！"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "omw",
+      "full_form": "on my way",
+      "meaning": "在路上",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "omw，马上到"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ong",
+      "full_form": "on god",
+      "meaning": "真的/发誓",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "ong是真的"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "oos",
+      "full_form": "out of stock",
+      "meaning": "缺货",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "这款oos了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ootd",
+      "full_form": "outfit of the day",
+      "meaning": "今日穿搭",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "发个ootd"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "pls",
+      "full_form": "please",
+      "meaning": "请",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "pls帮我"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "pm",
+      "full_form": "private message",
+      "meaning": "私信",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "pm聊"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "pyq",
+      "full_form": "朋友圈",
+      "meaning": "微信朋友圈",
+      "domain": "lifestyle",
+      "confidence": 0.95,
+      "examples": [
+        "发pyq了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "relatable",
+      "full_form": "有共鸣",
+      "meaning": "能产生共鸣",
+      "domain": "lifestyle",
+      "confidence": 0.75,
+      "examples": [
+        "so relatable"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "rn",
+      "full_form": "right now",
+      "meaning": "现在",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "我rn很忙"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "rofl",
+      "full_form": "roll on floor laughing",
+      "meaning": "笑到打滚",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "rofl"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "same",
+      "full_form": "我也是",
+      "meaning": "表示相同感受",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "same"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "shade",
+      "full_form": "讽刺",
+      "meaning": "讽刺/diss",
+      "domain": "lifestyle",
+      "confidence": 0.75,
+      "examples": [
+        "throw shade"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "slay",
+      "full_form": "很厉害",
+      "meaning": "很棒/杀疯了",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "you slay！"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "smh",
+      "full_form": "shaking my head",
+      "meaning": "摇头/无语",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "smh，这都能错"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "smth",
+      "full_form": "something",
+      "meaning": "某事/某物",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "smth like that"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "sorta",
+      "full_form": "sort of",
+      "meaning": "有点/算是",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "sorta like it"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "sry",
+      "full_form": "sorry",
+      "meaning": "对不起",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "sry迟到了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "sup",
+      "full_form": "what's up",
+      "meaning": "怎么了/你好",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "sup！"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "tb",
+      "full_form": "throwback",
+      "meaning": "回忆/怀旧",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "tb to last summer"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "tba",
+      "full_form": "to be announced",
+      "meaning": "待公布",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "详情tba"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "tbc",
+      "full_form": "to be confirmed",
+      "meaning": "待确认",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "tbc"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "tbd",
+      "full_form": "to be determined",
+      "meaning": "待定",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "时间tbd"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "tbf",
+      "full_form": "to be fair",
+      "meaning": "公平地说",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "tbf，他也有道理"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "tbh",
+      "full_form": "to be honest",
+      "meaning": "说实话",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "tbh，我不太喜欢"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "tea",
+      "full_form": "八卦",
+      "meaning": "八卦/内幕",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "spill the tea"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "tgif",
+      "full_form": "thank god it's friday",
+      "meaning": "感谢上帝周五了",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "tgif！"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "tho",
+      "full_form": "though",
+      "meaning": "不过/但是",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "nice tho"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "thx",
+      "full_form": "thanks",
+      "meaning": "谢谢",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "thx！"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "tmi",
+      "full_form": "too much information",
+      "meaning": "信息量太大",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "tmi了"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ttyl",
+      "full_form": "talk to you later",
+      "meaning": "晚点聊",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "ttyl"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ty",
+      "full_form": "thank you",
+      "meaning": "谢谢",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "ty帮忙"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "tyia",
+      "full_form": "thank you in advance",
+      "meaning": "先谢谢",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "tyia帮忙"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "tyvm",
+      "full_form": "thank you very much",
+      "meaning": "非常感谢",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "tyvm！"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "wanna",
+      "full_form": "want to",
+      "meaning": "想要",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "wanna try"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "wb",
+      "full_form": "welcome back",
+      "meaning": "欢迎回来",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "wb！"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "wbu",
+      "full_form": "what about you",
+      "meaning": "你呢",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "我很好，wbu"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "woke",
+      "full_form": "觉醒",
+      "meaning": "有觉悟/觉醒",
+      "domain": "lifestyle",
+      "confidence": 0.75,
+      "examples": [
+        "stay woke"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "wtf",
+      "full_form": "what the f**k",
+      "meaning": "什么鬼",
+      "domain": "lifestyle",
+      "confidence": 0.9,
+      "examples": [
+        "wtf？"
+      ],
+      "source": "builtin",
+      "notes": "包含粗俗用语"
+    },
+    {
+      "abbreviation": "wth",
+      "full_form": "what the hell",
+      "meaning": "什么鬼（稍轻语气）",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "wth happened"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "wya",
+      "full_form": "where you at",
+      "meaning": "你在哪",
+      "domain": "lifestyle",
+      "confidence": 0.8,
+      "examples": [
+        "wya"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "wyd",
+      "full_form": "what you doing",
+      "meaning": "你在干嘛",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "wyd现在"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "yolo",
+      "full_form": "you only live once",
+      "meaning": "人生只有一次",
+      "domain": "lifestyle",
+      "confidence": 0.85,
+      "examples": [
+        "yolo！"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ack",
+      "full_form": "acknowledgement",
+      "meaning": "确认/收到",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "ack"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ai",
+      "full_form": "artificial intelligence",
+      "meaning": "人工智能",
+      "domain": "tech",
+      "confidence": 0.95,
+      "examples": [
+        "ai技术"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "api",
+      "full_form": "application programming interface",
+      "meaning": "应用程序接口",
+      "domain": "tech",
+      "confidence": 0.95,
+      "examples": [
+        "调用api"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "auth",
+      "full_form": "authentication",
+      "meaning": "认证",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "auth系统"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "aws",
+      "full_form": "amazon web services",
+      "meaning": "亚马逊云服务",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "部署到aws"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "azure",
+      "full_form": "azure",
+      "meaning": "微软云平台",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "azure服务"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ba",
+      "full_form": "business analyst",
+      "meaning": "业务分析师",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "ba分析"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "backlog",
+      "full_form": "待办列表",
+      "meaning": "需求待办池",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "放到backlog"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "bdd",
+      "full_form": "behavior driven development",
+      "meaning": "行为驱动开发",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "bdd实践"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "be",
+      "full_form": "back end",
+      "meaning": "后端",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "be接口"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "bi",
+      "full_form": "business intelligence",
+      "meaning": "商业智能",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "bi报表"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "blame",
+      "full_form": "追溯",
+      "meaning": "代码追溯",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "git blame"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "branch",
+      "full_form": "分支",
+      "meaning": "代码分支",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "新建branch"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "bug",
+      "full_form": "缺陷",
+      "meaning": "程序错误",
+      "domain": "tech",
+      "confidence": 0.95,
+      "examples": [
+        "修bug"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "cache",
+      "full_form": "缓存",
+      "meaning": "缓存机制",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "清理cache"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "cd",
+      "full_form": "continuous deployment",
+      "meaning": "持续部署",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "cd流水线"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "cdn",
+      "full_form": "content delivery network",
+      "meaning": "内容分发网络",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "用cdn加速"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ceo",
+      "full_form": "chief executive officer",
+      "meaning": "首席执行官",
+      "domain": "tech",
+      "confidence": 0.95,
+      "examples": [
+        "ceo讲话"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "cert",
+      "full_form": "certificate",
+      "meaning": "证书",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "ssl cert"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ci",
+      "full_form": "continuous integration",
+      "meaning": "持续集成",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "ci流程"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "cicd",
+      "full_form": "ci/cd",
+      "meaning": "持续集成/部署",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "配置cicd"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "cli",
+      "full_form": "command line interface",
+      "meaning": "命令行界面",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "用cli操作"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "commit",
+      "full_form": "提交",
+      "meaning": "代码提交",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "一个commit"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "cors",
+      "full_form": "cross origin resource sharing",
+      "meaning": "跨域资源共享",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "配置cors"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "coverage",
+      "full_form": "覆盖率",
+      "meaning": "测试覆盖率",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "提高coverage"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "crud",
+      "full_form": "create read update delete",
+      "meaning": "增删改查",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "实现crud"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "csrf",
+      "full_form": "cross site request forgery",
+      "meaning": "跨站请求伪造",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "防csrf"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "css",
+      "full_form": "cascading style sheets",
+      "meaning": "层叠样式表",
+      "domain": "tech",
+      "confidence": 0.95,
+      "examples": [
+        "写css"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "csv",
+      "full_form": "comma separated values",
+      "meaning": "逗号分隔值",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "csv文件"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "cto",
+      "full_form": "chief technology officer",
+      "meaning": "技术总监",
+      "domain": "tech",
+      "confidence": 0.95,
+      "examples": [
+        "cto决策"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "cv",
+      "full_form": "computer vision",
+      "meaning": "计算机视觉",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "cv领域"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "cve",
+      "full_form": "common vulnerabilities and exposures",
+      "meaning": "通用漏洞披露",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "cve编号"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "db",
+      "full_form": "database",
+      "meaning": "数据库",
+      "domain": "tech",
+      "confidence": 0.95,
+      "examples": [
+        "查询db"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ddos",
+      "full_form": "distributed denial of service",
+      "meaning": "分布式拒绝服务",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "ddos攻击"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "demo",
+      "full_form": "demonstration",
+      "meaning": "演示",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "做demo"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "dev",
+      "full_form": "developer",
+      "meaning": "开发者",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "dev团队"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "dhcp",
+      "full_form": "dynamic host configuration protocol",
+      "meaning": "动态主机配置",
+      "domain": "tech",
+      "confidence": 0.75,
+      "examples": [
+        "dhcp分配"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "diff",
+      "full_form": "差异",
+      "meaning": "差异对比",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "看diff"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "dl",
+      "full_form": "deep learning",
+      "meaning": "深度学习",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "dl算法"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "dns",
+      "full_form": "domain name system",
+      "meaning": "域名系统",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "配置dns"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "docker",
+      "full_form": "docker",
+      "meaning": "容器技术",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "用docker部署"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "draft",
+      "full_form": "草稿",
+      "meaning": "草稿状态",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "draft pr"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "e2e",
+      "full_form": "end to end",
+      "meaning": "端到端测试",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "e2e测试"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ec2",
+      "full_form": "elastic compute cloud",
+      "meaning": "AWS计算服务",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "启动ec2"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "edge",
+      "full_form": "边缘",
+      "meaning": "边缘计算/节点",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "edge节点"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "em",
+      "full_form": "engineering manager",
+      "meaning": "工程经理",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "em管理"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "epic",
+      "full_form": "史诗",
+      "meaning": "大需求/史诗",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "一个epic"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "etl",
+      "full_form": "extract transform load",
+      "meaning": "数据抽取转换加载",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "etl流程"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "fe",
+      "full_form": "front end",
+      "meaning": "前端",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "fe开发"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "firewall",
+      "full_form": "防火墙",
+      "meaning": "网络安全",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "配置firewall"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "fs",
+      "full_form": "full stack",
+      "meaning": "全栈",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "fs工程师"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "gateway",
+      "full_form": "网关",
+      "meaning": "网络网关",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "配置gateway"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "gcp",
+      "full_form": "google cloud platform",
+      "meaning": "谷歌云平台",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "gcp服务"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "gpt",
+      "full_form": "generative pre-trained transformer",
+      "meaning": "生成式预训练模型",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "gpt模型"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "graphql",
+      "full_form": "graphql",
+      "meaning": "一种查询语言",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "用graphql查询"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "grooming",
+      "full_form": "backlog grooming",
+      "meaning": "需求梳理",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "grooming会议"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "grpc",
+      "full_form": "google rpc",
+      "meaning": "google的rpc框架",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "用grpc"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "gui",
+      "full_form": "graphical user interface",
+      "meaning": "图形用户界面",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "gui程序"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "html",
+      "full_form": "hypertext markup language",
+      "meaning": "超文本标记语言",
+      "domain": "tech",
+      "confidence": 0.95,
+      "examples": [
+        "写html"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "http",
+      "full_form": "hypertext transfer protocol",
+      "meaning": "超文本传输协议",
+      "domain": "tech",
+      "confidence": 0.95,
+      "examples": [
+        "http请求"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "https",
+      "full_form": "http secure",
+      "meaning": "安全http",
+      "domain": "tech",
+      "confidence": 0.95,
+      "examples": [
+        "https网站"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ide",
+      "full_form": "integrated development environment",
+      "meaning": "集成开发环境",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "用ide写代码"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ip",
+      "full_form": "internet protocol",
+      "meaning": "互联网协议",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "ip地址"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "issue",
+      "full_form": "问题",
+      "meaning": "问题/工单",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "提issue"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "js",
+      "full_form": "javascript",
+      "meaning": "JavaScript语言",
+      "domain": "tech",
+      "confidence": 0.95,
+      "examples": [
+        "写js"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "json",
+      "full_form": "javascript object notation",
+      "meaning": "一种数据格式",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "返回json"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "jwt",
+      "full_form": "json web token",
+      "meaning": "一种token格式",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "jwt验证"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "k8s",
+      "full_form": "kubernetes",
+      "meaning": "容器编排平台",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "k8s集群"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "kpi",
+      "full_form": "key performance indicator",
+      "meaning": "关键绩效指标",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "kpi考核"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "lambda",
+      "full_form": "lambda",
+      "meaning": "AWS无服务器计算",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "写lambda函数"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "lb",
+      "full_form": "load balancer",
+      "meaning": "负载均衡器",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "配置lb"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "lgtm",
+      "full_form": "looks good to me",
+      "meaning": "我觉得可以",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "lgtm，合并吧"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "llm",
+      "full_form": "large language model",
+      "meaning": "大语言模型",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "llm应用"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "log",
+      "full_form": "日志",
+      "meaning": "运行记录",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "看log"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "mac",
+      "full_form": "media access control",
+      "meaning": "媒体访问控制",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "mac地址"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "merge",
+      "full_form": "合并",
+      "meaning": "代码合并",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "merge代码"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "mfa",
+      "full_form": "multi factor authentication",
+      "meaning": "多因素认证",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "开启mfa"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ml",
+      "full_form": "machine learning",
+      "meaning": "机器学习",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "ml模型"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "mock",
+      "full_form": "模拟",
+      "meaning": "模拟对象",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "mock数据"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "mr",
+      "full_form": "merge request",
+      "meaning": "合并请求（GitLab）",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "创建mr"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "nack",
+      "full_form": "negative acknowledgement",
+      "meaning": "不同意/拒绝",
+      "domain": "tech",
+      "confidence": 0.75,
+      "examples": [
+        "nack"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "nat",
+      "full_form": "network address translation",
+      "meaning": "网络地址转换",
+      "domain": "tech",
+      "confidence": 0.75,
+      "examples": [
+        "nat配置"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "nginx",
+      "full_form": "nginx",
+      "meaning": "一款web服务器",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "用nginx"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "nit",
+      "full_form": "nitpick",
+      "meaning": "小建议",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "nit：这里可以优化"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "nlp",
+      "full_form": "natural language processing",
+      "meaning": "自然语言处理",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "nlp任务"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "nosql",
+      "full_form": "not only sql",
+      "meaning": "非关系型数据库",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "nosql数据库"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "oauth",
+      "full_form": "open authorization",
+      "meaning": "开放授权",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "oauth登录"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "okr",
+      "full_form": "objectives and key results",
+      "meaning": "目标与关键成果",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "定okr"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "origin",
+      "full_form": "源站",
+      "meaning": "CDN源站",
+      "domain": "tech",
+      "confidence": 0.75,
+      "examples": [
+        "origin服务器"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "orm",
+      "full_form": "object-relational mapping",
+      "meaning": "对象关系映射",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "使用orm"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "oss",
+      "full_form": "object storage service",
+      "meaning": "对象存储服务",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "存到oss"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "pii",
+      "full_form": "personally identifiable information",
+      "meaning": "个人身份信息",
+      "domain": "tech",
+      "confidence": 0.75,
+      "examples": [
+        "保护pii"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "planning",
+      "full_form": "sprint planning",
+      "meaning": "迭代规划",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "planning会议"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "po",
+      "full_form": "product owner",
+      "meaning": "产品负责人",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "po决定"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "poc",
+      "full_form": "proof of concept",
+      "meaning": "概念验证",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "做个poc"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "pr",
+      "full_form": "pull request",
+      "meaning": "合并请求",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "提交pr"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "prod",
+      "full_form": "production",
+      "meaning": "生产环境",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "部署到prod"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "protobuf",
+      "full_form": "protocol buffers",
+      "meaning": "一种序列化格式",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "protobuf定义"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "proxy",
+      "full_form": "代理",
+      "meaning": "网络代理",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "设置proxy"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ptal",
+      "full_form": "please take a look",
+      "meaning": "请看一下",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "ptal这个pr"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "qa",
+      "full_form": "quality assurance",
+      "meaning": "质量保证",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "qa测试"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "rbac",
+      "full_form": "role based access control",
+      "meaning": "基于角色的访问控制",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "rbac权限"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "rd",
+      "full_form": "research & development",
+      "meaning": "研发",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "rd团队"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "rds",
+      "full_form": "relational database service",
+      "meaning": "AWS数据库服务",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "创建rds"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "rebase",
+      "full_form": "变基",
+      "meaning": "代码变基操作",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "rebase分支"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "release",
+      "full_form": "发布",
+      "meaning": "发布版本",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "创建release"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "repo",
+      "full_form": "repository",
+      "meaning": "代码仓库",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "克隆repo"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "rest",
+      "full_form": "representational state transfer",
+      "meaning": "一种架构风格",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "rest api"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "retro",
+      "full_form": "retrospective",
+      "meaning": "回顾会议",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "开retro"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "review",
+      "full_form": "sprint review",
+      "meaning": "迭代评审",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "review会议"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "rfc",
+      "full_form": "request for comments",
+      "meaning": "征求意见",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "发一个rfc"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "roi",
+      "full_form": "return on investment",
+      "meaning": "投资回报率",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "算roi"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "rpc",
+      "full_form": "remote procedure call",
+      "meaning": "远程过程调用",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "rpc框架"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "s3",
+      "full_form": "simple storage service",
+      "meaning": "AWS对象存储",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "上传s3"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "sa",
+      "full_form": "system analyst",
+      "meaning": "系统分析师",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "sa设计"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "sdk",
+      "full_form": "software development kit",
+      "meaning": "软件开发工具包",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "下载sdk"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "sgtm",
+      "full_form": "sounds good to me",
+      "meaning": "听起来不错",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "sgtm，就这么办"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "sla",
+      "full_form": "service level agreement",
+      "meaning": "服务等级协议",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "签sla"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "sprint",
+      "full_form": "冲刺",
+      "meaning": "迭代周期",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "这个sprint"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "sql",
+      "full_form": "structured query language",
+      "meaning": "结构化查询语言",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "写sql语句"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "sre",
+      "full_form": "site reliability engineering",
+      "meaning": "站点可靠性工程",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "sre团队"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ssl",
+      "full_form": "secure sockets layer",
+      "meaning": "安全套接层",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "配置ssl"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "sso",
+      "full_form": "single sign on",
+      "meaning": "单点登录",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "sso系统"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "staging",
+      "full_form": "预发布环境",
+      "meaning": "预发布/测试环境",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "staging环境"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "standup",
+      "full_form": "daily standup",
+      "meaning": "每日站会",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "开standup"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "stash",
+      "full_form": "暂存",
+      "meaning": "暂存修改",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "stash修改"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "story",
+      "full_form": "user story",
+      "meaning": "用户故事",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "一个story"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "subtask",
+      "full_form": "子任务",
+      "meaning": "任务拆分",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "创建subtask"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "tag",
+      "full_form": "标签",
+      "meaning": "版本标签",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "打tag"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "tcp",
+      "full_form": "transmission control protocol",
+      "meaning": "传输控制协议",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "tcp连接"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "tdd",
+      "full_form": "test driven development",
+      "meaning": "测试驱动开发",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "用tdd"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ticket",
+      "full_form": "工单",
+      "meaning": "任务工单",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "这个ticket"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "tl",
+      "full_form": "tech lead",
+      "meaning": "技术负责人",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "tl review"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "tls",
+      "full_form": "transport layer security",
+      "meaning": "传输层安全",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "tls证书"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ts",
+      "full_form": "typescript",
+      "meaning": "TypeScript语言",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "用ts开发"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ttl",
+      "full_form": "time to live",
+      "meaning": "生存时间",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "设置ttl"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "uat",
+      "full_form": "user acceptance testing",
+      "meaning": "用户验收测试",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "uat环境"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "udp",
+      "full_form": "user datagram protocol",
+      "meaning": "用户数据报协议",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "udp通信"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ui",
+      "full_form": "user interface",
+      "meaning": "用户界面",
+      "domain": "tech",
+      "confidence": 0.95,
+      "examples": [
+        "ui设计"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "url",
+      "full_form": "uniform resource locator",
+      "meaning": "统一资源定位符",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "访问url"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ut",
+      "full_form": "unit test",
+      "meaning": "单元测试",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "写ut"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ux",
+      "full_form": "user experience",
+      "meaning": "用户体验",
+      "domain": "tech",
+      "confidence": 0.95,
+      "examples": [
+        "ux优化"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "vlan",
+      "full_form": "virtual local area network",
+      "meaning": "虚拟局域网",
+      "domain": "tech",
+      "confidence": 0.75,
+      "examples": [
+        "划分vlan"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "vm",
+      "full_form": "virtual machine",
+      "meaning": "虚拟机",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "创建vm"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "vpc",
+      "full_form": "virtual private cloud",
+      "meaning": "虚拟私有云",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "配置vpc"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "vpn",
+      "full_form": "virtual private network",
+      "meaning": "虚拟专用网络",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "连vpn"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "waf",
+      "full_form": "web application firewall",
+      "meaning": "web应用防火墙",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "配置waf"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "wip",
+      "full_form": "work in progress",
+      "meaning": "进行中",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "wip，还没完成"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "ws",
+      "full_form": "websocket",
+      "meaning": "一种通信协议",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "ws连接"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "xml",
+      "full_form": "extensible markup language",
+      "meaning": "可扩展标记语言",
+      "domain": "tech",
+      "confidence": 0.9,
+      "examples": [
+        "xml配置"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "xss",
+      "full_form": "cross site scripting",
+      "meaning": "跨站脚本攻击",
+      "domain": "tech",
+      "confidence": 0.8,
+      "examples": [
+        "防xss"
+      ],
+      "source": "builtin"
+    },
+    {
+      "abbreviation": "yaml",
+      "full_form": "yaml ain't markup language",
+      "meaning": "一种配置文件格式",
+      "domain": "tech",
+      "confidence": 0.85,
+      "examples": [
+        "yaml文件"
+      ],
+      "source": "builtin"
+    }
+  ]
+}

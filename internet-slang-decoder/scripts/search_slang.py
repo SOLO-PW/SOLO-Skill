@@ -64,6 +64,12 @@ def parse_search_results(abbreviation: str, search_snippets: List[str]) -> List[
         rf'(?:^|[\s，。；]){abbreviation}\s*[=＝:：]\s*(.+?)(?:[。，；;！!？?\s]|$)',
         # XX（XXX） 括号注释
         rf'{abbreviation}[（(]([^)）]+)[)）]',
+        # XX指的是XXX / XX即XXX / XX叫做XXX
+        rf'(?:{abbreviation})\s*(?:指的是|即|叫做|意思是|含义是|表示)\s*(.+?)(?:[。，；;！!？?\s,]|$)',
+        # XX, which stands for XXX / XX, meaning XXX
+        rf'(?:{abbreviation})\s*,\s*(?:which\s+)?(?:stands?\s+for|meaning|means?|refers?\s+to)\s+(.+?)(?:[.。，；;！!？?\s,]|$)',
+        # 全称XXX / 缩写XXX
+        rf'(?:全称|缩写|简称)\s*(?:为|是|：)?\s*({abbreviation})\s*(?:是|代表|指)?\s*(.+?)(?:[。，；;！!？?\s,]|$)',
     ]
 
     for snippet in search_snippets:
@@ -120,6 +126,7 @@ def validate_findings(abbreviation: str, findings: List[Dict], context: Optional
     2. 与上下文匹配 → 置信度提升
     3. 单一来源且无上下文 → 保持默认置信度
     4. 含义过于宽泛 → 置信度降低
+    5. 含义长度合理 → 置信度微调
     """
     if not findings:
         return []
@@ -136,17 +143,40 @@ def validate_findings(abbreviation: str, findings: List[Dict], context: Optional
 
         # 多来源一致 → 提升置信度
         count = f.get('_freq', freq.get(key, 1))
-        if count >= 2:
+        if count >= 3:
+            base = min(0.95, base + 0.2)
+        elif count >= 2:
             base = min(0.95, base + 0.15)
 
+        # 与上下文匹配 → 提升置信度
+        if context:
+            ctx_lower = context.lower()
+            meaning_lower = f['meaning'].lower()
+            domain = f.get('domain', infer_domain_from_meaning(f['full_form']))
+            # 上下文关键词与领域匹配
+            domain_keywords = {
+                'gaming': ['游戏', '电竞', '开黑', '排位', '游戏圈'],
+                'entertainment': ['娱乐', '饭圈', '明星', '追星', '偶像'],
+                'tech': ['科技', '编程', '开发', '代码', '技术', '工作'],
+                'lifestyle': ['生活', '日常', '聊天', '网络', '社交'],
+                'anime': ['动漫', '二次元', '番剧', '漫画'],
+                'finance': ['金融', '股票', '投资', '币圈'],
+            }
+            if domain in domain_keywords:
+                if any(kw in ctx_lower for kw in domain_keywords[domain]):
+                    base = min(0.95, base + 0.1)
+
         # 含义过于宽泛 → 降低置信度
-        vague_words = ['某个', '一种', '一些', 'something', 'some']
+        vague_words = ['某个', '一种', '一些', 'something', 'some', '某个东西', '某种']
         if any(w in f['meaning'].lower() for w in vague_words):
             base = max(0.4, base - 0.2)
 
         # 含义长度过短 → 降低置信度
         if len(f['meaning']) < 3:
             base = max(0.4, base - 0.1)
+        # 含义长度合理 → 微调提升
+        elif 5 <= len(f['meaning']) <= 30:
+            base = min(0.95, base + 0.05)
 
         f['confidence'] = round(base, 2)
 
@@ -156,34 +186,61 @@ def validate_findings(abbreviation: str, findings: List[Dict], context: Optional
 
 
 def infer_domain_from_meaning(full_form: str) -> str:
-    """从含义文本推断领域"""
+    """从含义文本推断领域，使用评分机制选择最佳匹配"""
     text = full_form.lower()
-    gaming_kw = ['游戏', 'game', '英雄', '技能', '装备', '副本', '玩家', 'player', 'hero']
-    entertainment_kw = ['饭圈', '明星', '偶像', '粉丝', '追星', '综艺', '选秀']
-    tech_kw = ['技术', '编程', '开发', '代码', 'tech', 'programming', 'software', 'api']
-    lifestyle_kw = ['网络', '聊天', '日常', 'internet', 'chat', 'social']
-    anime_kw = ['动漫', '番剧', '漫画', 'anime', 'manga', '二次元']
-    finance_kw = ['金融', '股票', '投资', '基金', 'finance', 'stock', 'trading']
 
-    for kw in gaming_kw:
-        if kw in text:
-            return 'gaming'
-    for kw in entertainment_kw:
-        if kw in text:
-            return 'entertainment'
-    for kw in tech_kw:
-        if kw in text:
-            return 'tech'
-    for kw in lifestyle_kw:
-        if kw in text:
-            return 'lifestyle'
-    for kw in anime_kw:
-        if kw in text:
-            return 'anime'
-    for kw in finance_kw:
-        if kw in text:
-            return 'finance'
-    return 'unknown'
+    domain_keywords = {
+        'gaming': {
+            'keywords': ['游戏', 'game', '英雄', '技能', '装备', '副本', '玩家', 'player', 'hero',
+                        '击杀', '团战', '排位', '段位', '对战', '竞技', '手游', '端游', 'gaming',
+                        '电竞', '开黑', '补刀', '推塔', '野怪', 'boss', 'buff', 'nerf', 'mvp'],
+            'weight': 1.0,
+        },
+        'entertainment': {
+            'keywords': ['饭圈', '明星', '偶像', '粉丝', '追星', '综艺', '选秀', '娱乐',
+                        '爱豆', '应援', '打榜', '热搜', '微博', '超话', 'cp', '磕', '追剧',
+                        '演员', '歌手', '出道', '专辑', '演唱会', '应援', '控评'],
+            'weight': 1.0,
+        },
+        'tech': {
+            'keywords': ['技术', '编程', '开发', '代码', 'tech', 'programming', 'software', 'api',
+                        '程序', '软件', '算法', '数据', '服务器', '接口', '框架', '部署', '运维',
+                        '前端', '后端', '数据库', 'git', 'github', '代码审查', '测试', '上线'],
+            'weight': 1.0,
+        },
+        'lifestyle': {
+            'keywords': ['网络', '聊天', '日常', 'internet', 'chat', 'social', '社交',
+                        '微信', 'qq', '朋友圈', '点赞', '评论', '私信', '表情包', '网络用语',
+                        '生活', '工作', '学习', '购物', '消费'],
+            'weight': 0.8,
+        },
+        'anime': {
+            'keywords': ['动漫', '番剧', '漫画', 'anime', 'manga', '二次元', '声优', '配音',
+                        '动画', '手办', 'cosplay', 'cos', '萌', '傲娇', '病娇', '异世界',
+                        '机甲', '番', '追番', '新番', '完结', 'ova', 'bd'],
+            'weight': 1.0,
+        },
+        'finance': {
+            'keywords': ['金融', '股票', '投资', '基金', 'finance', 'stock', 'trading',
+                        '币圈', '加密', '交易', '收益', '理财', '牛市', '熊市', '涨跌',
+                        '区块链', 'defi', 'nft', '交易所', '行情', 'k线', '止损', '杠杆'],
+            'weight': 1.0,
+        },
+    }
+
+    scores = {}
+    for domain, config in domain_keywords.items():
+        score = 0
+        for kw in config['keywords']:
+            if kw in text:
+                score += config['weight']
+        if score > 0:
+            scores[domain] = score
+
+    if not scores:
+        return 'unknown'
+
+    return max(scores, key=scores.get)
 
 
 def format_search_report(abbreviation: str, queries: List[str],
