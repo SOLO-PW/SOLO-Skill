@@ -1,6 +1,7 @@
 ---
 name: image-prompt-reverse
-description: AI图像提示词反推工具。分析用户上传的图片，生成精准的描述性提示词，支持输出多种主流AI绘图模型格式(Stable Diffusion、Midjourney、DALL-E 3、Flux、NijiJourney等)，具备IP/品牌识别能力，支持交互式精调。当用户需要"反推图片提示词"、"分析图片生成提示词"、"图片转提示词"、"提取图片描述词"、"生成AI绘图提示词"时触发此技能。
+description: |
+  AI图像提示词反推工具。分析用户上传的图片，生成精准的描述性提示词，支持输出多种主流AI绘图模型格式（Stable Diffusion、Midjourney、DALL-E 3、Flux、NijiJourney等），具备IP/品牌识别能力，支持交互式精调。当用户需要"反推图片提示词"、"分析图片生成提示词"、"图片转提示词"、"提取图片描述词"、"生成AI绘图提示词"时触发此技能。
 ---
 
 # Image Prompt Reverse

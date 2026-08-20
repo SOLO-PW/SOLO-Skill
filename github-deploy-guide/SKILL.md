@@ -1,6 +1,7 @@
 ---
 name: github-deploy-guide
-description: "为 GitHub 开源项目生成面向小白的部署教程。自动检测项目文档（README、INSTALL、docs/ 等），提取安装步骤，生成从环境准备到部署完成的分步 Markdown 教程。支持本地开发、Docker、云服务器、Kubernetes、PaaS 等全场景部署，覆盖 Python/Node.js/Go/Rust/Java/PHP/Ruby/Swift 等主流语言，支持全栈/AI-ML/Monorepo/CLI 等特殊项目类型。当项目无 README 时，依次回退到 zread.ai、GitHub Wiki、GitHub Issues、Releases 获取文档。当用户提供 GitHub 链接并希望部署、安装或搭建某个开源项目时触发。"
+description: |
+  为 GitHub 开源项目生成面向小白的部署教程。自动检测项目文档（README、INSTALL、docs/ 等），提取安装步骤，生成从环境准备到部署完成的分步 Markdown 教程。支持本地开发、Docker、云服务器、Kubernetes、PaaS 等全场景部署，覆盖 Python/Node.js/Go/Rust/Java/PHP/Ruby/Swift 等主流语言，支持全栈/AI-ML/Monorepo/CLI 等特殊项目类型。当项目无 README 时，依次回退到 zread.ai、GitHub Wiki、GitHub Issues、Releases 获取文档。当用户提供 GitHub 链接并希望部署、安装或搭建某个开源项目时触发。
 ---
 
 # GitHub 开源项目部署指南

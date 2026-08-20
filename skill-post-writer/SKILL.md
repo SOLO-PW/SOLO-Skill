@@ -1,6 +1,7 @@
 ---
 name: skill-post-writer
-description: 帮助用户撰写符合 SOLO 技能创作赛官方标准的 Skill 推广帖子。当用户说"帮我写一篇 Skill 推广帖子"、"为我的 Skill 写个参赛帖"、"生成 Skill 分享文案"、"写个 Skill 使用分享"、"制作 Skill 推荐文档"时使用。能一键生成符合官方7部分格式的完整 Markdown 帖子文档。
+description: |
+  帮助用户撰写符合 SOLO 技能创作赛官方标准的 Skill 推广帖子。当用户说"帮我写一篇 Skill 推广帖子"、"为我的 Skill 写个参赛帖"、"生成 Skill 分享文案"、"写个 Skill 使用分享"、"制作 Skill 推荐文档"时使用。能一键生成符合官方7部分格式的完整 Markdown 帖子文档。
 ---
 
 # Skill Post Writer

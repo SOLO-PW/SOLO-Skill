@@ -1,6 +1,7 @@
 ---
 name: trae-custom-model
-description: 帮助用户在TRAE/SOLO中配置自定义AI模型。当用户提到"TRAE自定义模型"、"添加模型"、"配置API"、"base URL"、"模型ID"、"接入模型"、"第三方模型"、"厂商配置"等关键词时触发。支持自动搜索厂商API文档，提取base URL、模型ID、上下文长度等配置信息，生成标准的TRAE配置指南。
+description: |
+  帮助用户在TRAE/SOLO中配置自定义AI模型。当用户提到"TRAE自定义模型"、"添加模型"、"配置API"、"base URL"、"模型ID"、"接入模型"、"第三方模型"、"厂商配置"等关键词时触发。支持自动搜索厂商API文档，提取base URL、模型ID、上下文长度等配置信息，生成标准的TRAE配置指南。
 ---
 
 # TRAE 自定义模型配置助手
