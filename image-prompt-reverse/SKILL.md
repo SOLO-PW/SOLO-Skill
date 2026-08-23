@@ -34,6 +34,8 @@ description: |
 | Playground AI | 滤镜风格 | 快速生成、风格探索 |
 | Ideogram | 文字渲染 | 文字设计、海报创作 |
 
+> ⚠️ 各模型的提示词格式语法会随模型迭代过时或变更。使用前请核对 [models.md](references/models.md) 顶部的「[模型格式版本表](references/models.md#模型格式版本表)」（含各模型适用版本与失效风险标注，核对日期：2026 年）。
+
 详细格式规范参见 [models.md](references/models.md)。
 
 ---
@@ -108,8 +110,8 @@ description: |
 | 色彩 | [color-palette.md](references/color-palette.md) |
 | 光影 | [lighting.md](references/lighting.md) |
 | 材质 | [material.md](references/material.md) |
-| 镜头 | [camera-lens.md](references/camera-lens.md) |
-| 天气 | [weather.md](references/weather.md) |
+| 镜头 | [composition.md](references/composition.md) |
+| 天气 | [nature.md](references/nature.md) |
 | 情绪 | [emotion.md](references/emotion.md) |
 | 姿态 | [pose.md](references/pose.md) |
 | 特效 | [effects.md](references/effects.md) |
@@ -305,7 +307,7 @@ description: |
 2. 多重特征交叉验证（服装+发型+配饰）
 3. 不确定时使用中性描述（"a person"）
 
-详细指南参见 [gender-identification.md](references/gender-identification.md)。
+人物/角色识别详细指南（含性别识别）参见 [character-recognition.md](references/character-recognition.md)。
 
 ### 风格误判预防
 
@@ -340,12 +342,12 @@ description: |
 
 | 元素 | 文档 | 说明 |
 |------|------|------|
-| 构图 | [composition.md](references/composition.md) | 构图法则分析 |
+| 构图 | [composition.md](references/composition.md) | 构图法则与镜头语言分析 |
 | 色彩 | [color-palette.md](references/color-palette.md) | 色彩搭配分析 |
 | 光影 | [lighting.md](references/lighting.md) | 光影效果分析 |
 | 材质 | [material.md](references/material.md) | 材质纹理识别 |
-| 镜头 | [camera-lens.md](references/camera-lens.md) | 镜头语言分析 |
-| 天气 | [weather.md](references/weather.md) | 天气氛围分析 |
+| 镜头 | [composition.md](references/composition.md) | 镜头语言分析 |
+| 天气 | [nature.md](references/nature.md) | 天气氛围分析（并入自然场景） |
 | 情绪 | [emotion.md](references/emotion.md) | 情绪氛围分析 |
 | 姿态 | [pose.md](references/pose.md) | 人物姿态分析 |
 | 特效 | [effects.md](references/effects.md) | 后期特效分析 |
@@ -355,7 +357,7 @@ description: |
 | 领域 | 文档 | 说明 |
 |------|------|------|
 | 人像 | [fashion.md](references/fashion.md) | 时尚穿搭分析 |
-| 人像 | [gender-identification.md](references/gender-identification.md) | 性别识别指南 |
+| 人像 | [character-recognition.md](references/character-recognition.md) | 角色与性别识别指南 |
 | 美食 | [food-photography.md](references/food-photography.md) | 美食摄影分析 |
 | 室内 | [interior-design.md](references/interior-design.md) | 室内设计分析 |
 | 建筑 | [architecture.md](references/architecture.md) | 建筑风格分析 |
@@ -373,5 +375,5 @@ description: |
 
 | 功能 | 文档 | 说明 |
 |------|------|------|
-| 提示词解释 | [prompt-explanation.md](references/prompt-explanation.md) | 解释提示词含义 |
+| 提示词解释 | [prompt-templates.md](references/prompt-templates.md) | 术语解释与提示词模板 |
 | 交互精调 | [interactive-refinement.md](references/interactive-refinement.md) | 提示词微调 |
