@@ -1,6 +1,7 @@
 ---
 name: trae-user-distiller
-description: 从 Trae 论坛提取用户历史发言数据，生成模仿其语言风格的个性化数字人格技能。
+description: |
+  从 Trae 论坛提取用户历史发言数据，生成模仿其语言风格的个性化数字人格技能。
 ---
 
 # Trae 用户蒸馏器

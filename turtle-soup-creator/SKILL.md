@@ -1,6 +1,7 @@
 ---
-name: "turtle-soup-creator"
-description: "为用户创作海龟汤文案，包含汤面和汤底的完整故事。Invoke when user asks for 海龟汤创作, 海龟汤文案, turtle soup story creation, or wants to create a lateral thinking puzzle."
+name: turtle-soup-creator
+description: |
+  为用户创作海龟汤文案，包含汤面和汤底的完整故事。当用户请求创作海龟汤、海龟汤文案、或想要创作一个侧向思维谜题（turtle soup story, lateral thinking puzzle）时触发。
 ---
 
 # 海龟汤文案创作

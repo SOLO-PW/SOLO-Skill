@@ -1,11 +1,7 @@
 ---
 name: skill-fusion
-description: >
-  智能融合多个 Skill 为统一新 Skill。当用户需要合并、整合、重组 Skill，
-  或构建复合能力工作流时使用。触发词：融合 Skill、合并 Skill、整合 Skill、
-  组合 Skill、Skill 合并、Skill 整合、把两个 Skill 合成一个、
-  在已有 Skill 上加新能力、预览融合可行性、批量融合。
-  支持三种模式：preview（仅分析不生成）、full（完整融合）、incremental（增量融合）。
+description: |
+  智能融合多个 Skill 为统一新 Skill。当用户需要合并、整合、重组 Skill，或构建复合能力工作流时使用。触发词：融合 Skill、合并 Skill、整合 Skill、组合 Skill、Skill 合并、Skill 整合、把两个 Skill 合成一个、在已有 Skill 上加新能力、预览融合可行性、批量融合。支持三种模式：preview（仅分析不生成）、full（完整融合）、incremental（增量融合）。
 ---
 
 # Skill 融合器
