@@ -1,27 +1,35 @@
 #!/usr/bin/env python3
 """
-TRAE 自定义模型厂商配置自动更新脚本 v2.0
+TRAE 自定义模型厂商配置自动更新脚本 v2.1
 
 功能:
 1. 自动搜索各厂商最新模型信息（使用WebSearch）
 2. 检测模型停用/上线情况
-3. 分析模型质量和使用建议
-4. 更新 search_provider.py 和 providers.md
-5. 记录详细的更新日志
+3. 官方接口直接探测（GET {base}/models）校验模型ID真实性
+4. 模型置信度标注与真实性留痕
+5. 分析模型质量和使用建议
+6. 更新 search_provider.py 和 providers.md
+7. 记录详细的更新日志，供定时任务停用/变更同步
 
 用法:
-    python update_models.py [--dry-run] [--check-only] [--auto-search]
+    python update_models.py [--dry-run] [--check-only] [--auto-search] [--no-probe] [--probe-only]
     
 参数:
     --dry-run: 只显示将要进行的更改，不实际修改文件
-    --check-only: 只检查更新，不修改文件
+    --check-only: 只检查更新，不修改文件（用于定时任务同步）
     --auto-search: 自动搜索最新模型信息（需要网络）
+    --probe: 开启官方接口探测（默认开启）
+    --no-probe: 关闭官方接口探测（离线场景）
+    --probe-only: 仅执行官方接口探测并输出核验报告
 """
 
 import json
 import re
 import sys
 import os
+import socket
+import urllib.error
+import urllib.request
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
@@ -102,6 +110,75 @@ PROVIDER_SEARCH_CONFIG = {
         ],
         "docs_url": "https://platform.lingyiwanwu.com/",
         "known_models": ["yi-large", "yi-medium", "yi-spark"]
+    }
+}
+
+# ============================================================
+# 动态年份处理
+# 搜索关键词中硬编码的年份（如 2026）会逐年过期，
+# 运行时统一替换为当前年份，避免关键词随年份失效。
+# ============================================================
+_YEAR_PATTERN = re.compile(r"\b20\d{2}\b")
+
+def _apply_dynamic_year():
+    """将所有搜索关键词中的四位数年份替换为当前年份"""
+    current_year = str(datetime.now().year)
+    for config in PROVIDER_SEARCH_CONFIG.values():
+        keywords = config.get("search_keywords", [])
+        config["search_keywords"] = [
+            _YEAR_PATTERN.sub(current_year, kw) for kw in keywords
+        ]
+
+_apply_dynamic_year()
+
+# ============================================================
+# 官方接口探测配置
+# 每个可探测的厂商提供一个 GET {base}/models 地址，用于
+# 直接校验模型ID真实性，而非仅依赖 WebSearch / 手工杜撰。
+# 若环境变量中存在 API Key（如 OPENAI_API_KEY），会携带
+# 鉴权探测；否则按「需鉴权」处理并记录留痕。
+# ============================================================
+PROVIDER_PROBE_CONFIG = {
+    "openai": {
+        "api_base_url": "https://api.openai.com/v1",
+        "api_key_env": "OPENAI_API_KEY",
+        "models_path": "/models"
+    },
+    "anthropic": {
+        "api_base_url": "https://api.anthropic.com/v1",
+        "api_key_env": "ANTHROPIC_API_KEY",
+        "models_path": "/models",
+        "requires_auth": True
+    },
+    "deepseek": {
+        "api_base_url": "https://api.deepseek.com",
+        "api_key_env": "DEEPSEEK_API_KEY",
+        "models_path": "/models"
+    },
+    "智谱": {
+        "api_base_url": "https://open.bigmodel.cn/api/paas/v4",
+        "api_key_env": "ZHIPU_API_KEY",
+        "models_path": "/models"
+    },
+    "通义千问": {
+        "api_base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        "api_key_env": "DASHSCOPE_API_KEY",
+        "models_path": "/models"
+    },
+    "kimi": {
+        "api_base_url": "https://api.kimi.com/coding/v1",
+        "api_key_env": "MOONSHOT_API_KEY",
+        "models_path": "/models"
+    },
+    "硅基流动": {
+        "api_base_url": "https://api.siliconflow.cn/v1",
+        "api_key_env": "SILICONFLOW_API_KEY",
+        "models_path": "/models"
+    },
+    "零一万物": {
+        "api_base_url": "https://api.lingyiwanwu.com/v1",
+        "api_key_env": "LINGYIWANWU_API_KEY",
+        "models_path": "/models"
     }
 }
 
@@ -406,27 +483,147 @@ class ModelAnalyzer:
 
 
 # ============================================================
+# 官方接口探测器
+# ============================================================
+class ModelVerifier:
+    """通过厂商官方 GET {base}/models 接口直接探测模型清单，
+    用于校验内置模型ID真实性，而非仅依赖 WebSearch 或人工录入。
+
+    - 携带 API Key（从环境变量读取）时返回真实模型列表；
+    - 无 Key 时记录「需鉴权」留痕，可确认接口可达但不返回清单；
+    - 网络失败/证书异常时记录「不可达」，避免误判。
+    """
+
+    PROBE_TIMEOUT = 8
+
+    @staticmethod
+    def probe(probe_config: dict) -> dict:
+        """探测单个厂商的 /models 接口
+
+        Args:
+            probe_config: PROVIDER_PROBE_CONFIG 中的单条配置
+
+        Returns:
+            {
+                "status": "ok" | "requires_auth" | "unreachable" | "failed",
+                "models": List[str],      # status=ok 时返回真实模型ID列表
+                "message": str
+            }
+        """
+        base_url = probe_config.get("api_base_url", "").rstrip("/")
+        models_path = probe_config.get("models_path", "/models")
+        api_key = os.environ.get(probe_config.get("api_key_env", ""), "")
+        url = f"{base_url}{models_path}"
+
+        headers = {"User-Agent": "TRAE-custom-model-verifier/2.1"}
+        if api_key:
+            if probe_config.get("requires_auth"):
+                headers["x-api-key"] = api_key
+            headers["Authorization"] = f"Bearer {api_key}"
+
+        req = urllib.request.Request(url, headers=headers)
+        try:
+            with urllib.request.urlopen(req, timeout=ModelVerifier.PROBE_TIMEOUT) as resp:
+                body = resp.read().decode("utf-8", errors="replace")
+                if resp.status == 200:
+                    models = ModelVerifier._parse_models(body)
+                    if models is None:
+                        return {"status": "failed", "models": [], "message": "接口返回但无法解析模型列表"}
+                    return {"status": "ok", "models": models, "message": f"探测成功，共 {len(models)} 个模型"}
+                return {
+                    "status": "requires_auth",
+                    "models": [],
+                    "message": f"接口可达但 HTTP {resp.status}（需鉴权）"
+                }
+        except urllib.error.HTTPError as e:
+            # 401/403 = 鉴权不足但对端点确实存在，直接断言需人工验证
+            if e.code in (401, 403):
+                return {
+                    "status": "requires_auth",
+                    "models": [],
+                    "message": f"接口可达但 HTTP {e.code}（需鉴权/配额）"
+                }
+            return {
+                "status": "failed",
+                "models": [],
+                "message": f"HTTP {e.code}"
+            }
+        except (urllib.error.URLError, socket.timeout, OSError) as e:
+            return {
+                "status": "unreachable",
+                "models": [],
+                "message": f"网络不可达: {e}"
+            }
+        except Exception as e:  # 证书等异常
+            return {
+                "status": "failed",
+                "models": [],
+                "message": f"探测异常: {e}"
+            }
+
+    @staticmethod
+    def _parse_models(body: str) -> Optional[List[str]]:
+        """从 OpenAI 兼容 /models 响应中解析模型ID列表"""
+        try:
+            data = json.loads(body)
+        except (json.JSONDecodeError, ValueError):
+            return None
+        if isinstance(data, dict) and isinstance(data.get("data"), list):
+            ids = []
+            for item in data["data"]:
+                if isinstance(item, dict) and isinstance(item.get("id"), str):
+                    ids.append(item["id"])
+            return ids or None
+        # Anthropic 风格：{"data":[{"id":..., "type":"model"}], ...}
+        return None
+
+    @staticmethod
+    def check_model(known_models: List[str], probe_result: dict) -> Dict[str, str]:
+        """根据探测结果给模型的核验状态打标
+
+        Returns:
+            { model_id: "verified" | "not_found" | "requires_auth" | "unverified" }
+        """
+        status = probe_result.get("status")
+        probed = set(m.lower() for m in probe_result.get("models", []))
+
+        result = {}
+        for model in known_models:
+            low = model.lower()
+            if status == "ok":
+                result[model] = "verified" if low in probed else "not_found"
+            elif status == "requires_auth":
+                result[model] = "requires_auth"
+            else:
+                result[model] = "unverified"
+        return result
+
+
+# ============================================================
 # 模型信息更新器
 # ============================================================
 class ModelUpdater:
     """模型信息更新器"""
     
-    def __init__(self, dry_run: bool = False, auto_search: bool = False):
+    def __init__(self, dry_run: bool = False, auto_search: bool = False, probe: bool = True):
         self.dry_run = dry_run
         self.auto_search = auto_search
+        self.probe = probe
         self.config = UpdateConfig()
         self.analyzer = ModelAnalyzer()
         self.script_dir = Path(__file__).parent
         self.project_dir = self.script_dir.parent
         self.changes = []
         self.suggestions = []
+        self.verification_report = []
     
     def run(self, check_only: bool = False):
         """运行更新"""
         print("=" * 70)
-        print("🚀 TRAE 自定义模型配置自动更新工具 v2.0")
+        print("🚀 TRAE 自定义模型配置自动更新工具 v2.1")
         print("=" * 70)
         print(f"模式: {'🔍 只检查' if check_only else ('⚙️ 模拟运行' if self.dry_run else '📝 实际更新')}")
+        print(f"官方接口探测: {'✅ 开启' if self.probe else '⏭️ 已关闭(--no-probe)'}")
         print(f"更新时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         print(f"更新频率: {self.config.data['update_frequency']}")
         print()
@@ -443,10 +640,18 @@ class ModelUpdater:
             print(f"\n{'='*70}")
             print(f"[{provider_id}] {config['name']}")
             print("-" * 70)
-            self._check_provider(provider_id, config)
+            # 提前探测（每个厂商仅探测一次，可被 _check_provider 复用）
+            probe_result = None
+            if self.probe:
+                probe_config = PROVIDER_PROBE_CONFIG.get(provider_id)
+                probe_result = ModelVerifier.probe(probe_config) if probe_config else None
+            self._check_provider(provider_id, config, probe_result)
         
-        # 显示总结和建议
+        # 显示总结和建议（含停用/变更同步摘要）
         self._show_summary()
+        
+        if check_only:
+            self._show_sync_summary()
         
         if not check_only and not self.dry_run:
             # 保存更新记录
@@ -457,10 +662,29 @@ class ModelUpdater:
         
         return len(self.changes) > 0 or len(self.suggestions) > 0
     
-    def _check_provider(self, provider_id: str, config: dict):
-        """检查单个厂商"""
+    def _check_provider(self, provider_id: str, config: dict, probe_result: Optional[dict] = None):
+        """检查单个厂商
+
+        probe_result: ModelVerifier 探测结果（含真实模型清单/核验状态）
+        """
         provider_status = self.config.get_provider_status(provider_id)
         issues = []
+        
+        # 0. 官方接口探测结果核验
+        model_verify = {}
+        if self.probe:
+            print("\n🔍 官方接口探测:")
+            if probe_result is None:
+                probe_config = PROVIDER_PROBE_CONFIG.get(provider_id)
+                probe_result = ModelVerifier.probe(probe_config) if probe_config else None
+            if probe_result:
+                icon = {"ok": "✅", "requires_auth": "🔑", "unreachable": "⛔", "failed": "⚠️"}.get(
+                    probe_result.get("status", ""), "❓")
+                print(f"  {icon} 状态: {probe_result.get('status', 'unknown')}")
+                print(f"     {probe_result.get('message', '')}")
+                model_verify = ModelVerifier.check_model(config.get("known_models", []), probe_result)
+            else:
+                print("  ⚠️ 该厂商无探测配置，跳过")
         
         # 1. 检查已知停用模型
         print("\n📋 停用模型检查:")
@@ -490,12 +714,30 @@ class ModelUpdater:
         else:
             print("  ✅ 无已知停用模型")
         
-        # 2. 检查新模型
+        # 2. 检查新模型 + 真实性核验
         print("\n🆕 新模型检查:")
         print("  💡 如需搜索最新模型，请添加 --auto-search 参数")
-        print("  📌 当前内置模型:")
-        for model in config.get("known_models", [])[:5]:
-            print(f"     - {model}")
+        print("  📌 当前内置模型（含核验状态）:")
+        model_confidence = {}
+        for model in config.get("known_models", []):
+            verify_state = model_verify.get(model, "")
+            conf = self.analyzer.get_model_confidence(model)
+            # 合成可信度：官网页面=verified(高) > 启发式+需鉴权 > 启发式
+            display_conf = conf
+            if verify_state == "verified":
+                display_conf = "verified(官方接口)"
+                verified = "✅"
+            elif verify_state == "not_found":
+                display_conf = "high" if conf == "high" else conf
+                verified = "❌ 探测未命中(疑似杜撰)"
+            elif verify_state == "requires_auth":
+                display_conf = f"{conf}(待API Key核验)"
+                verified = "🔑"
+            else:
+                display_conf = f"{conf}(未核验)"
+                verified = "⚠️"
+            model_confidence[model] = {"confidence": display_conf, "verified": verified}
+            print(f"     {verified} {model}  [{display_conf}]")
         if len(config.get("known_models", [])) > 5:
             print(f"     ... 共 {len(config['known_models'])} 个")
         
@@ -510,16 +752,35 @@ class ModelUpdater:
             for issue in provider_status["issues"]:
                 print(f"    - {issue}")
         
+        # 收集核验留痕
+        if model_verify:
+            unverified = {k: v for k, v in model_verify.items() if v != "verified"}
+            if unverified:
+                issues.append(f"{len(unverified)} 个模型未通过官方接口核验，需人工确认: {', '.join(unverified.keys())}")
+            self.verification_report.append({
+                "provider_id": provider_id,
+                "provider": config["name"],
+                "probe_status": probe_result.get("status") if probe_result else None,
+                "probe_message": probe_result.get("message") if probe_result else None,
+                "model_status": model_verify
+            })
+        
         # 更新厂商状态
         provider_status["last_verified"] = datetime.now().date().isoformat()
         provider_status["model_count"] = len(config.get("known_models", []))
         provider_status["deprecated_count"] = len(deprecated_found)
+        if issues:
+            provider_status["issues"] = issues
+        else:
+            provider_status.pop("issues", None)
         self.config.update_provider_status(provider_id, provider_status)
         
         # 记录检查
         self.config.record_check(provider_id, "completed", {
             "deprecated_found": len(deprecated_found),
-            "model_count": len(config.get("known_models", []))
+            "model_count": len(config.get("known_models", [])),
+            "probe_status": probe_result.get("status") if probe_result else None,
+            "verification_issues": len(issues)
         })
     
     def _show_summary(self):
@@ -568,7 +829,54 @@ class ModelUpdater:
             print("  3. 更新 providers.md 文档")
             print("  4. 运行 'python scripts/update_models.py --dry-run' 查看更改")
             print("=" * 70)
-    
+
+    def _show_sync_summary(self):
+        """停用/变更同步摘要（仅供定时任务 --check-only 使用）
+
+        以机器可读且易解析的方式输出「需要同步给用户」的变更，
+        供 SOLO 定时任务 / GitHub Actions 抓取并主动通知用户，
+        无需人工进入脚本交互。
+        """
+        deprecated_changes = [c for c in self.changes if c["type"] == "deprecated"]
+        unverified_models = []
+        for report in self.verification_report:
+            for model, status in (report.get("model_status") or {}).items():
+                if status in ("not_found", "unverified"):
+                    unverified_models.append((report["provider"], model, status))
+
+        print("\n" + "=" * 70)
+        print("🔔 需要同步的变更（SYNC SUMMARY）")
+        print("=" * 70)
+        changed = False
+
+        if deprecated_changes:
+            changed = True
+            print("\n⛔ 停用模型（建议删除配置）:")
+            for change in deprecated_changes:
+                print(f"  [DEPRECATED] {change['model']} ({change['provider']}) -> 替代: {change['info']['replacement']}")
+        else:
+            print("\n无停用模型变更")
+
+        if unverified_models:
+            changed = True
+            print("\n⚠️ 待人工核验/疑似杜撰模型:")
+            for provider, model, status in unverified_models:
+                tag = "探测未命中" if status == "not_found" else "未核验"
+                print(f"  [UNVERIFIED] {model} ({provider}) - {tag}")
+
+        if self.suggestions:
+            changed = True
+            print("\n💡 新模型建议:")
+            for s in self.suggestions:
+                print(f"  [SUGGESTION] {s}")
+
+        if not changed:
+            print("✅ 无需要同步的变更，模型清单已是最新")
+
+        print("\n" + "=" * 70)
+        print("结束 SYNC SUMMARY")
+        print("=" * 70)
+
     def _update_changelog(self):
         """更新变更日志"""
         if not self.changes:
@@ -721,14 +1029,40 @@ def main():
     check_only = "--check-only" in sys.argv
     auto_search = "--auto-search" in sys.argv
     interactive = "--wizard" in sys.argv
-    
+    probe = "--no-probe" not in sys.argv
+    probe_only = "--probe-only" in sys.argv
+
+    if probe_only:
+        # 仅执行官方接口探测并输出核验报告
+        print("=" * 70)
+        print("🔍 仅官方接口探测模式")
+        print("=" * 70)
+        found = 0
+        for provider_id, probe_config in PROVIDER_PROBE_CONFIG.items():
+            name = PROVIDER_SEARCH_CONFIG.get(provider_id, {}).get("name", provider_id)
+            print(f"\n[{provider_id}] {name}")
+            print("-" * 70)
+            result = ModelVerifier.probe(probe_config)
+            icon = {"ok": "✅", "requires_auth": "🔑", "unreachable": "⛔", "failed": "⚠️"}.get(
+                result.get("status", ""), "❓")
+            print(f"  {icon} 状态: {result.get('status', 'unknown')}")
+            print(f"     {result.get('message', '')}")
+            if result.get("models"):
+                found += len(result["models"])
+                print("  模型列表(前20):")
+                for mid in result["models"][:20]:
+                    print(f"     - {mid}")
+        print("\n" + "=" * 70)
+        print(f"✅ 探测完成，累计获取 {found} 个真实模型ID（需鉴权厂商需配置环境变量 API Key）")
+        sys.exit(0)
+
     if interactive:
         # 运行交互式向导
         wizard = UpdateWizard()
         wizard.run()
     else:
         # 运行自动更新
-        updater = ModelUpdater(dry_run=dry_run, auto_search=auto_search)
+        updater = ModelUpdater(dry_run=dry_run, auto_search=auto_search, probe=probe)
         has_changes = updater.run(check_only=check_only)
         
         # 返回适当的退出码
