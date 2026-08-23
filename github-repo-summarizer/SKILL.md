@@ -29,10 +29,19 @@ description: |
 
 ### 步骤2：获取信息
 
-使用WebFetch访问仓库页面，提取：
-- 项目名称、描述、Star数量
-- 最后更新时间、许可证
-- README内容、功能特性、图片
+优先使用 **GitHub API / gh CLI**（更稳定、字段更准确）获取结构化数据，再用 WebFetch 补充 README 与页面细节：
+
+- **GitHub API / gh（推荐，优先）**
+  - `gh api repos/{owner}/{repo}`（或 REST `GET /repos/{owner}/{repo}`）→ 名称、描述、Star、Fork、更新时间、许可证
+  - `gh api repos/{owner}/{repo}/readme`（或 raw 抓取）→ README 正文
+  - `gh api repos/{owner}/{repo}/languages` → 主要语言/技术栈
+  - Star / 时间 / 许可证等数值字段以 API 返回为准，避免 WebFetch 解析误差；API 遇到 403 限流或认证缺失时自动回退到 WebFetch
+- **WebFetch（补充）**：用户提供的是仓库主页或不方便用 API 时，访问仓库页面提取：
+  - 项目名称、描述、Star数量
+  - 最后更新时间、许可证
+  - README内容、功能特性、图片
+
+> 无论走哪条通道，Star/时间/许可证等关键数据只要拿到，就优先以 API 的准确数值为准，并在文章中标注「最近更新时间」口径。
 
 ### 步骤3：转化信息
 
@@ -160,8 +169,15 @@ description: |
 
 ## 参考文档
 
+`references/` 目录下共 10 个文件，按需读取：
+
 - `references/article-generation-guide.md`：文章生成详细指南
 - `references/article-templates.md`：文章模板库
 - `references/quick-reference.md`：快速参考卡片
 - `references/interaction-templates.md`：交互式提问模板
 - `references/troubleshooting-guide.md`：常见问题处理指南
+- `references/github-api-guide.md`：GitHub API 使用指南（获取仓库信息/Releases/README）
+- `references/tech-stack-analysis-guide.md`：技术栈分析指南（语言/框架/工具/数据库）
+- `references/tech-stack-identification.md`：技术栈识别规则（文件扩展名→技术栈）
+- `references/readme-quality-assessment.md`：README 质量评估指南
+- `references/quality-assessment.md`：文章质量评估标准
