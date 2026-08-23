@@ -122,7 +122,10 @@ description: |
 
 **基本用法:**
 ```bash
-# 检查更新（推荐首次使用）
+# 官方接口探测（直接校验模型ID真实性，推荐先用）
+python scripts/update_models.py --probe-only
+
+# 检查更新（推荐首次使用，含官方接口核验 + 停用同步摘要）
 python scripts/update_models.py --check-only
 
 # 模拟运行（查看将要进行的更改）
@@ -138,10 +141,17 @@ python scripts/update_models.py --wizard
 **参数说明:**
 | 参数 | 说明 |
 |------|------|
-| `--check-only` | 只检查不修改 |
+| `--check-only` | 只检查不修改，输出停用/变更同步摘要（供定时任务主动通知用户） |
 | `--dry-run` | 模拟运行 |
 | `--wizard` | 交互式向导 |
-| `--auto-search` | 自动搜索最新模型 |
+| `--auto-search` | 自动搜索最新模型（需要网络） |
+| `--probe` | 开启官方接口探测（默认开启） |
+| `--no-probe` | 关闭官方接口探测（离线场景） |
+| `--probe-only` | 仅执行官方接口探测，输出模型核验报告 |
+
+**动态年份：** 搜索关键词不再硬编码年份，运行时自动替换为当前年份，避免逐年过期。
+
+**模型真实性核验：** 脚本会对厂商 `GET /v1/models` 接口做直接探测，命中官方清单的模型标记为 `verified`；需鉴权的标记 `🔑`；探测未命中的标记为疑似杜撰。可通过设置 `OPENAI_API_KEY`、`DEEPSEEK_API_KEY` 等环境变量进行带 Key 的完整探测。
 
 ### 定时任务设置
 
@@ -163,8 +173,10 @@ python scripts/update_models.py --wizard
 创建每周定时任务，每周一上午9点检查模型更新
 任务内容:
 1. 运行 python scripts/update_models.py --check-only
-2. 如果发现停用模型，通知用户
-3. 如果有新模型建议，更新 references/update_config.json
+2. 解析输出中的「SYNC SUMMARY」部分
+3. 对 [DEPRECATED] 停用模型，通知用户立即替换为替代方案
+4. 对 [UNVERIFIED] 疑似杜撰/未核验模型，提示用户以官方文档为准
+5. 如有新模型建议 [SUGGESTION]，更新 references/update_config.json
 ```
 
 #### 方法3: GitHub Actions (可选)
@@ -195,12 +207,14 @@ jobs:
 ### 更新内容
 
 脚本会自动:
-1. ✅ 检查已知停用模型状态
-2. ✅ 检测新增/变更模型
-3. ✅ 更新 `references/providers.md`
-4. ✅ 更新 `references/model_changelog.md`
-5. ✅ 记录更新历史到 `references/update_config.json`
-6. ✅ 记录检查历史和统计信息
+1. ✅ 官方接口探测（`GET /models`）校验模型ID真实性
+2. ✅ 检查已知停用模型状态
+3. ✅ 检测新增/变更模型
+4. ✅ 更新 `references/providers.md`
+5. ✅ 更新 `references/model_changelog.md`
+6. ✅ 记录更新历史到 `references/update_config.json`
+7. ✅ 记录检查历史和统计信息
+8. ✅ `--check-only` 输出「SYNC SUMMARY」供定时任务同步停用/变更给用户
 
 ### 查看更新日志
 
@@ -215,7 +229,8 @@ jobs:
 - **检查次数统计**: 记录总检查次数和成功更新数
 - **厂商状态追踪**: 每个厂商单独记录状态
 - **问题记录**: 记录检查中发现的问题
-- **置信度评估**: 模型ID的可信度分级
+- **置信度评估**: 模型ID的可信度分级（high/medium/low）
+- **真实性核验**: 通过官方接口探测标记 `verified` / `requires_auth` / `unverified`，疑似杜撰模型会单列提示
 
 ### 交互式向导
 

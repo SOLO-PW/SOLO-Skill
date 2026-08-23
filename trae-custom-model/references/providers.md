@@ -4,6 +4,22 @@
 
 > ⚠️ **模型信息可能随时间变化，建议定期更新本文档**
 
+> 🔒 **数据真实性说明（重要）**
+> 本文档部分「最新模型」条目（如 `gpt-5.5`、`claude-opus-4.7`、`glm-5.x`、`qwen3.6-*`、`kimi-k2.6`、`deepseek-v4-*` 等）系根据内部演进预期/搜索线索整理，
+> **未经官方页面逐一确认，存在杜撰或超前风险**，切勿直接照抄配置。
+>
+> - 可靠的模型 ID 与 Base URL 请以**厂商官方 `GET /v1/models` 接口返回为准**（见下文「核验方法」）。
+> - 使用 `python scripts/update_models.py --probe-only` 可对已配置探测地址的厂商做官方接口核验。
+> - 未带 API Key 时探测仅能确认接口可达（HTTP 401/403），最终可用模型以官方文档为准。
+
+### 核验方法
+
+| 方式 | 命令 | 说明 |
+|------|------|------|
+| 官方接口探测 | `python scripts/update_models.py --probe-only` | 直接请求各厂商 `GET /models`，命中官方清单才算 `verified` |
+| 带 Key 探测 | 先设置 `OPENAI_API_KEY` 等环境变量再探测 | 可真实拉取并校验模型 ID |
+| 综合检查 | `python scripts/update_models.py --check-only` | 输出每个模型的核验状态，未核验标 `⚠️` |
+
 ---
 
 ## 目录
