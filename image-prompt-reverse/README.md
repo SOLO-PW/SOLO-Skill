@@ -90,7 +90,7 @@
 | [SKILL.md](SKILL.md) | 技能主定义文件，包含完整工作流程和触发条件 |
 | [references/analysis-method.md](references/analysis-method.md) | 图片分析方法论（五层分析法、描述词选择原则） |
 | [references/precision-checklist.md](references/precision-checklist.md) | 精准分析检查清单 |
-| [references/gender-identification.md](references/gender-identification.md) | 性别识别精准指南 |
+| [references/character-recognition.md](references/character-recognition.md) | 角色与性别识别精准指南 |
 
 ### 场景与主体识别
 
@@ -107,12 +107,11 @@
 
 | 文档 | 说明 |
 |------|------|
-| [references/composition.md](references/composition.md) | 构图分析专项指南 |
+| [references/composition.md](references/composition.md) | 构图与镜头语言分析专项指南 |
 | [references/color-palette.md](references/color-palette.md) | 色彩分析专项指南 |
 | [references/lighting.md](references/lighting.md) | 光影效果专项指南 |
 | [references/material.md](references/material.md) | 材质识别专项指南 |
-| [references/camera-lens.md](references/camera-lens.md) | 镜头语言专项指南 |
-| [references/weather.md](references/weather.md) | 天气氛围专项指南 |
+| [references/nature.md](references/nature.md) | 天气氛围分析 |
 | [references/emotion.md](references/emotion.md) | 情绪氛围专项指南 |
 | [references/pose.md](references/pose.md) | 人物姿态专项指南 |
 | [references/effects.md](references/effects.md) | 特效后期专项指南 |
@@ -137,10 +136,9 @@
 
 | 文档 | 说明 |
 |------|------|
-| [references/prompt-templates.md](references/prompt-templates.md) | 提示词生成策略与模板 |
+| [references/prompt-templates.md](references/prompt-templates.md) | 提示词生成策略、模板与术语解释 |
 | [references/models.md](references/models.md) | 各模型提示词格式详细规范（含SD3） |
 | [references/quality-words.md](references/quality-words.md) | 质量词库和反向提示词 |
-| [references/prompt-explanation.md](references/prompt-explanation.md) | 提示词解释功能指南 |
 | [references/interactive-refinement.md](references/interactive-refinement.md) | 交互式精调功能指南 |
 
 ---

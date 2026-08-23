@@ -4,6 +4,25 @@
 
 ---
 
+## 模型格式版本表
+
+> ⚠️ 各模型与平台持续迭代，下方格式语法可能随新版本过时、失效或变更。**核对日期：2026 年**。使用前请回源核对各模型官方最新文档，避免照抄旧语法。
+
+| 模型 | 当前提示词格式语法要点 | 适用模型版本 | 失效风险标注 |
+|------|------------------------|--------------|--------------|
+| Stable Diffusion | 权重语法 `(word:1.2)`，标签式描述 + 反向提示词 | SD 1.5 / SDXL | SDXL 之后权重语法仍是主流，但自然语言能力增强，语法可能继续演进 |
+| Stable Diffusion 3 | 自然语言优先，权重语法**可选** | SD3 / SD3.5 | 权重语法为可选，并非强制；版本更新后需回源核对 |
+| Midjourney | 自然语言 + `--` 参数，`::` 权重 | MJ `--v 6` | MJ 参数可能随 V7 大改，需回源核对 |
+| DALL-E 3 | 纯自然语言，内置自动优化，无需质量词 | DALL-E 3 / DALL-E 4 | 输出格式较稳定，但随新版本可能调整 |
+| Flux | 自然语言 + 风格词，简单权重 | Flux.1 /dev、schnell | 版本更新后需回源核对 |
+| NijiJourney | 动漫描述 + `--niji` / `--style` | Niji 6 | 参数可能随 MJ 版本大改 |
+| Leonardo.ai | 自然语言 + 标签混合，内置风格预设 | Leonardo Phoenix / Diffusion | 内置预设风格随平台更新可能变化 |
+| InvokeAI | 基于 SD 权重语法 + 节点工作流 | InvokeAI 4.x / 5.x | 语法随版本更新可能变化 |
+| Playground AI | 自然语言 + 滤镜风格 | Playground v2.5 / Gadget | 滤镜预设会随平台更新 |
+| Ideogram | 自然语言 + 文字渲染 | Ideogram 2.0 / 3.0 | 文字渲染能力持续迭代，语法可能微调 |
+
+---
+
 ## 目录
 
 1. [Stable Diffusion (SD/SDXL)](#stable-diffusion-sdsdxl)
@@ -298,6 +317,19 @@ anime girl with pink hair, wearing school uniform, cherry blossoms background, s
 反向: blurry, low quality, distorted, bad anatomy, watermark
 ```
 
+### 完整实操模板
+
+> 正向+反向端到端模板，含「主体 → 外观 → 姿态 → 环境 → 构图 → 光照 → 氛围 → 风格 → 质量」完整结构，可与 Leonardo.ai 内置预设（Photography / Cinematic / Dynamic 等）结合使用。
+
+**正向提示词:**
+```
+cinematic portrait of a young knight, silver hair, sapphire eyes, ornate full-plate armor with gold trims, confident expression, holding a longsword across the chest, standing before an ancient castle gate, low-angle composition, golden hour side lighting, dynamic leaves in the air, epic fantasy atmosphere, Photography preset, 8k, ultra detailed, masterpiece
+```
+**反向提示词:**
+```
+blurry, low quality, distorted, bad anatomy, extra fingers, deformed hands, watermark, text, oversaturated
+```
+
 ---
 
 ## InvokeAI
@@ -328,6 +360,19 @@ anime girl with pink hair, wearing school uniform, cherry blossoms background, s
 正向: (masterpiece:1.2), (best quality:1.2), detailed fantasy landscape, floating islands, waterfalls, magical atmosphere, ethereal lighting
 
 反向: (worst quality:1.4), (low quality:1.4), blurry, bad anatomy
+```
+
+### 完整实操模板
+
+> 正向+反向端到端模板，与 InvokeAI（基于 Stable Diffusion）的权重语法一致，可在文本转图片节点或 ControlNet 工作流中直接使用。
+
+**正向提示词:**
+```
+(masterpiece:1.2), (best quality:1.2), (epic fantasy landscape:1.3) of (floating islands with waterfalls:1.2), (ancient stone ruins on foreground island:1.1), (magical aurora and stars in sky:1.0), (a lone mage in flowing robes descending:1.1), low-angle wide composition, ethereal volumetric lighting, mystical atmosphere, colorful and vivid, 8k, highly detailed
+```
+**反向提示词:**
+```
+(worst quality:1.4), (low quality:1.4), (normal quality:1.4), blurry, deformed, bad anatomy, extra limbs, duplicate, watermark, text, jpeg artifacts
 ```
 
 ---
@@ -365,6 +410,19 @@ anime girl with pink hair, wearing school uniform, cherry blossoms background, s
 反向: blurry, low quality, distorted
 ```
 
+### 完整实操模板
+
+> 正向+反向端到端模板，含「主体 → 外观 → 姿态 → 环境 → 构图 → 光照 → 氛围 → 滤镜 → 质量」完整结构，可配合 Playground AI 的滤镜风格（Cinematic / Analogue / Volumetric 等）使用。
+
+**正向提示词:**
+```
+cinematic street portrait of a cyberpunk hacker, short neon-blue hair, reflective visor, futuristic raincoat, leaning against a glowing advertisement, street-level dutch-angle composition, wet pavement reflecting purple and cyan neon lights, volumetric fog, rainy night atmosphere, Cinematic filter, highly detailed, 8k
+```
+**反向提示词:**
+```
+blurry, low quality, distorted, bad anatomy, extra fingers, watermark, text, oversaturated, lens flare
+```
+
 ---
 
 ## Ideogram
@@ -398,6 +456,19 @@ anime girl with pink hair, wearing school uniform, cherry blossoms background, s
 正向: Typography poster design with text "DREAM BIG", modern minimalist style, gradient background, professional graphic design
 
 反向: blurry text, distorted letters, low quality
+```
+
+### 完整实操模板
+
+> 正向+反向端到端模板，突出 Ideogram 的强项「文字渲染」，明确写入画面文本内容并描述排版/配色/背景/风格，便于海报与品牌设计复用。
+
+**正向提示词:**
+```
+Bold typographic poster with the text "LIMITLESS", giant serif letters in the center, modern editorial layout, split complementary gradient background from deep blue to warm orange, subtle grain texture and vignette, sharp readable text, clear hierarchy with small subtitle below, Design style preset, high quality professional graphic design
+```
+**反向提示词:**
+```
+blurry text, misspelled letters, distorted letters, low quality, noisy background, cramped layout, unreadable type
 ```
 
 ---
