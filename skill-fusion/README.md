@@ -30,6 +30,8 @@ skill-fusion/
     ├── incremental-fusion.md          # 增量融合的完整流程
     ├── preview-analysis.md            # 预览模式的分析框架与报告模板
     ├── output-template.md             # 融合输出结构模板与命名规范
+    ├── fusion-config.md               # 可配置规则阈值、默认值与覆盖机制
+    ├── script-dependency-check.md     # 跨 Skill 脚本依赖解析与冲突检测
     └── examples.md                    # 8 个融合案例（含失败案例）
 ```
 
@@ -70,4 +72,6 @@ skill-fusion/
 | [incremental-fusion.md](references/incremental-fusion.md) | 增量融合流程、回溯冲突、边界检查 | 使用增量融合模式时 |
 | [preview-analysis.md](references/preview-analysis.md) | 预览分析框架、报告模板 | 使用预览模式时 |
 | [output-template.md](references/output-template.md) | 输出结构模板、融合日志规范、命名规范 | 生成融合 Skill 时 |
+| [fusion-config.md](references/fusion-config.md) | 可配置规则阈值、默认值与覆盖机制 | 需要调整融合规模或规则阈值时 |
+| [script-dependency-check.md](references/script-dependency-check.md) | 跨 Skill 脚本依赖解析与冲突检测 | 融合含 scripts 的 Skill 时 |
 | [examples.md](references/examples.md) | 8 个完整案例（互补/重叠/多领域/资源冲突/失败/低交叉高价值/增量/预览） | 需要参考实际案例时 |

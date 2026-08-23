@@ -70,9 +70,11 @@ description: |
 
 | 交叉度 | 处理 |
 |--------|------|
-| 高（>50%） | 直接融合，合并重叠部分 |
-| 中（20-50%） | 智能整合，保留特色能力 |
-| 低（<20%） | 进入扩展分析流程（见下方） |
+| 高（≥ `overlap_high`，默认 50%） | 直接融合，合并重叠部分 |
+| 中（`overlap_mid` ~ `overlap_high`，默认 20-50%） | 智能整合，保留特色能力 |
+| 低（< `overlap_mid`，默认 20%） | 进入扩展分析流程（见下方） |
+
+> 交叉度与行数等阈值均为可配置项，默认值与覆盖机制见 [references/fusion-config.md](references/fusion-config.md)。
 
 **低交叉度扩展分析**：
 1. 深度理解每个 Skill 的用户意图、使用场景、能力边界
@@ -114,7 +116,7 @@ description: |
 1. 编写 SKILL.md frontmatter（复合名称 + 全面描述）
 2. 编写 SKILL.md body（合并工作流 + 条件分支 + 领域章节）
 3. 合并参考文件，保持连贯叙述
-4. 整合脚本，保留最佳实现
+4. 整合脚本：先做跨 Skill 脚本依赖解析与冲突检测，再保留最佳实现，详见 [references/script-dependency-check.md](references/script-dependency-check.md)
 5. 嵌入融合日志（HTML 注释记录所有合并决策）
 
 输出模板参见 [references/output-template.md](references/output-template.md)。
@@ -128,7 +130,7 @@ description: |
 - [ ] 所有资源引用路径正确
 - [ ] 融合日志已嵌入
 - [ ] 无内部矛盾或未解决冲突
-- [ ] SKILL.md body < 500 行（超出则拆分到 references）
+- [ ] SKILL.md body 行数 ≤ 配置项 `max_body_lines`（默认 500，超出则拆分到 references），取值为可配置，见 [references/fusion-config.md](references/fusion-config.md)
 
 **建议通过**：
 - [ ] 模块边界清晰（低交叉度融合时）
@@ -144,7 +146,7 @@ description: |
 在已融合的 Skill 基础上，融合新的 Skill。
 
 与 full 模式的差异：
-- 步骤 1：基准 Skill 为已融合 Skill，验证其融合日志完整性
+- 步骤 1：基准 Skill 为已融合 Skill，按其融合日志执行「融合日志完整性校验」（清单见 [references/output-template.md](references/output-template.md)）
 - 步骤 3：交叉度分析仅在新 Skill 与基准之间进行
 - 步骤 5：在基准结构上扩展，而非从零设计
 - 新增：检查增量融合是否会破坏已有模块边界
@@ -190,7 +192,7 @@ Skill A + B + C + D
 | 流水线顺序 | 存在输入输出链 | 按数据流顺序逐步融合 |
 
 **每轮检查点**：
-- 中间产物 SKILL.md < 500 行
+- 中间产物 SKILL.md 行数 ≤ 配置项 `max_body_lines`（默认 500，可配置，见 [references/fusion-config.md](references/fusion-config.md)）
 - 无能力稀释（核心能力被弱化）
 - 用户可终止并输出当前状态
 
@@ -198,8 +200,8 @@ Skill A + B + C + D
 
 | 信号 | 阈值 | 建议 |
 |------|------|------|
-| 领域数量 | >4 | 拆分为多个融合任务 |
-| 严重/高冲突 | >10 | 先解决冲突再融合 |
+| 领域数量 | > 配置项 `max_domains`（默认 4） | 拆分为多个融合任务 |
+| 严重/高冲突 | > 配置项 `max_serious_conflicts`（默认 10） | 先解决冲突再融合 |
 | 互斥依赖 | 存在 | 建议不融合或重构依赖 |
 
 ---
@@ -217,7 +219,7 @@ Skill A + B + C + D
 | 冲突重解 | 重新选择冲突解决方案 |
 | 内容删减 | 移除冗余内容 |
 
-**限制**：不能添加原始 Skill 不存在的新能力；不能改变核心决策（如建议不融合的不能强制融合）；调优不超过 3 轮。
+**限制**：不能添加原始 Skill 不存在的新能力；不能改变核心决策（如建议不融合的不能强制融合）；调优轮数不超过配置项 `max_tuning_rounds`（默认 3 轮）。
 
 ---
 
@@ -233,6 +235,7 @@ Skill A + B + C + D
 | 基准 Skill 路径 | 增量模式必需 | 已融合的 Skill 目录 |
 | 融合意图说明 | 否（推荐） | 帮助理解融合目标 |
 | 优先级顺序 | 否 | 冲突时的优先级，默认提供顺序 |
+| 配置覆盖 | 否 | 覆盖融合规则阈值（如 `max_body_lines`），默认值见 [references/fusion-config.md](references/fusion-config.md) |
 
 ### 输出
 
@@ -256,4 +259,6 @@ Skill A + B + C + D
 - **增量融合**：[references/incremental-fusion.md](references/incremental-fusion.md) — 增量融合的详细算法和注意事项
 - **预览分析**：[references/preview-analysis.md](references/preview-analysis.md) — 预览模式的详细分析框架
 - **输出模板**：[references/output-template.md](references/output-template.md) — 融合 Skill 的输出结构模板
+- **融合配置**：[references/fusion-config.md](references/fusion-config.md) — 可配置规则阈值、默认值与覆盖机制
+- **脚本依赖解析**：[references/script-dependency-check.md](references/script-dependency-check.md) — 跨 Skill 脚本依赖解析与冲突检测
 - **示例**：[references/examples.md](references/examples.md) — 六个融合案例（含失败案例和增量融合）
