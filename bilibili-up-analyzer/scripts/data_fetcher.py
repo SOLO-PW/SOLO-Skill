@@ -21,6 +21,14 @@ _WBI_MIXED_TABLE = [
     37, 48, 7, 16, 24, 55, 40, 61, 26, 17, 0, 1, 60, 51, 30, 4,
     22, 25, 54, 21, 56, 59, 6, 63, 57, 62, 11, 36, 20, 34, 44, 52
 ]
+# 不会被过滤的合法 WBI 参数过滤集
+_WBI_CHAR_FILTER = set("!'()*")
+
+
+def mix_key_enc_wbi(img_key: str, sub_key: str) -> str:
+    """从 img/sub 两张密钥表派生 WBI 的 mixin_key（32 位）"""
+    combined = img_key + sub_key
+    return "".join(combined[i] for i in _WBI_MIXED_TABLE[:32])
 
 
 class BilibiliDataFetcher:
@@ -28,7 +36,8 @@ class BilibiliDataFetcher:
 
     API_BASE = "https://api.bilibili.com/x"
 
-    def __init__(self, cache_dir: str = "./cache", enable_cache: bool = True):
+    def __init__(self, cache_dir: str = "./cache", enable_cache: bool = True,
+                 cookie: Optional[str] = None, sessdata: Optional[str] = None):
         self.cache_dir = cache_dir
         self.enable_cache = enable_cache
         self.session = requests.Session()
@@ -39,6 +48,11 @@ class BilibiliDataFetcher:
                 "Chrome/120.0.0.0 Safari/537.36"
             ),
         })
+        # 登录态：提升 like_num/follower 等字段完整度
+        if cookie:
+            self.session.headers["Cookie"] = cookie.strip()
+        elif sessdata:
+            self.session.headers["Cookie"] = f"SESSDATA={sessdata.strip()}"
         self._wbi_keys: Optional[tuple] = None  # (img_key, sub_key)
         if enable_cache:
             os.makedirs(cache_dir, exist_ok=True)
@@ -74,10 +88,9 @@ class BilibiliDataFetcher:
         if not keys:
             return params
         img_key, sub_key = keys
-        mixin_key = "".join((img_key + sub_key)[i] for i in _WBI_MIXED_TABLE[:32])
+        mixin_key = mix_key_enc_wbi(img_key, sub_key)
         params["wts"] = str(int(time.time()))
-        chr_filter = set("!'()*")
-        params = {k: "".join(c for c in str(v) if c not in chr_filter) for k, v in params.items()}
+        params = {k: "".join(c for c in str(v) if c not in _WBI_CHAR_FILTER) for k, v in params.items()}
         query = urlencode(sorted(params.items())) + mixin_key
         params["w_rid"] = hashlib.md5(query.encode()).hexdigest()[:32]
         return params
@@ -199,7 +212,45 @@ class BilibiliDataFetcher:
         except Exception:
             pass
 
+    # ==================== 断点续传 ====================
+
+    def load_checkpoint(self, uid: str) -> Optional[Dict]:
+        """读取断点续传进度（不按 TTL 过期，便于中断后继续）"""
+        path = self._cache_path("checkpoint", uid)
+        if not os.path.exists(path):
+            return None
+        try:
+            with open(path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception:
+            return None
+
+    def save_checkpoint(self, uid: str, data: Dict) -> None:
+        """写入断点续传进度"""
+        if not self.enable_cache:
+            return
+        try:
+            with open(self._cache_path("checkpoint", uid), 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+        except Exception:
+            pass
+
     # ==================== 数据获取 ====================
+
+    def _parse_up_info(self, info: Dict[str, Any]) -> Dict[str, Any]:
+        """将 acc/info 接口的 info 段解析为统一结构"""
+        return {
+            "uid": str(info.get("mid", "")),
+            "name": info.get("name", ""),
+            "face": info.get("face", ""),
+            "sign": info.get("sign", ""),
+            "level": info.get("level", 0),
+            "follower": info.get("follower", 0) or 0,
+            "following": info.get("following", 0) or 0,
+            "archive_count": info.get("archive_count", 0) or 0,
+            "article_count": info.get("article_count", 0) or 0,
+            "like_num": info.get("like_num", 0) or 0,
+        }
 
     def get_up_info(self, uid: str) -> Optional[Dict[str, Any]]:
         """获取UP主基础信息（WBI签名接口优先）"""
@@ -226,18 +277,8 @@ class BilibiliDataFetcher:
             return None
 
         info = data["data"]
-        result = {
-            "uid": uid,
-            "name": info.get("name", ""),
-            "face": info.get("face", ""),
-            "sign": info.get("sign", ""),
-            "level": info.get("level", 0),
-            "follower": info.get("follower", 0) or 0,
-            "following": info.get("following", 0) or 0,
-            "archive_count": info.get("archive_count", 0) or 0,
-            "article_count": info.get("article_count", 0) or 0,
-            "like_num": info.get("like_num", 0) or 0,
-        }
+        result = self._parse_up_info(info)
+        result["uid"] = str(uid)
 
         # 未登录时B站不返回follower/like_num等字段，通过搜索API补充
         if (result["follower"] == 0 or result["like_num"] == 0) and result["name"]:
@@ -263,7 +304,7 @@ class BilibiliDataFetcher:
                 break
 
     def get_video_list(self, uid: str, page: int = 1,
-                       page_size: int = 30) -> List[Dict[str, Any]]:
+                       page_size: int = 30):
         """获取UP主视频列表（单页）"""
         params = {"mid": uid, "pn": page, "ps": page_size, "order": "pubdate"}
         referer = {"Referer": f"https://space.bilibili.com/{uid}/video"}
@@ -280,27 +321,61 @@ class BilibiliDataFetcher:
                 retries=2,
             )
         if not data:
-            return []
+            return [], 0
 
-        vlist = data["data"].get("list", {}).get("vlist", [])
-        page_info = data["data"].get("page", {})
+        return self._parse_video_list(data)
+
+    def _parse_video_item(self, v: Dict[str, Any]) -> Dict[str, Any]:
+        """将视频列表项 vlist item 解析为统一样式"""
+        return {
+            "bvid": v.get("bvid"),
+            "title": v.get("title", ""),
+            "description": v.get("description", ""),
+            "created": v.get("created"),
+            "length": v.get("length", ""),
+            "play": v.get("play", 0) or 0,
+            "comment": v.get("comment", 0) or 0,
+            "typeid": v.get("typeid", 0) or 0,
+            "typename": v.get("typename", ""),
+            "video_review": v.get("video_review", 0) or 0,
+        }
+
+    def _parse_video_list(self, data: Dict[str, Any]):
+        """解析 arc/search 接口返回，返回 (videos, total)"""
+        vlist = data.get("data", {}).get("list", {}).get("vlist", [])
+        page_info = data.get("data", {}).get("page", {})
         total = page_info.get("count", 0)
-
-        videos = []
-        for v in vlist:
-            videos.append({
-                "bvid": v.get("bvid"),
-                "title": v.get("title", ""),
-                "description": v.get("description", ""),
-                "created": v.get("created"),
-                "length": v.get("length", ""),
-                "play": v.get("play", 0) or 0,
-                "comment": v.get("comment", 0) or 0,
-                "typeid": v.get("typeid", 0) or 0,
-                "typename": v.get("typename", ""),
-                "video_review": v.get("video_review", 0) or 0,
-            })
+        videos = [self._parse_video_item(v) for v in vlist]
         return videos, total
+
+    def _parse_video_detail(self, data: Dict[str, Any]) -> Dict[str, Any]:
+        """解析 view 接口返回为统一结构"""
+        d = data.get("data", {})
+        stat = d.get("stat", {})
+        return {
+            "bvid": d.get("bvid"),
+            "aid": d.get("aid"),
+            "title": d.get("title"),
+            "description": d.get("desc"),
+            "duration": d.get("duration"),
+            "pubdate": d.get("pubdate"),
+            "owner": {
+                "mid": d.get("owner", {}).get("mid"),
+                "name": d.get("owner", {}).get("name"),
+            },
+            "stat": {
+                "view": stat.get("view", 0) or 0,
+                "danmaku": stat.get("danmaku", 0) or 0,
+                "reply": stat.get("reply", 0) or 0,
+                "favorite": stat.get("favorite", 0) or 0,
+                "coin": stat.get("coin", 0) or 0,
+                "share": stat.get("share", 0) or 0,
+                "like": stat.get("like", 0) or 0,
+                "dislike": stat.get("dislike", 0) or 0,
+            },
+            "tname": d.get("tname", ""),
+            "tid": d.get("tid", 0),
+        }
 
     def get_videos_via_search(self, uid: str, up_name: str) -> List[Dict[str, Any]]:
         """通过搜索API获取视频列表（兜底方案）"""
@@ -401,31 +476,8 @@ class BilibiliDataFetcher:
         if not data:
             return None
 
-        stat = data["data"].get("stat", {})
-        result = {
-            "bvid": bvid,
-            "aid": data["data"].get("aid"),
-            "title": data["data"].get("title"),
-            "description": data["data"].get("desc"),
-            "duration": data["data"].get("duration"),
-            "pubdate": data["data"].get("pubdate"),
-            "owner": {
-                "mid": data["data"].get("owner", {}).get("mid"),
-                "name": data["data"].get("owner", {}).get("name"),
-            },
-            "stat": {
-                "view": stat.get("view", 0) or 0,
-                "danmaku": stat.get("danmaku", 0) or 0,
-                "reply": stat.get("reply", 0) or 0,
-                "favorite": stat.get("favorite", 0) or 0,
-                "coin": stat.get("coin", 0) or 0,
-                "share": stat.get("share", 0) or 0,
-                "like": stat.get("like", 0) or 0,
-                "dislike": stat.get("dislike", 0) or 0,
-            },
-            "tname": data["data"].get("tname", ""),
-            "tid": data["data"].get("tid", 0),
-        }
+        result = self._parse_video_detail(data)
+        result["bvid"] = bvid
         self._save_cache(cache_file, result)
         return result
 
@@ -459,15 +511,23 @@ class BilibiliDataFetcher:
         return video
 
     def clear_cache(self, uid: Optional[str] = None) -> None:
-        """清除缓存"""
+        """
+        清除缓存目录下所有 JSON 缓存（含断点续传 checkpoint）。
+
+        边界说明：
+        - 缓存采用 TTL 自动过期（up_info 12h、video 24h），无需手动清理。
+        - `--clear-cache` 用于强制刷新，保证拿到最新数据。
+        - 视频详情缓存以 bvid 为键、无法按 uid 精确归属，因此显式清理时
+          统一清空整个缓存目录，避免跨 UP 主残留脏数据。
+        """
         if not os.path.exists(self.cache_dir):
             return
-        if uid:
-            for prefix in ["up_info", "video", "search"]:
-                path = self._cache_path(prefix, uid)
-                if os.path.exists(path):
-                    os.remove(path)
-        else:
-            for f in os.listdir(self.cache_dir):
-                if f.endswith('.json'):
+        removed = 0
+        for f in os.listdir(self.cache_dir):
+            if f.endswith('.json'):
+                try:
                     os.remove(os.path.join(self.cache_dir, f))
+                    removed += 1
+                except OSError:
+                    pass
+        return removed

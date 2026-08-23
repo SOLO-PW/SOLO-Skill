@@ -9,9 +9,29 @@ import os
 from typing import Dict, List, Any, Optional
 from datetime import datetime
 
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
+# matplotlib 为可选依赖：缺失或 --no-charts 时降级为纯文本渲染，
+# 避免在无绘图环境的机器上拉高启动成本。
+try:
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    _HAS_MATPLOTLIB = True
+except Exception:  # pragma: no cover - 绘图环境缺失
+    _HAS_MATPLOTLIB = False
+
+
+def _text_sparkline(values: List[float], width: int = 14) -> str:
+    """纯文本迷你柱状图，用于无图表环境下的趋势展示"""
+    if not values:
+        return ""
+    vmax = max(values)
+    if vmax <= 0:
+        return "▁" * width
+    bars = ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
+    scaled = [int(round(v / vmax * (len(bars) - 1))) for v in values]
+    step = max(1, len(scaled) // width)
+    downsample = scaled[::step][:width]
+    return "".join(bars[i] for i in downsample)
 
 
 class ReportGenerator:
@@ -25,6 +45,8 @@ class ReportGenerator:
 
     def _setup_chinese_font(self):
         """配置中文字体"""
+        if not _HAS_MATPLOTLIB:
+            return
         for font_name in ['SimHei', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'Noto Sans CJK SC']:
             try:
                 plt.rcParams['font.sans-serif'] = [font_name] + plt.rcParams['font.sans-serif']
@@ -50,6 +72,8 @@ class ReportGenerator:
                           name_key: str = "name", value_key: str = "value",
                           filename: str = "chart.png") -> Optional[str]:
         """创建饼图并保存为文件"""
+        if not _HAS_MATPLOTLIB:
+            return None
         fig, ax = plt.subplots(figsize=(7, 5))
         labels = [item[name_key] for item in data]
         sizes = [item[value_key] for item in data]
@@ -76,6 +100,8 @@ class ReportGenerator:
     def _create_radar_chart(self, dimensions: List[str], values: List[float],
                             title: str, filename: str = "radar.png") -> Optional[str]:
         """创建雷达图并保存为文件"""
+        if not _HAS_MATPLOTLIB:
+            return None
         n = len(dimensions)
         angles = [i / n * 2 * 3.14159265 for i in range(n)]
         values_closed = values + [values[0]]
@@ -97,6 +123,8 @@ class ReportGenerator:
                            xlabel: str = "", ylabel: str = "",
                            filename: str = "trend.png") -> Optional[str]:
         """创建折线图并保存为文件"""
+        if not _HAS_MATPLOTLIB:
+            return None
         fig, ax = plt.subplots(figsize=(10, 4.5))
         sorted_items = sorted(data.items())
         x_labels = [item[0] for item in sorted_items]
@@ -303,12 +331,24 @@ class ReportGenerator:
         L.append("")
 
         monthly_dist = trend_analysis.get('monthly_distribution', {})
-        if enable_charts and monthly_dist and len(monthly_dist) >= 2:
+        if enable_charts and monthly_dist and len(monthly_dist) >= 2 and _HAS_MATPLOTLIB:
             chart_path = self._create_line_chart(
                 monthly_dist, "月度发布趋势", "月份", "视频数", filename="trend.png")
             if chart_path:
                 L.append(f"![月度趋势]({chart_path})")
                 L.append("")
+        elif monthly_dist and len(monthly_dist) >= 2:
+            # 无绘图环境/禁用图表时的纯文本降级
+            labels = sorted(monthly_dist.keys())
+            values = [monthly_dist[k] for k in labels]
+            spark = _text_sparkline(values)
+            max_val = max(values)
+            top_display = ", ".join(f"{k}:{v}" for k, v in
+                                    sorted(monthly_dist.items(), key=lambda x: x[1], reverse=True)[:3])
+            L.append(f"- 月度发布趋势（纯文本）: `{spark}`")
+            L.append(f"- 峰值发布月份: {top_display}")
+            L.append(f"- 峰值月发布量: {max_val}")
+            L.append("")
 
         # ==================== 八、热门视频 ====================
         L.append("## 八、热门视频 TOP5")

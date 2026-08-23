@@ -1,3 +1,4 @@
 # bilibili-up-analyzer 脚本运行依赖
 requests>=2.28.0
-matplotlib>=3.5.0
+# matplotlib 为可选：缺失时自动降级为纯文本渲染（不生成 PNG 图表）
+matplotlib>=3.5.0 ; extra == "charts"

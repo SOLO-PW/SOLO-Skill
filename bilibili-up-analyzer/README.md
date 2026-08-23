@@ -39,6 +39,10 @@
 | `--filename` | string | 否 | 指定输出文件名 |
 | `--no-charts` | flag | 否 | 禁用图表生成 |
 | `--clear-cache` | flag | 否 | 清除缓存后运行 |
+| `--sessdata` | string | 否 | B 站 SESSDATA 登录凭证，提升获赞/粉丝字段完整度 |
+| `--cookie` | string | 否 | 完整 Cookie 字符串（优先推荐 `--sessdata`） |
+| `--resume` | flag | 否 | 结合 `--all --cache` 从上次断点继续全量分析 |
+| `--no-checkpoint` | flag | 否 | 禁用断点续传，始终从头全量分析 |
 | `--verbose` | flag | 否 | 显示详细日志 |
 
 ## 📄 报告内容
@@ -68,6 +72,8 @@ bilibili-up-analyzer/
 │   ├── scoring_system.py      # 评分系统
 │   ├── report_generator.py    # 报告生成
 │   └── persona_analyzer.py    # UP 主画像分析
+├── tests/
+│   └── test_data_fetcher.py   # 单元测试（WBI 签名/解析/缓存 mocked）
 ├── references/
 │   ├── api_reference.md       # 接口设计
 │   ├── data_models.md         # 数据模型
@@ -107,7 +113,26 @@ bilibili-up-analyzer/
 2. **风控限制**: 频繁请求可能触发风控,建议启用 `--cache`
 3. **未登录状态**: 部分字段(如获赞数)通过视频数据累加补充
 4. **网络异常**: 自动重试 3 次,指数退避策略
-5. **缓存清理**: 定期清理缓存以获取最新数据
+5. **缓存清理**: 缓存按 TTL 自动过期（up_info 12h、video 24h）；`--clear-cache` 用于强制刷新并清空全部缓存（含断点 checkpoint），避免跨 UP 主脏数据
+6. **登录态**: 传入 `--sessdata` 可让 API 直接返回获赞/粉丝等字段，无需累加估算
+7. **断点续传**: `--all --cache` 全量分析中断后，再次以 `--all --cache --resume` 运行可跳过已完成的视频
+8. **图表依赖**: `matplotlib` 为可选依赖；缺失或 `--no-charts` 时自动降级为纯文本迷你柱状图
+
+## 使用示例
+
+```bash
+# 单次分析最近 10 个视频
+python scripts/analyze_up.py 159285873
+
+# 登录态全量分析（字段更完整）
+python scripts/analyze_up.py 159285873 --all --cache --sessdata "你的SESSDATA"
+
+# 全量分析中断后续传
+python scripts/analyze_up.py 159285873 --all --cache --resume
+
+# 无绘图环境/禁用图表
+python scripts/analyze_up.py 159285873 --cache --no-charts
+```
 
 ## 📊 性能对比
 
