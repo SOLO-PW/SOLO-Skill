@@ -9,6 +9,12 @@ API端点：
   - 话题详情:  GET /t/{topic_id}.json
   - 帖子加载:  GET /t/{topic_id}/posts.json?post_ids[]=[...]
   - 搜索补充:  GET /search.json?q=@username
+
+使用须知 / 免责声明：
+  - 本脚本仅用于提取「用户本人」或「已获得明确授权」的公开数据，禁止在未授权时提取他人数据。
+  - 提取与生成的数据仅供个人研究与学习使用，不得用于欺诈、冒充、网络诈骗或任何恶意用途。
+  - 数据仅基于论坛公开内容，不包含私密信息；生成内容不代表该用户本人的真实观点。
+  - 请遵守论坛使用条款及相关法律法规，违规使用产生的法律风险由使用者自行承担。
 """
 
 import argparse
@@ -31,6 +37,12 @@ BASE_URL = "https://forum.trae.cn"
 REQUEST_DELAY = 0.5
 MAX_RETRIES = 3
 TIMEOUT = 30
+
+# ─── 分页上限（集中配置，可调整）───
+DEFAULT_MAX_TOPICS = 50      # --max-topics 默认值：最大提取话题数
+DEFAULT_MAX_POSTS = 300      # --max-posts 默认值：最大提取帖子数（0 表示不限）
+MAX_SEARCH_PAGES = 3         # 搜索补充的最大页数上限
+SEARCH_MIN_RESULTS_PER_PAGE = 5  # 搜索单页结果低于该条数即视为无更多结果
 
 TRUST_LEVEL_MAP = {0: "newuser", 1: "basic", 2: "member", 3: "regular", 4: "leader"}
 
@@ -83,7 +95,17 @@ def _api_get(session: requests.Session, path: str, params: dict = None, _depth: 
             return _api_get(session, path, params, _depth + 1)
         resp.raise_for_status()
         time.sleep(REQUEST_DELAY)
-        return resp.json()
+        # 结构降级：应答非有效 JSON 或非对象结构时，明确警告并优雅返回 None，
+        # 避免 JSON 解析失败中断整个提取流程。
+        try:
+            data = resp.json()
+        except ValueError as e:
+            print(f"  [WARN] 响应不是有效 JSON，已降级跳过: {path} ({e})")
+            return None
+        if not isinstance(data, dict):
+            print(f"  [WARN] 响应结构异常（非 JSON 对象），已降级跳过: {path}")
+            return None
+        return data
     except requests.RequestException as e:
         print(f"  [ERROR] 请求失败 {path}: {e}")
         return None
@@ -149,9 +171,9 @@ def fetch_profile(session: requests.Session, username: str) -> dict:
 
     u = data["user"]
     return {
-        "username": u["username"],
-        "user_id": u["id"],
-        "name": u.get("name", "") or u["username"],
+        "username": u.get("username", username),
+        "user_id": u.get("id", 0),
+        "name": u.get("name", "") or u.get("username", username),
         "profile_url": f"{BASE_URL}/u/{username}/summary",
         "created_at": u.get("created_at", ""),
         "trust_level": TRUST_LEVEL_MAP.get(u.get("trust_level", 0), "unknown"),
@@ -597,8 +619,10 @@ def _empty_style_analysis() -> dict:
 
 # ─── 主流程 ───
 
-def extract_user_data(username: str, output_dir: str = ".", max_topics: int = 50) -> dict:
-    """执行完整的数据提取流程"""
+def extract_user_data(username: str, output_dir: str = ".",
+                      max_topics: int = DEFAULT_MAX_TOPICS,
+                      max_posts: int = DEFAULT_MAX_POSTS) -> dict:
+    """执行完整的数据提取流程（max_posts 为 0 表示不限制帖子数）"""
     session = _create_session()
     cat_cache = _load_categories(session)
 
@@ -681,12 +705,16 @@ def extract_user_data(username: str, output_dir: str = ".", max_topics: int = 50
                 p["topic_title"] = detail.get("title", "")
                 p["content_clean"] = _clean_html(p.pop("cooked", ""))
                 all_posts.append(p)
+        # 达到帖子上限时提前结束，避免无谓请求
+        if max_posts and len(all_posts) >= max_posts:
+            print(f"  ⚠ 已达帖子上限 {max_posts}，提前结束回复提取")
+            break
 
     # 通过搜索 API 补充
     print("  搜索补充...")
     search_exhausted = False
-    for page in range(1, 4):
-        if search_exhausted:
+    for page in range(1, MAX_SEARCH_PAGES + 1):
+        if search_exhausted or (max_posts and len(all_posts) >= max_posts):
             break
         search_results = search_user_posts(session, username, page)
         if not search_results:
@@ -697,13 +725,21 @@ def extract_user_data(username: str, output_dir: str = ".", max_topics: int = 50
             if pid and pid not in seen_post_ids:
                 seen_post_ids.add(pid)
                 sr["content_clean"] = sr.pop("blurb", "")
-                sr["topic_title"] = ""
+                # 修复空标题：若话题已在缓存中则补取标题，复用缓存避免额外发请求
+                tid = sr.get("topic_id")
+                cached_detail = topic_cache.get(tid) if tid else None
+                sr["topic_title"] = (
+                    cached_detail.get("title", "") if isinstance(cached_detail, dict) else ""
+                )
                 all_posts.append(sr)
-        # Discourse 搜索每页通常返回 20-50 条，少于 5 条视为无更多结果
-        if len(search_results) < 5:
+        # Discourse 搜索每页通常返回 20-50 条，少于阈值视为无更多结果
+        if len(search_results) < SEARCH_MIN_RESULTS_PER_PAGE:
             search_exhausted = True
 
     all_posts.sort(key=lambda x: x.get("created_at", ""), reverse=True)
+    if max_posts and len(all_posts) > max_posts:
+        print(f"  ⚠ 帖子总数超过上限 {max_posts}，进行截断（实际 {len(all_posts)} 条）")
+        all_posts = all_posts[:max_posts]
     print(f"  ✓ 共 {len(all_posts)} 条回复（缓存命中 {len(topic_cache) - len(topics_detail)} 个话题）")
 
     # 5. 风格分析
@@ -754,7 +790,11 @@ def main():
     )
     parser.add_argument("username", help="目标论坛用户名")
     parser.add_argument("--output", "-o", default=".", help="输出目录")
-    parser.add_argument("--max-topics", type=int, default=50, help="最大提取话题数")
+    parser.add_argument("--max-topics", type=int, default=DEFAULT_MAX_TOPICS,
+                        help=f"最大提取话题数（默认 {DEFAULT_MAX_TOPICS}）")
+    parser.add_argument("--max-posts", type=int, default=DEFAULT_MAX_POSTS,
+                        help=f"最大提取帖子数（默认 {DEFAULT_MAX_POSTS}，0 表示不限；"
+                             f"搜索补充最多 {MAX_SEARCH_PAGES} 页）")
     parser.add_argument("--generate", "-g", action="store_true",
                         help="提取后自动生成个性化技能（一键模式）")
     args = parser.parse_args()
@@ -763,7 +803,7 @@ def main():
         print("错误: 用户名只能包含字母、数字、下划线和连字符")
         sys.exit(1)
 
-    data = extract_user_data(args.username, args.output, args.max_topics)
+    data = extract_user_data(args.username, args.output, args.max_topics, args.max_posts)
     json_path = save_to_file(data, args.output)
 
     total = data["stats"]["total_topics"] + data["stats"]["total_posts"]
