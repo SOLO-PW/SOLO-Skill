@@ -108,6 +108,23 @@ description: >
 | 排除能力 | 是 | `无` 或列出被排除的能力及原因 |
 | 融合日期 | 是 | ISO 8601 格式 |
 
+### 融合日志完整性校验
+
+每次生成（full）或追加（incremental）融合日志后，必须通过以下校验：
+
+| # | 检查项 | 说明 |
+|---|--------|------|
+| 1 | 注释存在 | 以 `<!-- 融合日志` 开头，以 `-->` 正确闭合 |
+| 2 | 必需字段齐全 | 上表 6 个必需字段均已填写 |
+| 3 | 字段值有效 | 融合模式在 `full`/`incremental`（增量含原始+增量标注）内；日期为 ISO 8601 |
+| 4 | 冲突记录完整 | 每个已解决冲突含级别、描述、解决方案 |
+| 5 | 增量变更已并表 | 增量模式在追加 `增量变更:` 条目后，仍满足上表全部字段（追加不破坏原始字段） |
+
+**生效范围**：该校验对 **full 与 incremental 两种模式都强制生效**。增量融合时，基准融合日志在增量前已通过校验；追加增量变更后需再次运行本清单，确保字段完整性与注释闭合性不被破坏。具体调用点：
+
+- full 模式：见 SKILL.md 步骤 6 必过项「融合日志已嵌入」
+- incremental 模式：见 [incremental-fusion.md](incremental-fusion.md) 步骤 1 基准验证与步骤 6 增量验证
+
 ### 增量融合日志
 
 ```html
@@ -134,13 +151,15 @@ description: >
 - 使用小写字母、数字和连字符
 - 动词-名词结构优先（如 `pdf-to-structured-data`）
 - 反映融合后的核心能力，非源 Skill 的简单拼接
-- 长度 < 64 字符
+- 长度 ≤ 配置项 `max_skill_name_len`（默认 64 字符，可配置，见 [fusion-config.md](fusion-config.md)）
 
 ### 脚本命名
 
 - 格式：`<命名空间>-<功能>.<ext>`
 - 命名空间使用源 Skill 名称或模块名称
 - 示例：`pdf-extract-text.py`、`data-format-csv.py`
+
+> 多 Skill 脚本合并时的依赖解析与冲突检测遵循 [script-dependency-check.md](script-dependency-check.md)。
 
 ### 参考文件命名
 
