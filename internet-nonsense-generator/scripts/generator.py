@@ -7,6 +7,7 @@
 import re
 import json
 import random
+from pathlib import Path
 from typing import List, Dict, Optional, Tuple
 from dataclasses import dataclass
 from enum import Enum
@@ -60,306 +61,79 @@ class NonsenseTemplate:
 class NonsenseGenerator:
     """废话文学生成器"""
     
-    # 情绪词列表
-    EMOTIONS = ["急", "忙", "饿", "困", "累", "无语", "好笑", "生气", "开心"]
+    # 开头无意义的发语词/条件词（从句首整段剔除，用于话题提取）
+    LEADING_STOPWORDS = [
+        "如果", "面对", "请问", "关于", "帮我", "能帮我", "我想",
+        "你可以", "能不能", "请问一下", "你说",
+    ]
     
-    # 对象词列表
-    OBJECTS = ["西红柿", "番茄", "鸡蛋", "苹果", "手机"]
-    
-    # 动作-结果配对
-    ACTION_RESULT_PAIRS = [("胖", "体重变重"), ("饿", "想吃饭"), ("困", "想睡觉")]
-    
-    # 品质词列表
-    QUALITIES = ["本事", "能力", "耐心", "毅力"]
-    
-    # 负面-正面词配对
-    NEGATIVE_POSITIVE_PAIRS = [("丑", "好看"), ("笨", "聪明"), ("懒", "勤快")]
-    
-    # 需要移除的常见词
-    REMOVE_WORDS = ["如果", "怎么", "如何", "说", "用", "废话", "文学", "回复", "面对", "情况", "有人", "我", "你", "他", "她", "它", "们", "在", "了", "的", "吗", "呢", "吧", "啊"]
+    # 结尾的语气词/疑问尾缀（从句尾整段剔除，用于话题提取）
+    TRAILING_STOPWORDS = [
+        "呢", "吧", "啊", "吗", "么", "怎么", "怎么办", "怎么样",
+        "是什么", "怎么了", "如何", "好不好", "了吗",
+    ]
     
     def __init__(self):
+        self._data = self._load_json_data()
+        self._setup_vocab()
         self.templates = self._load_templates()
         self.scene_keywords = self._load_scene_keywords()
     
+    def _load_json_data(self) -> Dict:
+        """
+        读取 references/templates.json（单一数据源）
+        
+        使用 __file__ 定位文件，确保从任意 cwd 运行都能找到。
+        """
+        json_path = Path(__file__).resolve().parent.parent / "references" / "templates.json"
+        with open(json_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    
+    def _setup_vocab(self) -> None:
+        """从 JSON 加载词表到实例属性"""
+        vocab = self._data.get("vocab", {})
+        self.EMOTIONS = vocab.get("EMOTIONS", ["急"])
+        self.OBJECTS = vocab.get("OBJECTS", ["西红柿"])
+        self.ACTION_RESULT_PAIRS = [
+            (a, r) for a, r in vocab.get("ACTION_RESULT_PAIRS", [["胖", "体重变重"]])
+        ]
+        self.QUALITIES = vocab.get("QUALITIES", ["本事"])
+        self.NEGATIVE_POSITIVE_PAIRS = [
+            (n, p) for n, p in vocab.get("NEGATIVE_POSITIVE_PAIRS", [["丑", "好看"]])
+        ]
+        self.REMOVE_WORDS = vocab.get("REMOVE_WORDS", [])
+    
+    @staticmethod
+    def _parse_keywords(keywords: List) -> List:
+        """解析模板关键词：单元素字符串原样保留，双元素数组转为配对元组"""
+        parsed = []
+        for kw in keywords:
+            if isinstance(kw, list):
+                parsed.append(tuple(kw))
+            else:
+                parsed.append(kw)
+        return parsed
+    
     def _load_templates(self) -> Dict[NonsenseType, List[NonsenseTemplate]]:
-        """加载废话文学模板"""
-        templates = {
-            NonsenseType.SYNONYM_REPEAT: [
-                NonsenseTemplate(
-                    type=NonsenseType.SYNONYM_REPEAT,
-                    template="情况就是这么个情况，但具体{topic}，还得看{topic}",
-                    examples=["情况就是这么个情况，但具体什么情况，还得看情况"],
-                    keywords=["情况", "问题", "事情"]
-                ),
-                NonsenseTemplate(
-                    type=NonsenseType.SYNONYM_REPEAT,
-                    template="说{topic}也{topic}，说不{topic}也不{topic}",
-                    examples=["说重要也重要，说不重要也不重要"],
-                    keywords=["重要", "紧急", "困难"]
-                ),
-                NonsenseTemplate(
-                    type=NonsenseType.SYNONYM_REPEAT,
-                    template="有没有{topic}是要根据有没有{topic}来判定的",
-                    examples=["有没有意义是要根据有没有意义来判定的"],
-                    keywords=["意义", "价值", "作用"]
-                ),
-            ],
-            NonsenseType.TIME_LOOP: [
-                NonsenseTemplate(
-                    type=NonsenseType.TIME_LOOP,
-                    template="上次这么{emotion}的时候，还是上次",
-                    examples=["上次这么无语的时候，还是上次"],
-                    keywords=["无语", "好笑", "生气", "开心"]
-                ),
-                NonsenseTemplate(
-                    type=NonsenseType.TIME_LOOP,
-                    template="一日不见如隔一日",
-                    examples=["一日不见如隔一日"],
-                    keywords=["见面", "时间"]
-                ),
-            ],
-            NonsenseType.CONDITIONAL: [
-                NonsenseTemplate(
-                    type=NonsenseType.CONDITIONAL,
-                    template="但凡你有点{quality}，也不至于一点{quality}没有",
-                    examples=["但凡你有点本事，也不至于一点本事没有"],
-                    keywords=["本事", "能力", "耐心"]
-                ),
-                NonsenseTemplate(
-                    type=NonsenseType.CONDITIONAL,
-                    template="你要是不{negative}的话，其实还挺{positive}的",
-                    examples=["你要是不丑的话，其实还挺好看的"],
-                    keywords=[("丑", "好看"), ("笨", "聪明"), ("懒", "勤快")]
-                ),
-            ],
-            NonsenseType.UNIT_CONVERSION: [
-                NonsenseTemplate(
-                    type=NonsenseType.UNIT_CONVERSION,
-                    template="每呼吸六十秒，就过去了一分钟",
-                    examples=["每呼吸六十秒，就过去了一分钟"],
-                    keywords=["时间", "呼吸"]
-                ),
-                NonsenseTemplate(
-                    type=NonsenseType.UNIT_CONVERSION,
-                    template="每过一天，就离昨天更远了一天",
-                    examples=["每过一天，就离昨天更远了一天"],
-                    keywords=["时间", "天"]
-                ),
-            ],
-            NonsenseType.OBVIOUS: [
-                NonsenseTemplate(
-                    type=NonsenseType.OBVIOUS,
-                    template="这个{object}，有一股{object}味儿",
-                    examples=["这个西红柿，有一股番茄味儿"],
-                    keywords=["西红柿", "番茄", "鸡蛋"]
-                ),
-                NonsenseTemplate(
-                    type=NonsenseType.OBVIOUS,
-                    template="我发现，我{action}之后，就{result}了",
-                    examples=["我发现，我胖了之后，体重就变重了"],
-                    keywords=[("胖", "体重变重"), ("饿", "想吃饭")]
-                ),
-            ],
-            NonsenseType.LEADER_SPEECH: [
-                NonsenseTemplate(
-                    type=NonsenseType.LEADER_SPEECH,
-                    template="既然让我讲两句，那我就来讲两句，具体哪两句呢? 我先随便讲两句",
-                    examples=["既然让我讲两句，那我就来讲两句，具体哪两句呢? 我先随便讲两句"],
-                    keywords=["讲话", "发言"]
-                ),
-                NonsenseTemplate(
-                    type=NonsenseType.LEADER_SPEECH,
-                    template="全文内容大概是这么个事啊，我们讲不是说，不是说不办。但是……",
-                    examples=["全文内容大概是这么个事啊，我们讲不是说，不是说不办。但是……"],
-                    keywords=["事情", "问题"]
-                ),
-            ],
-            NonsenseType.REVERSAL: [
-                NonsenseTemplate(
-                    type=NonsenseType.REVERSAL,
-                    template="我知道你很{emotion}，但是你先别{emotion}",
-                    examples=["我知道你很急，但是你先别急"],
-                    keywords=["急", "忙", "饿", "困"]
-                ),
-                NonsenseTemplate(
-                    type=NonsenseType.REVERSAL,
-                    template="给你提个建议，你不要随便给别人提建议",
-                    examples=["给你提个建议，你不要随便给别人提建议"],
-                    keywords=["建议"]
-                ),
-            ],
-            NonsenseType.ASSUMPTION: [
-                NonsenseTemplate(
-                    type=NonsenseType.ASSUMPTION,
-                    template="如果我有{object}，那么这句话就不用加如果两个字了",
-                    examples=["如果我有男朋友，那么这句话就不用加如果两个字了"],
-                    keywords=["男朋友", "女朋友", "钱"]
-                ),
-            ],
-            NonsenseType.FOLLOW_UP: [
-                NonsenseTemplate(
-                    type=NonsenseType.FOLLOW_UP,
-                    template="俗话说得好：俗话说得好",
-                    examples=["俗话说得好：俗话说得好"],
-                    keywords=["俗话", "古话"]
-                ),
-                NonsenseTemplate(
-                    type=NonsenseType.FOLLOW_UP,
-                    template="能力越大，能力就越大",
-                    examples=["能力越大，能力就越大"],
-                    keywords=["能力", "责任"]
-                ),
-            ],
-            NonsenseType.RHYME: [
-                NonsenseTemplate(
-                    type=NonsenseType.RHYME,
-                    template="我前脚刚走，后脚就跟上了",
-                    examples=["我前脚刚走，后脚就跟上了"],
-                    keywords=["走", "跟"]
-                ),
-                NonsenseTemplate(
-                    type=NonsenseType.RHYME,
-                    template="你跟我搁这儿搁这儿呢",
-                    examples=["你跟我搁这儿搁这儿呢"],
-                    keywords=["这儿", "那儿"]
-                ),
-            ],
-            NonsenseType.LONG_SENTENCE: [
-                NonsenseTemplate(
-                    type=NonsenseType.LONG_SENTENCE,
-                    template="关于{topic}，我简单说两句，第一句是我要说两句，第二句是我说完了",
-                    examples=["关于这个问题，我简单说两句，第一句是我要说两句，第二句是我说完了"],
-                    keywords=["问题", "事情", "项目"]
-                ),
-                NonsenseTemplate(
-                    type=NonsenseType.LONG_SENTENCE,
-                    template="这个{topic}很重要，重要到什么程度呢？重要到很重要",
-                    examples=["这个事情很重要，重要到什么程度呢？重要到很重要"],
-                    keywords=["事情", "问题", "项目"]
-                ),
-                NonsenseTemplate(
-                    type=NonsenseType.LONG_SENTENCE,
-                    template="既然你问到了{topic}，那我就不得不回答一下{topic}，{topic}问得好，好在哪里呢？好在问得好",
-                    examples=["既然你问到了这个问题，那我就不得不回答一下这个问题，这个问题问得好，好在哪里呢？好在问得好"],
-                    keywords=["问题", "事情", "项目"]
-                ),
-                NonsenseTemplate(
-                    type=NonsenseType.LONG_SENTENCE,
-                    template="我简单说三点，第一点是我要说三点，第二点是我说完了，第三点是补充前两点",
-                    examples=["我简单说三点，第一点是我要说三点，第二点是我说完了，第三点是补充前两点"],
-                    keywords=["三点", "三点"]
-                ),
-            ],
-            NonsenseType.CONTRADICTION: [
-                NonsenseTemplate(
-                    type=NonsenseType.CONTRADICTION,
-                    template="我上次这么{emotion}的时候，还是上次，具体什么时候呢？就是上次",
-                    examples=["我上次这么无语的时候，还是上次，具体什么时候呢？就是上次"],
-                    keywords=["无语", "好笑", "生气", "开心"]
-                ),
-                NonsenseTemplate(
-                    type=NonsenseType.CONTRADICTION,
-                    template="这个方案可行不可行呢？可行，但具体怎么行，还得看怎么不行",
-                    examples=["这个方案可行不可行呢？可行，但具体怎么行，还得看怎么不行"],
-                    keywords=["方案", "计划", "项目"]
-                ),
-                NonsenseTemplate(
-                    type=NonsenseType.CONTRADICTION,
-                    template="你说的话但凡有一点{quality}也不至于一点{quality}没有",
-                    examples=["你说的话但凡有一点意义也不至于一点意义也没有"],
-                    keywords=["意义", "价值", "作用"]
-                ),
-            ],
-            NonsenseType.LITERATURE: [
-                NonsenseTemplate(
-                    type=NonsenseType.LITERATURE,
-                    template="听君一席话，如听一席话",
-                    examples=["听君一席话，如听一席话"],
-                    keywords=["一席话", "说话"]
-                ),
-                NonsenseTemplate(
-                    type=NonsenseType.LITERATURE,
-                    template="三人行则必有三人",
-                    examples=["三人行则必有三人"],
-                    keywords=["三人", "行"]
-                ),
-                NonsenseTemplate(
-                    type=NonsenseType.LITERATURE,
-                    template="一日不见如隔一日",
-                    examples=["一日不见如隔一日"],
-                    keywords=["一日", "不见"]
-                ),
-            ],
-            NonsenseType.HOPE: [
-                NonsenseTemplate(
-                    type=NonsenseType.HOPE,
-                    template="如果我有{object}，那么这句话就不用加如果两个字了",
-                    examples=["如果我有男朋友，那么这句话就不用加如果两个字了"],
-                    keywords=["男朋友", "女朋友", "钱"]
-                ),
-                NonsenseTemplate(
-                    type=NonsenseType.HOPE,
-                    template="如果你愿意多花点时间了解我，你就会发现多花了点时间",
-                    examples=["如果你愿意多花点时间了解我，你就会发现多花了点时间"],
-                    keywords=["时间", "了解"]
-                ),
-                NonsenseTemplate(
-                    type=NonsenseType.HOPE,
-                    template="如果我不说的话，你就不知道我要说什么",
-                    examples=["如果我不说的话，你就不知道我要说什么"],
-                    keywords=["说", "知道"]
-                ),
-            ],
-            NonsenseType.REDUNDANCY: [
-                NonsenseTemplate(
-                    type=NonsenseType.REDUNDANCY,
-                    template="每呼吸六十秒，就过去了一分钟",
-                    examples=["每呼吸六十秒，就过去了一分钟"],
-                    keywords=["呼吸", "时间"]
-                ),
-                NonsenseTemplate(
-                    type=NonsenseType.REDUNDANCY,
-                    template="每过一天，就离昨天更远了一天",
-                    examples=["每过一天，就离昨天更远了一天"],
-                    keywords=["时间", "天"]
-                ),
-                NonsenseTemplate(
-                    type=NonsenseType.REDUNDANCY,
-                    template="每吃一顿饭，就少了一顿饭",
-                    examples=["每吃一顿饭，就少了一顿饭"],
-                    keywords=["吃饭", "饭"]
-                ),
-            ],
-        }
+        """从 JSON 加载废话文学模板"""
+        templates: Dict[NonsenseType, List[NonsenseTemplate]] = {}
+        for item in self._data.get("templates", []):
+            tp = NonsenseType(item["type"])
+            template = NonsenseTemplate(
+                type=tp,
+                template=item["template"],
+                examples=item.get("examples", []),
+                keywords=self._parse_keywords(item.get("keywords", [])),
+            )
+            templates.setdefault(tp, []).append(template)
         return templates
     
     def _load_scene_keywords(self) -> Dict[str, List[NonsenseType]]:
-        """加载场景关键词映射"""
-        return {
-            "工作": [NonsenseType.LEADER_SPEECH, NonsenseType.SYNONYM_REPEAT, NonsenseType.LONG_SENTENCE],
-            "会议": [NonsenseType.LEADER_SPEECH, NonsenseType.SYNONYM_REPEAT, NonsenseType.LONG_SENTENCE],
-            "汇报": [NonsenseType.LEADER_SPEECH, NonsenseType.SYNONYM_REPEAT, NonsenseType.LONG_SENTENCE],
-            "生活": [NonsenseType.OBVIOUS, NonsenseType.CONDITIONAL],
-            "吃饭": [NonsenseType.OBVIOUS, NonsenseType.UNIT_CONVERSION, NonsenseType.REDUNDANCY],
-            "天气": [NonsenseType.SYNONYM_REPEAT, NonsenseType.OBVIOUS],
-            "外貌": [NonsenseType.CONDITIONAL, NonsenseType.OBVIOUS],
-            "社交": [NonsenseType.TIME_LOOP, NonsenseType.REVERSAL],
-            "聊天": [NonsenseType.TIME_LOOP, NonsenseType.FOLLOW_UP],
-            "网络": [NonsenseType.FOLLOW_UP, NonsenseType.RHYME],
-            "评论": [NonsenseType.FOLLOW_UP, NonsenseType.RHYME],
-            "表白": [NonsenseType.REVERSAL, NonsenseType.ASSUMPTION, NonsenseType.HOPE],
-            "被夸": [NonsenseType.FOLLOW_UP, NonsenseType.SYNONYM_REPEAT],
-            "被批评": [NonsenseType.CONDITIONAL, NonsenseType.REVERSAL],
-            "催婚": [NonsenseType.ASSUMPTION, NonsenseType.CONDITIONAL, NonsenseType.HOPE],
-            "尴尬": [NonsenseType.SYNONYM_REPEAT, NonsenseType.TIME_LOOP],
-            "发言": [NonsenseType.LONG_SENTENCE, NonsenseType.LEADER_SPEECH],
-            "总结": [NonsenseType.LONG_SENTENCE, NonsenseType.SYNONYM_REPEAT],
-            "矛盾": [NonsenseType.CONTRADICTION, NonsenseType.SYNONYM_REPEAT],
-            "文学": [NonsenseType.LITERATURE, NonsenseType.FOLLOW_UP],
-            "希望": [NonsenseType.HOPE, NonsenseType.ASSUMPTION],
-            "冗余": [NonsenseType.REDUNDANCY, NonsenseType.UNIT_CONVERSION],
-        }
+        """从 JSON 加载场景关键词映射"""
+        scene_keywords: Dict[str, List[NonsenseType]] = {}
+        for scene, types in self._data.get("scene_keywords", {}).items():
+            scene_keywords[scene] = [NonsenseType(t) for t in types]
+        return scene_keywords
     
     def analyze_scene(self, user_input: str) -> Tuple[Optional[str], List[NonsenseType]]:
         """
@@ -371,40 +145,54 @@ class NonsenseGenerator:
         Returns:
             (场景名称, 推荐的废话类型列表)
         """
-        # 提取关键词
-        keywords = []
-        for word in self.scene_keywords.keys():
-            if word in user_input:
-                keywords.append(word)
+        # 加权匹配：更长关键词、出现次数更多者权重更高，降低短词误触发
+        scene_weights = {}  # 场景名 -> 权重
+        for scene in self.scene_keywords:
+            count = user_input.count(scene)
+            if count <= 0:
+                continue
+            # 权重 = 出现次数 * 词长（更精确的长词贡献更高）
+            scene_weights[scene] = count * len(scene)
         
-        # 根据关键词确定场景和推荐类型
-        if keywords:
-            scene = keywords[0]
-            recommended_types = []
-            for kw in keywords:
-                recommended_types.extend(self.scene_keywords.get(kw, []))
-            return scene, list(set(recommended_types))
+        # 未命中任何场景，直接回退默认
+        if not scene_weights:
+            return None, list(NonsenseType)
         
-        # 默认返回
-        return None, list(NonsenseType)
+        # 取权重最高的场景（权重相同取更长关键词）
+        best_scene = max(scene_weights, key=lambda s: (scene_weights[s], len(s)))
+        
+        # 按权重从高到低汇总推荐类型，去重并保留场景内顺序
+        recommended_types = []
+        for scene in sorted(scene_weights, key=scene_weights.get, reverse=True):
+            for t in self.scene_keywords[scene]:
+                if t not in recommended_types:
+                    recommended_types.append(t)
+        
+        return best_scene, recommended_types
     
     def extract_topic(self, user_input: str) -> str:
         """
         从用户输入中提取话题
         
-        Args:
-            user_input: 用户输入文本
-            
-        Returns:
-            提取的话题词
+        策略：不在全文粗暴剔除人称代词与虚词，而是只剔除开头/收尾的
+        无意义成分与中间安全元词/虚词，尽量保留核心名词短语；若结果为空
+        则回退到兜底话题词。
         """
-        # 提取核心话题：去掉常见关键词和标点
-        topic = user_input
+        topic = user_input.strip()
+        # 剔除开头无意义的发语词/条件词（整段移除，避免把话题拆散）
+        for prefix in self.LEADING_STOPWORDS:
+            if topic.startswith(prefix):
+                topic = topic[len(prefix):]
+                break
+        # 剔除结尾的语气词/疑问尾缀
+        for suffix in self.TRAILING_STOPWORDS:
+            if topic.endswith(suffix):
+                topic = topic[:-len(suffix)]
+        # 剔除中间安全虚词/元词（不含 你我他/们 等可能构成名词短语的代词）
         for word in self.REMOVE_WORDS:
             topic = topic.replace(word, "")
-        # 去掉标点
-        topic = re.sub(r'[，。！？、；：""''（）【】《》]', '', topic)
-        topic = topic.strip()
+        # 去除标点
+        topic = re.sub(r'[，。！？、；：“”‘’"\'（）【】《》\s]', '', topic)
         # 如果话题太长，只取前10个字
         if len(topic) > 10:
             topic = topic[:10]
@@ -477,12 +265,23 @@ class NonsenseGenerator:
         if "{topic}" in result:
             # 对于同义反复类型，使用更简短的关键词
             if template.type == NonsenseType.SYNONYM_REPEAT:
-                # 从模板的keywords中选择一个合适的词
-                short_topic = "情况"  # 默认
+                # 优先命中使用户输入中的关键词（更贴合原意）
+                hit_word = None
                 for kw in template.keywords:
-                    if kw in user_input:
-                        short_topic = kw
+                    if isinstance(kw, str) and kw in user_input:
+                        hit_word = kw
                         break
+                if hit_word is not None:
+                    short_topic = hit_word
+                else:
+                    # 未命中则从候选池随机选取，提升多样性（不再固定为「情况」）
+                    candidate_pool = [kw for kw in template.keywords if isinstance(kw, str)]
+                    # 提取到的话题词如果简短且有意义，也纳入候选池
+                    if topic and topic != "这个" and len(topic) <= 4 and topic not in candidate_pool:
+                        candidate_pool.append(topic)
+                    if not candidate_pool:
+                        candidate_pool = ["情况"]
+                    short_topic = random.choice(candidate_pool)
                 result = result.replace("{topic}", short_topic)
             else:
                 result = result.replace("{topic}", topic)

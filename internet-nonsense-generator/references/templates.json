@@ -1,0 +1,622 @@
+{
+  "templates": [
+    {
+      "type": "synonym_repeat",
+      "template": "情况就是这么个情况，但具体{topic}，还得看{topic}",
+      "examples": [
+        "情况就是这么个情况，但具体什么情况，还得看情况",
+        "情况就是这么个情况，但具体情况，还得看具体情况"
+      ],
+      "keywords": ["情况", "问题", "事情"]
+    },
+    {
+      "type": "synonym_repeat",
+      "template": "说{topic}也{topic}，说不{topic}也不{topic}",
+      "examples": ["说重要也重要，说不重要也不重要"],
+      "keywords": ["重要", "紧急", "困难"]
+    },
+    {
+      "type": "synonym_repeat",
+      "template": "有没有{topic}是要根据有没有{topic}来判定的",
+      "examples": ["有没有意义是要根据有没有意义来判定的"],
+      "keywords": ["意义", "价值", "作用"]
+    },
+    {
+      "type": "synonym_repeat",
+      "template": "这件事说重要也重要，说不重要也不重要，主要看重不重要",
+      "examples": ["这件事说重要也重要，说不重要也不重要，主要看重不重要"],
+      "keywords": ["重要"]
+    },
+    {
+      "type": "synonym_repeat",
+      "template": "我的意见就是没有意见，具体意见要看情况",
+      "examples": ["我的意见就是没有意见，具体意见要看情况"],
+      "keywords": ["意见"]
+    },
+    {
+      "type": "synonym_repeat",
+      "template": "能不能成功取决于能不能成功，成功了就能成功",
+      "examples": ["能不能成功取决于能不能成功，成功了就能成功"],
+      "keywords": ["成功"]
+    },
+    {
+      "type": "synonym_repeat",
+      "template": "这个{topic}的成功取决于我们能否成功完成这个{topic}",
+      "examples": ["这个项目的成功取决于我们能否成功完成这个项目"],
+      "keywords": ["项目", "计划", "任务"]
+    },
+    {
+      "type": "synonym_repeat",
+      "template": "我们的{topic}是制定一个{topic}",
+      "examples": ["我们的计划是制定一个计划"],
+      "keywords": ["计划", "方案"]
+    },
+    {
+      "type": "synonym_repeat",
+      "template": "这个{topic}的解决方案就是解决这个{topic}",
+      "examples": ["这个问题的解决方案就是解决这个问题"],
+      "keywords": ["问题", "难题"]
+    },
+    {
+      "type": "synonym_repeat",
+      "template": "我们需要更多的{topic}来获取更多{topic}",
+      "examples": ["我们需要更多的资源来获取更多资源"],
+      "keywords": ["资源", "机会"]
+    },
+    {
+      "type": "synonym_repeat",
+      "template": "这个{topic}的目的是讨论这个{topic}的目的",
+      "examples": ["这个会议的目的是讨论这个会议的目的"],
+      "keywords": ["会议", "项目"]
+    },
+
+    {
+      "type": "time_loop",
+      "template": "上次这么{emotion}的时候，还是上次",
+      "examples": [
+        "上次这么无语的时候，还是上次",
+        "上次这么生气的时候，还是上次"
+      ],
+      "keywords": ["无语", "好笑", "生气", "开心"]
+    },
+    {
+      "type": "time_loop",
+      "template": "一日不见如隔一日",
+      "examples": ["一日不见如隔一日"],
+      "keywords": ["见面", "时间"]
+    },
+    {
+      "type": "time_loop",
+      "template": "我上次这么好笑还是上次",
+      "examples": ["我上次这么好笑还是上次"],
+      "keywords": ["好笑"]
+    },
+    {
+      "type": "time_loop",
+      "template": "上次见到你的时候还是上次",
+      "examples": ["上次见到你的时候还是上次"],
+      "keywords": ["见面"]
+    },
+    {
+      "type": "time_loop",
+      "template": "我上次吃饭还是上次吃饭的时候",
+      "examples": ["我上次吃饭还是上次吃饭的时候"],
+      "keywords": ["吃饭"]
+    },
+    {
+      "type": "time_loop",
+      "template": "每次睡觉都是在睡觉的时候",
+      "examples": ["每次睡觉都是在睡觉的时候"],
+      "keywords": ["睡觉"]
+    },
+    {
+      "type": "time_loop",
+      "template": "昨天的今天就是今天",
+      "examples": ["昨天的今天就是今天"],
+      "keywords": ["昨天"]
+    },
+
+    {
+      "type": "conditional",
+      "template": "但凡你有点{quality}，也不至于一点{quality}没有",
+      "examples": ["但凡你有点本事，也不至于一点本事没有"],
+      "keywords": ["本事", "能力", "耐心"]
+    },
+    {
+      "type": "conditional",
+      "template": "你要是不{negative}的话，其实还挺{positive}的",
+      "examples": ["你要是不丑的话，其实还挺好看的"],
+      "keywords": [["丑", "好看"], ["笨", "聪明"], ["懒", "勤快"]]
+    },
+    {
+      "type": "conditional",
+      "template": "如果你愿意多花点时间了解我，你就会发现多花了点时间",
+      "examples": ["如果你愿意多花点时间了解我，你就会发现多花了点时间"],
+      "keywords": ["时间", "了解"]
+    },
+    {
+      "type": "conditional",
+      "template": "如果我没猜错的话，我应该没猜错",
+      "examples": ["如果我没猜错的话，我应该没猜错"],
+      "keywords": ["猜错"]
+    },
+    {
+      "type": "conditional",
+      "template": "如果明天不下雨，那明天就不会下雨",
+      "examples": ["如果明天不下雨，那明天就不会下雨"],
+      "keywords": ["下雨"]
+    },
+    {
+      "type": "conditional",
+      "template": "你要是不迟到的话，其实你没迟到",
+      "examples": ["你要是不迟到的话，其实你没迟到"],
+      "keywords": ["迟到"]
+    },
+    {
+      "type": "conditional",
+      "template": "但凡你认真一点，也不至于这么不认真",
+      "examples": ["但凡你认真一点，也不至于这么不认真"],
+      "keywords": ["认真"]
+    },
+
+    {
+      "type": "unit_conversion",
+      "template": "每呼吸六十秒，就过去了一分钟",
+      "examples": ["每呼吸六十秒，就过去了一分钟"],
+      "keywords": ["时间", "呼吸"]
+    },
+    {
+      "type": "unit_conversion",
+      "template": "每过一天，就离昨天更远了一天",
+      "examples": ["每过一天，就离昨天更远了一天"],
+      "keywords": ["时间", "天"]
+    },
+    {
+      "type": "unit_conversion",
+      "template": "每吃一顿饭，就少了一顿饭",
+      "examples": ["每吃一顿饭，就少了一顿饭"],
+      "keywords": ["吃饭", "饭"]
+    },
+    {
+      "type": "unit_conversion",
+      "template": "每走一步路，就离起点远了一步",
+      "examples": ["每走一步路，就离起点远了一步"],
+      "keywords": ["走路", "起点"]
+    },
+    {
+      "type": "unit_conversion",
+      "template": "每说一句话，就少说了一句",
+      "examples": ["每说一句话，就少说了一句"],
+      "keywords": ["说话"]
+    },
+    {
+      "type": "unit_conversion",
+      "template": "每看一秒手机，手机就亮了一秒",
+      "examples": ["每看一秒手机，手机就亮了一秒"],
+      "keywords": ["手机"]
+    },
+
+    {
+      "type": "obvious",
+      "template": "这个{object}，有一股{object}味儿",
+      "examples": [
+        "这个西红柿，有一股番茄味儿",
+        "这个番茄，有一股西红柿味儿"
+      ],
+      "keywords": ["西红柿", "番茄", "鸡蛋"]
+    },
+    {
+      "type": "obvious",
+      "template": "我发现，我{action}之后，就{result}了",
+      "examples": ["我发现，我胖了之后，体重就变重了"],
+      "keywords": [["胖", "体重变重"], ["饿", "想吃饭"], ["困", "想睡觉"]]
+    },
+    {
+      "type": "obvious",
+      "template": "现在的年轻人啊，和老一辈比起来真的年轻",
+      "examples": ["现在的年轻人啊，和老一辈比起来真的年轻"],
+      "keywords": ["年轻"]
+    },
+    {
+      "type": "obvious",
+      "template": "我睡着之前还是醒的",
+      "examples": ["我睡着之前还是醒的"],
+      "keywords": ["睡觉"]
+    },
+    {
+      "type": "obvious",
+      "template": "这杯水是液体的",
+      "examples": ["这杯水是液体的"],
+      "keywords": ["水"]
+    },
+    {
+      "type": "obvious",
+      "template": "太阳从东边升起",
+      "examples": ["太阳从东边升起"],
+      "keywords": ["太阳"]
+    },
+    {
+      "type": "obvious",
+      "template": "冬天比夏天冷",
+      "examples": ["冬天比夏天冷"],
+      "keywords": ["冬天"]
+    },
+
+    {
+      "type": "leader_speech",
+      "template": "既然让我讲两句，那我就来讲两句，具体哪两句呢? 我先随便讲两句",
+      "examples": ["既然让我讲两句，那我就来讲两句，具体哪两句呢? 我先随便讲两句"],
+      "keywords": ["讲话", "发言"]
+    },
+    {
+      "type": "leader_speech",
+      "template": "全文内容大概是这么个事啊，我们讲不是说，不是说不办。但是……",
+      "examples": ["全文内容大概是这么个事啊，我们讲不是说，不是说不办。但是……"],
+      "keywords": ["事情", "问题"]
+    },
+    {
+      "type": "leader_speech",
+      "template": "关于这个问题，我简单说两句，第一句是我要说两句，第二句是我说完了",
+      "examples": ["关于这个问题，我简单说两句，第一句是我要说两句，第二句是我说完了"],
+      "keywords": ["问题", "总结"]
+    },
+    {
+      "type": "leader_speech",
+      "template": "这个事情很重要，重要到什么程度呢？重要到很重要",
+      "examples": ["这个事情很重要，重要到什么程度呢？重要到很重要"],
+      "keywords": ["事情"]
+    },
+
+    {
+      "type": "reversal",
+      "template": "我知道你很{emotion}，但是你先别{emotion}",
+      "examples": [
+        "我知道你很急，但是你先别急",
+        "我知道你很忙，但你先别忙"
+      ],
+      "keywords": ["急", "忙", "饿", "困", "累"]
+    },
+    {
+      "type": "reversal",
+      "template": "给你提个建议，你不要随便给别人提建议",
+      "examples": ["给你提个建议，你不要随便给别人提建议"],
+      "keywords": ["建议"]
+    },
+    {
+      "type": "reversal",
+      "template": "我知道你很难过，但你先别难过",
+      "examples": ["我知道你很难过，但你先别难过"],
+      "keywords": ["难过"]
+    },
+    {
+      "type": "reversal",
+      "template": "我知道你很焦虑，但你先别焦虑",
+      "examples": ["我知道你很焦虑，但你先别焦虑"],
+      "keywords": ["焦虑"]
+    },
+
+    {
+      "type": "assumption",
+      "template": "如果我有{object}，那么这句话就不用加如果两个字了",
+      "examples": ["如果我有男朋友，那么这句话就不用加如果两个字了"],
+      "keywords": ["男朋友", "女朋友", "钱"]
+    },
+    {
+      "type": "assumption",
+      "template": "如果我不说的话，你就不知道我要说什么",
+      "examples": ["如果我不说的话，你就不知道我要说什么"],
+      "keywords": ["说", "知道"]
+    },
+    {
+      "type": "assumption",
+      "template": "如果我有{object}的话，我就有{object}了",
+      "examples": ["如果我有钱的话，我就有钱了"],
+      "keywords": ["钱", "时间"]
+    },
+    {
+      "type": "assumption",
+      "template": "如果我不迟到的话，我就没迟到",
+      "examples": ["如果我不迟到的话，我就没迟到"],
+      "keywords": ["迟到"]
+    },
+
+    {
+      "type": "follow_up",
+      "template": "俗话说得好：俗话说得好",
+      "examples": ["俗话说得好：俗话说得好"],
+      "keywords": ["俗话", "古话"]
+    },
+    {
+      "type": "follow_up",
+      "template": "能力越大，能力就越大",
+      "examples": ["能力越大，能力就越大"],
+      "keywords": ["能力", "责任"]
+    },
+    {
+      "type": "follow_up",
+      "template": "记是记得住，就是想不起来了",
+      "examples": ["记是记得住，就是想不起来了"],
+      "keywords": ["记得"]
+    },
+    {
+      "type": "follow_up",
+      "template": "懂的都懂，不懂的说了也不懂",
+      "examples": ["懂的都懂，不懂的说了也不懂"],
+      "keywords": ["懂"]
+    },
+    {
+      "type": "follow_up",
+      "template": "知道的都知道，不知道的说了也不知道",
+      "examples": ["知道的都知道，不知道的说了也不知道"],
+      "keywords": ["知道"]
+    },
+
+    {
+      "type": "rhyme",
+      "template": "我前脚刚走，后脚就跟上了",
+      "examples": ["我前脚刚走，后脚就跟上了"],
+      "keywords": ["走", "跟"]
+    },
+    {
+      "type": "rhyme",
+      "template": "你跟我搁这儿搁这儿呢",
+      "examples": ["你跟我搁这儿搁这儿呢"],
+      "keywords": ["这儿", "那儿"]
+    },
+    {
+      "type": "rhyme",
+      "template": "我左脚刚迈，右脚就跟上了",
+      "examples": ["我左脚刚迈，右脚就跟上了"],
+      "keywords": ["走", "跟"]
+    },
+    {
+      "type": "rhyme",
+      "template": "你说的对，你说的都对",
+      "examples": ["你说的对，你说的都对"],
+      "keywords": ["对"]
+    },
+
+    {
+      "type": "long_sentence",
+      "template": "关于{topic}，我简单说两句，第一句是我要说两句，第二句是我说完了",
+      "examples": ["关于这个问题，我简单说两句，第一句是我要说两句，第二句是我说完了"],
+      "keywords": ["问题", "事情", "项目"]
+    },
+    {
+      "type": "long_sentence",
+      "template": "这个{topic}很重要，重要到什么程度呢？重要到很重要",
+      "examples": ["这个事情很重要，重要到什么程度呢？重要到很重要"],
+      "keywords": ["事情", "问题", "项目"]
+    },
+    {
+      "type": "long_sentence",
+      "template": "既然你问到了{topic}，那我就不得不回答一下{topic}，{topic}问得好，好在哪里呢？好在问得好",
+      "examples": ["既然你问到了这个问题，那我就不得不回答一下这个问题，这个问题问得好，好在哪里呢？好在问得好"],
+      "keywords": ["问题", "事情", "项目"]
+    },
+    {
+      "type": "long_sentence",
+      "template": "我简单说三点，第一点是我要说三点，第二点是我说完了，第三点是补充前两点",
+      "examples": ["我简单说三点，第一点是我要说三点，第二点是我说完了，第三点是补充前两点"],
+      "keywords": ["三点"]
+    },
+    {
+      "type": "long_sentence",
+      "template": "这个方案可行不可行呢？可行，但具体怎么行，还得看怎么不行",
+      "examples": ["这个方案可行不可行呢？可行，但具体怎么行，还得看怎么不行"],
+      "keywords": ["方案", "计划", "项目"]
+    },
+    {
+      "type": "long_sentence",
+      "template": "关于这个{topic}的进展，我总结一下，总结什么呢？总结一下我总结的内容",
+      "examples": ["关于这个项目的进展，我总结一下，总结什么呢？总结一下我总结的内容"],
+      "keywords": ["项目", "计划", "工作"]
+    },
+
+    {
+      "type": "contradiction",
+      "template": "我上次这么{emotion}的时候，还是上次，具体什么时候呢？就是上次",
+      "examples": ["我上次这么无语的时候，还是上次，具体什么时候呢？就是上次"],
+      "keywords": ["无语", "好笑", "生气", "开心"]
+    },
+    {
+      "type": "contradiction",
+      "template": "这个方案可行不可行呢？可行，但具体怎么行，还得看怎么不行",
+      "examples": ["这个方案可行不可行呢？可行，但具体怎么行，还得看怎么不行"],
+      "keywords": ["方案", "计划", "项目"]
+    },
+    {
+      "type": "contradiction",
+      "template": "你说的话但凡有一点{quality}也不至于一点{quality}没有",
+      "examples": ["你说的话但凡有一点意义也不至于一点意义也没有"],
+      "keywords": ["意义", "价值", "作用"]
+    },
+    {
+      "type": "contradiction",
+      "template": "这件事说重要也重要，说不重要也不重要，主要看重不重要",
+      "examples": ["这件事说重要也重要，说不重要也不重要，主要看重不重要"],
+      "keywords": ["重要"]
+    },
+    {
+      "type": "contradiction",
+      "template": "我的意见就是没有意见，具体意见要看情况",
+      "examples": ["我的意见就是没有意见，具体意见要看情况"],
+      "keywords": ["意见"]
+    },
+    {
+      "type": "contradiction",
+      "template": "能不能成功取决于能不能成功，成功了就能成功",
+      "examples": ["能不能成功取决于能不能成功，成功了就能成功"],
+      "keywords": ["成功"]
+    },
+
+    {
+      "type": "literature",
+      "template": "听君一席话，如听一席话",
+      "examples": ["听君一席话，如听一席话"],
+      "keywords": ["一席话", "说话"]
+    },
+    {
+      "type": "literature",
+      "template": "三人行则必有三人",
+      "examples": ["三人行则必有三人"],
+      "keywords": ["三人", "行"]
+    },
+    {
+      "type": "literature",
+      "template": "一日不见如隔一日",
+      "examples": ["一日不见如隔一日"],
+      "keywords": ["一日", "不见"]
+    },
+    {
+      "type": "literature",
+      "template": "学而不思则罔，思而不学则罔",
+      "examples": ["学而不思则罔，思而不学则罔"],
+      "keywords": ["学习", "思考"]
+    },
+    {
+      "type": "literature",
+      "template": "温故而知新，温故而知新",
+      "examples": ["温故而知新，温故而知新"],
+      "keywords": ["学习"]
+    },
+    {
+      "type": "literature",
+      "template": "知之为知之，不知为不知",
+      "examples": ["知之为知之，不知为不知"],
+      "keywords": ["知道"]
+    },
+    {
+      "type": "literature",
+      "template": "己所不欲，勿施于己所不欲",
+      "examples": ["己所不欲，勿施于己所不欲"],
+      "keywords": ["处事"]
+    },
+
+    {
+      "type": "hope",
+      "template": "如果我有{object}，那么这句话就不用加如果两个字了",
+      "examples": ["如果我有男朋友，那么这句话就不用加如果两个字了"],
+      "keywords": ["男朋友", "女朋友", "钱"]
+    },
+    {
+      "type": "hope",
+      "template": "如果你愿意多花点时间了解我，你就会发现多花了点时间",
+      "examples": ["如果你愿意多花点时间了解我，你就会发现多花了点时间"],
+      "keywords": ["时间", "了解"]
+    },
+    {
+      "type": "hope",
+      "template": "如果我不说的话，你就不知道我要说什么",
+      "examples": ["如果我不说的话，你就不知道我要说什么"],
+      "keywords": ["说", "知道"]
+    },
+    {
+      "type": "hope",
+      "template": "如果我有{object}的话，我就有{object}了",
+      "examples": ["如果我有钱的话，我就有钱了"],
+      "keywords": ["钱", "时间"]
+    },
+    {
+      "type": "hope",
+      "template": "如果我不迟到的话，我就没迟到",
+      "examples": ["如果我不迟到的话，我就没迟到"],
+      "keywords": ["迟到"]
+    },
+    {
+      "type": "hope",
+      "template": "如果我努力的话，我就努力了",
+      "examples": ["如果我努力的话，我就努力了"],
+      "keywords": ["努力"]
+    },
+
+    {
+      "type": "redundancy",
+      "template": "每呼吸六十秒，就过去了一分钟",
+      "examples": ["每呼吸六十秒，就过去了一分钟"],
+      "keywords": ["呼吸", "时间"]
+    },
+    {
+      "type": "redundancy",
+      "template": "每过一天，就离昨天更远了一天",
+      "examples": ["每过一天，就离昨天更远了一天"],
+      "keywords": ["时间", "天"]
+    },
+    {
+      "type": "redundancy",
+      "template": "每吃一顿饭，就少了一顿饭",
+      "examples": ["每吃一顿饭，就少了一顿饭"],
+      "keywords": ["吃饭", "饭"]
+    },
+    {
+      "type": "redundancy",
+      "template": "每走一步路，就离起点远了一步",
+      "examples": ["每走一步路，就离起点远了一步"],
+      "keywords": ["走路", "起点"]
+    },
+    {
+      "type": "redundancy",
+      "template": "每说一句话，就少说了一句",
+      "examples": ["每说一句话，就少说了一句"],
+      "keywords": ["说话"]
+    },
+    {
+      "type": "redundancy",
+      "template": "每看一秒手机，手机就亮了一秒",
+      "examples": ["每看一秒手机，手机就亮了一秒"],
+      "keywords": ["手机"]
+    },
+    {
+      "type": "redundancy",
+      "template": "每睡一觉，就少了一觉",
+      "examples": ["每睡一觉，就少了一觉"],
+      "keywords": ["睡觉"]
+    }
+  ],
+
+  "scene_keywords": {
+    "工作": ["leader_speech", "synonym_repeat", "long_sentence"],
+    "会议": ["leader_speech", "synonym_repeat", "long_sentence"],
+    "汇报": ["leader_speech", "synonym_repeat", "long_sentence"],
+    "生活": ["obvious", "conditional"],
+    "吃饭": ["obvious", "unit_conversion", "redundancy"],
+    "天气": ["synonym_repeat", "obvious"],
+    "外貌": ["conditional", "obvious"],
+    "社交": ["time_loop", "reversal"],
+    "聊天": ["time_loop", "follow_up"],
+    "网络": ["follow_up", "rhyme"],
+    "评论": ["follow_up", "rhyme"],
+    "表白": ["reversal", "assumption", "hope"],
+    "被夸": ["follow_up", "synonym_repeat"],
+    "被批评": ["conditional", "reversal"],
+    "催婚": ["assumption", "conditional", "hope"],
+    "尴尬": ["synonym_repeat", "time_loop"],
+    "发言": ["long_sentence", "leader_speech"],
+    "总结": ["long_sentence", "synonym_repeat"],
+    "矛盾": ["contradiction", "synonym_repeat"],
+    "文学": ["literature", "follow_up"],
+    "希望": ["hope", "assumption"],
+    "冗余": ["redundancy", "unit_conversion"]
+  },
+
+  "vocab": {
+    "EMOTIONS": ["急", "忙", "饿", "困", "累", "无语", "好笑", "生气", "开心"],
+    "OBJECTS": ["西红柿", "番茄", "鸡蛋", "苹果", "手机"],
+    "ACTION_RESULT_PAIRS": [
+      ["胖", "体重变重"],
+      ["饿", "想吃饭"],
+      ["困", "想睡觉"]
+    ],
+    "QUALITIES": ["本事", "能力", "耐心", "毅力"],
+    "NEGATIVE_POSITIVE_PAIRS": [
+      ["丑", "好看"],
+      ["笨", "聪明"],
+      ["懒", "勤快"]
+    ],
+    "REMOVE_WORDS": [
+      "如果", "怎么", "如何", "说", "用", "废话", "文学", "回复", "面对",
+      "情况", "有人", "在", "了", "的", "吗", "呢", "吧", "啊",
+      "有没有", "会不会", "是不是", "为什么", "怎么样"
+    ]
+  }
+}
