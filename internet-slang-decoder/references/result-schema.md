@@ -7,6 +7,9 @@
   "original_text": "用户原始输入",
   "context": "用户指定的上下文（可为 null）",
   "inferred_domain": "推断的领域（可为 null）",
+  "truncated": false,
+  "too_long": false,
+  "notice": "可有可无，输入超长时的提示信息（可为 null）",
   "found": [
     {
       "abbreviation": "缩写",
@@ -17,8 +20,9 @@
           "domain": "领域枚举值",
           "confidence": 0.85,
           "examples": ["例句"],
-          "source": "builtin|web_search|cache",
-          "notes": "备注（可为 null）"
+          "source": "builtin|web_search|cache|hotword",
+          "notes": "备注（可为 null）",
+          "recommended": true
         }
       ]
     }
@@ -34,6 +38,9 @@
   ]
 }
 ```
+
+> - `too_long=True`：输入超过 500 字符且未显式处理时的提示结果，`found`/`unknown` 为空，交由用户决定。
+> - `recommended`：上下文消歧后标注的最优多义项（`matches` 中为 true 的条目标记 ★推荐）。
 
 ## 领域枚举值
 

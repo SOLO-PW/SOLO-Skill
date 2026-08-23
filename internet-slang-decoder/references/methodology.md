@@ -13,9 +13,19 @@
 
 ## 缩写识别规则
 
-- 正则模式：`[a-zA-Z]{2,6}`（纯字母）+ `[a-zA-Z][0-9][a-zA-Z0-9]{0,4}`（混合）
-- 过滤：500+ 常见英文单词（详见 `decoder.py` 的 `common_words`）
-- 优先级：已知缩写（在 `scripts/slang_db.json` 中）优先匹配
+- 正则模式：`[a-zA-Z]{2,10}`（纯字母）+ `[a-zA-Z][0-9][a-zA-Z0-9]{0,4}`（混合）
+- 过滤：小型英文词频字典（`scripts/common_words.json`，替代原先内联硬编码的上千行停用词表；加载失败时回退到内置最小集）
+- 优先级：已知缩写（在 `scripts/slang_db.json` 或 `hotwords.json` 中）优先匹配，不受词频字典过滤影响
+- 上限：单次识别最多返回 20 个缩写
+
+## 输入长度（截断提示）
+
+- 阈值：`MAX_INPUT_LEN = 500` 字符
+- **NEVER 静默截断**。输入超过阈值时：
+  - 默认返回 `too_long=True` 的提示结果，交由用户决定（精简输入 / 显式截断 / 全文解析），不再偷偷丢弃尾部内容
+  - `decode(..., truncate=True)` 显式按前 500 字符解析
+  - `decode(..., allow_partial=True)` 全文解析，仅在结果中附带 `notice` 提示
+- CLI 对应：`--truncate`、`--allow-partial`
 
 ## 搜索闭环
 
@@ -58,6 +68,23 @@
 - 含义过短（<3字）→ 置信度 -10%
 - 含义长度合理（5-30字）→ 置信度 +5%
 - 上下文领域匹配 → 置信度 +10%
+
+## 上下文消歧
+
+多义缩写（GG/OP/MVP/DM 等）排序不再只依赖置信度，而采用 `_disambiguate_entries()`：
+
+- **领域一致性**：与推断领域一致的词条 +0.3 强加分（强信号）
+- **词性/用法先验**：按领域的轻量动词/名词启发线索 +0.05（如游戏圈判断"太强/技能/动作"，不依赖外部 POS 工具）
+- 最终按 (领域一致性, 置信度) 排序，并把最优项标记为 `recommended`（输出中显示 `★推荐`）
+- 单义结果不受消歧影响
+
+## 词条更新机制
+
+`scripts/slang_db.json` 是主词库；为避免网络迭代导致词条过时，新增 **热词层 `scripts/hotwords.json`**：
+
+- 通过 `python scripts/decoder.py --add <ABBR> <FULL_FORM> <MEANING> [--domain X] [--confidence N] [--notes ...]` 增量写入
+- 加载时热词自动合入主词库，并覆盖同缩写+同全称的旧词条（`source` 标记为 `hotword`）
+- MUST 优先用热词层做增量更新，而非直接改 `slang_db.json`（避免重跑 `build_refs.py` 引发 references 口径漂移）
 
 ## 回填格式
 

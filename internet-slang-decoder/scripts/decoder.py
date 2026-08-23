@@ -13,9 +13,39 @@ from typing import List, Dict, Optional, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 
-CACHE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'cache')
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+CACHE_DIR = os.path.join(SCRIPT_DIR, '..', 'cache')
 CACHE_FILE = os.path.join(CACHE_DIR, 'search_cache.json')
 CACHE_TTL = 30 * 24 * 3600  # 30 天过期
+
+COMMON_WORDS_FILE = os.path.join(SCRIPT_DIR, 'common_words.json')
+HOTWORDS_FILE = os.path.join(SCRIPT_DIR, 'hotwords.json')
+MAX_INPUT_LEN = 500  # 输入长度阈值（字符）
+
+# common_words.json 缺失时的内置回退（精简最小集），避免脚本因数据文件缺失而报错
+_FALLBACK_COMMON_WORDS = frozenset(
+    "a an and the is are was were be been being have has had do does did "
+    "i you he she it we they me him her us them my your his our their this that "
+    "these those of in on at to from for with by about into over after under between "
+    "as but or not so than then if else while when where how why what which who whom whose "
+    "can could will would shall should may might must all any both few more most much some such "
+    "no yes own same very just too also almost only even ever never now here there of "
+    "to be".split()
+)
+
+
+def _load_common_words() -> set:
+    """加载停用/常见英文高频词表（小型词频字典）。空则回退到内置最小集。"""
+    try:
+        if os.path.exists(COMMON_WORDS_FILE):
+            with open(COMMON_WORDS_FILE, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            words = data.get('words', []) if isinstance(data, dict) else data
+            if words:
+                return {str(w).lower() for w in words}
+    except (json.JSONDecodeError, IOError, AttributeError):
+        pass
+    return set(_FALLBACK_COMMON_WORDS)
 
 class SearchCache:
     """搜索结果缓存，持久化到 JSON 文件"""
@@ -122,7 +152,88 @@ class SlangEntry:
 class SlangDatabase:
     def __init__(self):
         self.entries: Dict[str, List[SlangEntry]] = {}
+        self.hotwords: List[SlangEntry] = []
         self._load_builtin_data()
+        self._load_hotwords()
+
+    def _load_hotwords(self):
+        """从 hotwords.json 加载热词更新层，覆盖/追加到主词库"""
+        if os.path.exists(HOTWORDS_FILE):
+            try:
+                with open(HOTWORDS_FILE, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+            except (json.JSONDecodeError, IOError):
+                return
+            domain_map = {d.value: d for d in Domain}
+            for item in data.get('entries', []):
+                try:
+                    domain = domain_map.get(item.get('domain', 'unknown'), Domain.UNKNOWN)
+                    entry = SlangEntry(
+                        abbreviation=item['abbreviation'],
+                        full_form=item['full_form'],
+                        meaning=item.get('meaning', ''),
+                        domain=domain,
+                        confidence=item.get('confidence', 0.7),
+                        examples=item.get('examples', []),
+                        source=item.get('source', 'hotword'),
+                        notes=item.get('notes'),
+                    )
+                except KeyError:
+                    continue
+                self.hotwords.append(entry)
+                abbr_lower = entry.abbreviation.lower()
+                # 覆盖同缩写+同全称的内置旧词条
+                if abbr_lower in self.entries:
+                    self.entries[abbr_lower] = [e for e in self.entries[abbr_lower]
+                                                if not (e.full_form.lower() == entry.full_form.lower())]
+                self.add_entry(entry)
+
+    def add_hotword(self, abbreviation: str, full_form: str, meaning: str,
+                    domain: Optional[Domain] = None, confidence: float = 0.7,
+                    examples: Optional[List[str]] = None, notes: Optional[str] = None) -> SlangEntry:
+        """新增/覆盖热词并持久化到 hotwords.json（词条更新机制）"""
+        entry = SlangEntry(
+            abbreviation=abbreviation, full_form=full_form, meaning=meaning,
+            domain=domain if domain else Domain.UNKNOWN,
+            confidence=confidence, examples=examples or [],
+            source='hotword', notes=notes,
+        )
+        # 处理与现有热词重复，覆盖同缩写+同全称
+        abbr_lower = entry.abbreviation.lower()
+        self.hotwords = [e for e in self.hotwords if not (
+            e.abbreviation.lower() == abbr_lower and e.full_form.lower() == entry.full_form.lower()
+        )]
+        self.hotwords.append(entry)
+        self.add_entry(entry)
+        self._persist_hotwords()
+        return entry
+
+    def _persist_hotwords(self):
+        """将内存热词写回 hotwords.json"""
+        payload = {
+            "version": "1.0.0",
+            "title": "Hotword update layer",
+            "description": "热词更新层：独立于 slang_db.json 主词库，用于增量添加/更新词条。",
+            "updated_at": time.strftime('%Y-%m-%d'),
+            "entries": [
+                {
+                    "abbreviation": e.abbreviation,
+                    "full_form": e.full_form,
+                    "meaning": e.meaning,
+                    "domain": e.domain.value,
+                    "confidence": e.confidence,
+                    "examples": e.examples,
+                    "source": e.source,
+                    "notes": e.notes,
+                }
+                for e in sorted(self.hotwords, key=lambda x: x.abbreviation.lower())
+            ],
+        }
+        try:
+            with open(HOTWORDS_FILE, 'w', encoding='utf-8') as f:
+                json.dump(payload, f, ensure_ascii=False, indent=2)
+        except IOError:
+            pass
 
     def _load_builtin_data(self):
         """从 scripts/slang_db.json 加载词条，若不存在则回退到内置精简版"""
@@ -193,165 +304,32 @@ class SlangDecoder:
     def __init__(self):
         self.db = SlangDatabase()
         self.cache = SearchCache()
+        self.common_words = _load_common_words()
 
-    def extract_abbreviations(self, text: str) -> List[str]:
-        # 输入长度限制：超过 500 字符截断
-        MAX_INPUT_LEN = 500
+    def extract_abbreviations(self, text: str, truncate: bool = False) -> List[str]:
+        # 输入长度阈值：默认不静默截断，超限时通过返回值告知调用方
+        truncated = False
         if len(text) > MAX_INPUT_LEN:
-            text = text[:MAX_INPUT_LEN]
+            if truncate:
+                text = text[:MAX_INPUT_LEN]
+                truncated = True
+            # 不截断时仍继续处理全文，但由 `decode()` 负责提示用户
 
         # 匹配纯字母 2-10 位（覆盖 tsundere/yandere/stablecoin 等）+ 混合数字字母（如 u1s1, k8s）
         pattern = r'[a-zA-Z]{2,10}|[a-zA-Z][0-9][a-zA-Z0-9]{0,4}'
         matches = re.findall(pattern, text)
-        common_words = {
-            'the', 'and', 'for', 'are', 'but', 'not', 'you', 'all', 'had', 'her',
-            'was', 'our', 'out', 'day', 'get', 'has', 'him', 'his', 'how', 'its',
-            'may', 'new', 'now', 'old', 'see', 'two', 'who', 'boy', 'did', 'she',
-            'use', 'way', 'many', 'oil', 'sit', 'set', 'run', 'eat', 'far', 'sea',
-            'eye', 'ago', 'off', 'too', 'any', 'try', 'ask', 'end', 'why', 'let',
-            'put', 'own', 'tell', 'very', 'when', 'much', 'there', 'their', 'what',
-            'said', 'each', 'which', 'will', 'about', 'could', 'other', 'after',
-            'first', 'never', 'these', 'think', 'where', 'being', 'every', 'great',
-            'might', 'shall', 'still', 'those', 'while', 'this', 'that', 'with',
-            'have', 'from', 'they', 'been', 'were', 'time', 'than', 'them', 'into',
-            'just', 'like', 'over', 'also', 'back', 'only', 'know', 'take', 'year',
-            'good', 'some', 'come', 'make', 'well', 'work', 'life', 'even', 'more',
-            'want', 'here', 'look', 'down', 'most', 'long', 'last', 'find', 'give',
-            'does', 'made', 'part', 'such', 'keep', 'call', 'came', 'need', 'feel',
-            'seem', 'turn', 'hand', 'sure', 'upon', 'head', 'help', 'home', 'side',
-            'move', 'both', 'five', 'once', 'same', 'must', 'name', 'left', 'done',
-            'open', 'case', 'show', 'live', 'play', 'went', 'told', 'seen', 'hear',
-            'talk', 'soon', 'read', 'stop', 'face', 'fact', 'land', 'line', 'kind',
-            'next', 'word', 'thing', 'world', 'house', 'night', 'found', 'thought',
-            'went', 'story', 'point', 'right', 'number', 'place', 'small', 'water',
-            'young', 'learn', 'change', 'light', 'power', 'large', 'until', 'group',
-            'began', 'often', 'later', 'start', 'close', 'question', 'against',
-            'high', 'school', 'every', 'leave', 'family', 'city', 'tree', 'cross',
-            'in', 'on', 'at', 'to', 'of', 'by', 'up', 'or', 'an', 'if', 'so',
-            'do', 'no', 'go', 'be', 'he', 'we', 'me', 'it', 'am', 'as', 'is',
-            'us', 'my', 'vs', 'ie', 'eg',
-            # 7-10 字母常见词
-            'about', 'after', 'again', 'being', 'below', 'could', 'doing', 'during',
-            'every', 'first', 'found', 'given', 'going', 'great', 'having', 'help',
-            'house', 'large', 'later', 'least', 'learn', 'never', 'often', 'other',
-            'place', 'plant', 'point', 'right', 'since', 'small', 'sound', 'still',
-            'story', 'study', 'taken', 'their', 'there', 'these', 'thing', 'think',
-            'those', 'three', 'under', 'until', 'water', 'where', 'which', 'while',
-            'world', 'would', 'write', 'above', 'along', 'among', 'begin', 'black',
-            'bring', 'build', 'carry', 'catch', 'cause', 'check', 'child', 'choose',
-            'class', 'clean', 'clear', 'climb', 'color', 'cover', 'cross', 'dance',
-            'doubt', 'dream', 'drink', 'drive', 'early', 'earth', 'eight', 'enjoy',
-            'enter', 'equal', 'event', 'field', 'fight', 'final', 'force', 'front',
-            'fruit', 'guess', 'happy', 'heart', 'heavy', 'horse', 'image', 'inner',
-            'issue', 'knife', 'known', 'label', 'laugh', 'layer', 'level', 'local',
-            'lower', 'lucky', 'magic', 'major', 'march', 'match', 'metal', 'model',
-            'money', 'month', 'moral', 'music', 'night', 'noise', 'north', 'noted',
-            'offer', 'order', 'outer', 'owner', 'paint', 'paper', 'party', 'peace',
-            'phone', 'photo', 'piano', 'piece', 'pilot', 'pitch', 'pixel', 'plain',
-            'plane', 'plate', 'plaza', 'pound', 'press', 'price', 'pride', 'prime',
-            'prince','proof', 'proud', 'queen', 'quick', 'quiet', 'quite', 'radio',
-            'raise', 'range', 'rapid', 'reach', 'ready', 'reply', 'ridge', 'river',
-            'robot', 'roger', 'round', 'route', 'royal', 'rural', 'scale', 'scene',
-            'scope', 'score', 'sense', 'serve', 'seven', 'share', 'sharp', 'sheet',
-            'shift', 'shine', 'shirt', 'shock', 'shore', 'short', 'sight', 'since',
-            'sixty', 'skill', 'sleep', 'slide', 'smart', 'smile', 'smoke', 'solar',
-            'solid', 'solve', 'sorry', 'south', 'space', 'spare', 'speak', 'speed',
-            'spend', 'spice', 'split', 'sport', 'squad', 'staff', 'stage', 'stake',
-            'stand', 'start', 'state', 'steam', 'steel', 'steep', 'stick', 'stock',
-            'stone', 'store', 'storm', 'story', 'strip', 'stuck', 'style', 'sugar',
-            'suite', 'super', 'sweet', 'swing', 'table', 'taste', 'teach', 'theme',
-            'thick', 'tiger', 'tight', 'tired', 'title', 'today', 'token', 'total',
-            'touch', 'tough', 'tower', 'track', 'trade', 'train', 'trait', 'treat',
-            'trend', 'trial', 'tribe', 'trick', 'truck', 'truly', 'trust', 'truth',
-            'twice', 'twist', 'uncle', 'under', 'union', 'unite', 'upper', 'upset',
-            'urban', 'usual', 'valid', 'value', 'video', 'virus', 'visit', 'vital',
-            'vocal', 'voice', 'watch', 'wheel', 'where', 'white', 'whole', 'whose',
-            'woman', 'worse', 'worst', 'worth', 'wound', 'write', 'wrong', 'youth',
-            'zero', 'zone',
-            'hard', 'really', 'since', 'before', 'early', 'body', 'state',
-            'white', 'black', 'red', 'blue', 'best', 'door', 'between',
-            'while', 'again', 'car', 'order', 'paper', 'children',
-            'plan', 'quite', 'class', 'music', 'mind', 'today', 'money',
-            'bring', 'happen', 'stand', 'room', 'book', 'map', 'air', 'write',
-            'table', 'river', 'second', 'fire', 'watch', 'listen',
-            'build', 'spend', 'grow', 'low', 'true', 'cold', 'dog', 'top',
-            'road', 'mark', 'rock', 'short', 'food', 'love', 'girl', 'person',
-            'art', 'bird', 'fish', 'mountain', 'sing', 'color', 'ball',
-            # 补充常见 3-4 字母单词
-            'can', 'may', 'yet', 'own', 'few', 'six', 'ten', 'big', 'bit',
-            'cut', 'dry', 'eat', 'far', 'fit', 'fly', 'gap', 'god', 'gun',
-            'hat', 'hit', 'hot', 'ill', 'job', 'joy', 'key', 'kid', 'lab',
-            'law', 'lay', 'led', 'leg', 'lie', 'lip', 'log', 'lot', 'low',
-            'met', 'mix', 'net', 'nor', 'odd', 'oil', 'pay', 'per', 'pie',
-            'pin', 'pot', 'raw', 'row', 'sad', 'sat', 'saw', 'son', 'tip',
-            'toe', 'ton', 'trip', 'van', 'war', 'win', 'yes', 'yet', 'zoo',
-            'area', 'army', 'baby', 'base', 'body', 'born', 'camp', 'card',
-            'care', 'cash', 'cell', 'chip', 'club', 'coat', 'code', 'cold',
-            'copy', 'core', 'cost', 'crew', 'crop', 'data', 'dawn', 'deal',
-            'dear', 'deep', 'desk', 'diet', 'dirt', 'dish', 'disk', 'door',
-            'dose', 'down', 'draw', 'dust', 'duty', 'earn', 'ease', 'east',
-            'edge', 'else', 'even', 'evil', 'exam', 'exit', 'face', 'fact',
-            'fair', 'fall', 'fame', 'farm', 'fear', 'file', 'fill', 'film',
-            'fine', 'firm', 'fish', 'flag', 'flat', 'flow', 'fold', 'folk',
-            'font', 'food', 'foot', 'ford', 'form', 'fort', 'four', 'free',
-            'from', 'fuel', 'full', 'fund', 'gain', 'gate', 'gift', 'glad',
-            'goal', 'gold', 'golf', 'grab', 'gray', 'grip', 'gulf', 'hair',
-            'half', 'hall', 'halt', 'hang', 'harm', 'hate', 'have', 'head',
-            'hear', 'heat', 'heel', 'hell', 'help', 'hide', 'high', 'hill',
-            'hint', 'hire', 'hold', 'hole', 'holy', 'hook', 'hope', 'horn',
-            'host', 'hour', 'huge', 'hunt', 'hurt', 'idea', 'inch', 'iron',
-            'item', 'jack', 'jane', 'jean', 'join', 'joke', 'jump', 'jury',
-            'jury', 'just', 'keen', 'kick', 'kill', 'king', 'kiss', 'knee',
-            'knock', 'know', 'lack', 'lady', 'lake', 'lamp', 'land', 'lane',
-            'last', 'late', 'lead', 'leaf', 'lean', 'left', 'lend', 'lift',
-            'like', 'limit', 'line', 'link', 'list', 'live', 'load', 'loan',
-            'lock', 'long', 'look', 'lord', 'lose', 'loss', 'lost', 'lots',
-            'luck', 'lung', 'mail', 'main', 'make', 'male', 'mall', 'many',
-            'mark', 'mass', 'mate', 'math', 'meal', 'mean', 'meat', 'meet',
-            'menu', 'mere', 'mild', 'mile', 'milk', 'mill', 'mind', 'mine',
-            'miss', 'mode', 'mood', 'moon', 'more', 'most', 'move', 'much',
-            'must', 'myth', 'nail', 'navy', 'near', 'neat', 'neck', 'need',
-            'news', 'nice', 'nine', 'node', 'none', 'noon', 'norm', 'nose',
-            'note', 'noun', 'odds', 'okay', 'once', 'only', 'onto', 'open',
-            'oral', 'oven', 'over', 'pace', 'pack', 'page', 'pain', 'pair',
-            'pale', 'palm', 'park', 'part', 'pass', 'past', 'path', 'peak',
-            'peer', 'pick', 'pile', 'pine', 'pink', 'pipe', 'plan', 'play',
-            'plot', 'plug', 'plus', 'poem', 'poet', 'poll', 'pond', 'pool',
-            'poor', 'pope', 'port', 'pose', 'post', 'pour', 'pray', 'pull',
-            'pump', 'pure', 'push', 'quit', 'race', 'rail', 'rain', 'rank',
-            'rare', 'rate', 'read', 'real', 'rear', 'rely', 'rent', 'rest',
-            'rice', 'rich', 'ride', 'ring', 'rise', 'risk', 'role', 'roll',
-            'roof', 'root', 'rope', 'rose', 'ruin', 'rush', 'safe', 'sake',
-            'sale', 'salt', 'same', 'sand', 'save', 'seat', 'seed', 'seek',
-            'seem', 'self', 'sell', 'send', 'shed', 'ship', 'shop', 'shot',
-            'show', 'shut', 'sick', 'side', 'sigh', 'sign', 'silk', 'sing',
-            'sink', 'site', 'size', 'skin', 'slip', 'slow', 'snap', 'snow',
-            'soft', 'soil', 'sole', 'some', 'song', 'soon', 'sort', 'soul',
-            'span', 'spin', 'spot', 'star', 'stay', 'step', 'stop', 'such',
-            'suit', 'sure', 'swim', 'tail', 'tale', 'talk', 'tall', 'tank',
-            'tape', 'task', 'team', 'tear', 'tell', 'tend', 'tent', 'term',
-            'test', 'text', 'that', 'them', 'then', 'they', 'thin', 'this',
-            'thus', 'tiny', 'tire', 'tone', 'tool', 'tour', 'town', 'tree',
-            'trip', 'tube', 'tuck', 'turn', 'twin', 'type', 'ugly', 'unit',
-            'upon', 'urge', 'used', 'user', 'vast', 'very', 'vice', 'view',
-            'vine', 'vote', 'wade', 'wage', 'wait', 'wake', 'walk', 'wall',
-            'want', 'ward', 'warm', 'warn', 'wash', 'wave', 'weak', 'wear',
-            'weed', 'week', 'well', 'west', 'what', 'when', 'whom', 'wide',
-            'wife', 'wild', 'will', 'wind', 'wine', 'wing', 'wire', 'wise',
-            'wish', 'with', 'wolf', 'wood', 'wool', 'word', 'work', 'wrap',
-            'yard', 'yeah', 'zero', 'zone',
-        }
         abbreviations = []
         for match in matches:
             match_lower = match.lower()
             # 已知缩写优先匹配，不在过滤列表中
             if match_lower in self.db.entries:
                 abbreviations.append(match)
-            elif match_lower not in common_words and len(match) >= 2:
+            elif match_lower not in self.common_words and len(match) >= 2:
                 abbreviations.append(match)
         # 最多返回 20 个缩写，避免超长文本性能问题
         MAX_ABBR = 20
         result = list(set(abbreviations))
+        result.sort(key=len, reverse=True)
         return result[:MAX_ABBR]
 
     def infer_domain(self, text: str, context: Optional[str] = None) -> Optional[Domain]:
@@ -363,8 +341,16 @@ class SlangDecoder:
                     return domain
         return None
 
-    def decode(self, text: str, context: Optional[str] = None) -> Dict:
-        abbreviations = self.extract_abbreviations(text)
+    def decode(self, text: str, context: Optional[str] = None, truncate: bool = False,
+               allow_partial: bool = False) -> Dict:
+        # 输入超长处理：不再静默截断，超限时返回提示由用户决定（除非显式 truncate）
+        too_long = len(text) > MAX_INPUT_LEN
+        if too_long and not truncate and not allow_partial:
+            return self._too_long_result(text, context)
+
+        processed_text = text[:MAX_INPUT_LEN] if truncate else text
+
+        abbreviations = self.extract_abbreviations(processed_text, truncate=truncate)
         inferred_domain = self.infer_domain(text, context)
 
         results = []
@@ -373,13 +359,8 @@ class SlangDecoder:
         for abbr in abbreviations:
             entries = self.db.lookup(abbr)
             if entries:
-                sorted_entries = sorted(entries, key=lambda x: x.confidence, reverse=True)
-                target = inferred_domain
-                if target:
-                    for entry in sorted_entries:
-                        if entry.domain == target:
-                            entry.confidence = min(1.0, entry.confidence + 0.1)
-                    sorted_entries = sorted(sorted_entries, key=lambda x: x.confidence, reverse=True)
+                disambiguated = self._disambiguate_entries(entries, inferred_domain, context)
+                sorted_entries, top_candidate = disambiguated
                 results.append({
                     'abbreviation': abbr,
                     'matches': [
@@ -390,6 +371,7 @@ class SlangDecoder:
                             'confidence': e.confidence,
                             'examples': e.examples,
                             'source': e.source,
+                            'recommended': e is top_candidate,
                         }
                         for e in sorted_entries
                     ]
@@ -415,16 +397,80 @@ class SlangDecoder:
                 else:
                     unknown_abbrs.append(abbr)
 
-        return {
-            'original_text': text,
+        result = {
+            'original_text': processed_text,
             'context': context,
             'inferred_domain': inferred_domain.value if inferred_domain else None,
+            'truncated': bool(too_long) and truncate,
+            'too_long': too_long,
             'found': results,
             'unknown': unknown_abbrs,
             'total_found': len(results),
             'total_unknown': len(unknown_abbrs),
             'search_queries': self._generate_search_queries(unknown_abbrs, context, inferred_domain),
         }
+        if too_long and not truncate:
+            result['notice'] = (f"输入长度 {len(text)} 字符超过阈值 {MAX_INPUT_LEN} 字符。"
+                                f"为避免静默截断丢失内容，本次已按全文解析；如需截断请显式指定 truncate=True。")
+        return result
+
+    def _too_long_result(self, text: str, context: Optional[str]) -> Dict:
+        """返回超长提示结果，交由用户决定而非静默丢弃内容"""
+        return {
+            'original_text': text,
+            'context': context,
+            'inferred_domain': None,
+            'truncated': False,
+            'too_long': True,
+            'notice': (f"输入长度 {len(text)} 字符超过阈值 {MAX_INPUT_LEN} 字符。"
+                       f"为使解析聚焦且避免超限误判，本次未对全文做强制截断解析。"
+                       f"请精简输入后重试，或显式传入 truncate=True 允许按前 {MAX_INPUT_LEN} 字符解析。"),
+            'found': [],
+            'unknown': [],
+            'total_found': 0,
+            'total_unknown': 0,
+            'search_queries': [],
+        }
+
+    def _disambiguate_entries(self, entries: List[SlangEntry],
+                              inferred_domain: Optional[Domain],
+                              context: Optional[str] = None) -> Tuple[List[SlangEntry], Optional[SlangEntry]]:
+        """
+        上下文消歧：在置信度排序基础上引入 领域匹配 + 词性/上下文 先验。
+
+        - 与推断领域一致的词条大幅加分（领域匹配是强信号）
+        - 多义条目按 (领域一致性, 置信度) 排序，避免只靠置信度排序
+        - 返回 (排序后的条目, 推荐词条)
+        """
+        if len(entries) <= 1:
+            return list(entries), (entries[0] if entries else None)
+
+        ctx_text = ((context or "") + " " + " ".join([e.meaning or "" for e in entries])).lower()
+        # 简单词性/用法先验：名词性、动词性线索（轻量启发，不依赖外部 POS 工具）
+        pos_boost = {
+            Domain.GAMING: ['动词', '动作', '技能', '命令', '发', '用'],
+            Domain.ENTERTAINMENT: ['名词', '称谓', '粉丝', '饭圈', '夸'],
+            Domain.TECH: ['技术', '编程', '接口', '系统', '开发'],
+            Domain.FINANCE: ['交易', '投资', '涨', '跌', '买入', '卖出'],
+        }
+
+        def pos_match(e: SlangEntry) -> float:
+            if e.domain in pos_boost:
+                if any(kw in ctx_text for kw in pos_boost[e.domain]):
+                    return 0.05
+            return 0.0
+
+        scored = []
+        for e in entries:
+            score = e.confidence
+            if inferred_domain is not None and e.domain == inferred_domain:
+                score += 0.3  # 领域一致强加分
+            score += pos_match(e)
+            scored.append((e, min(1.0, score)))
+
+        scored.sort(key=lambda x: x[1], reverse=True)
+        ordered = [e for e, _ in scored]
+        return ordered, ordered[0]
 
     def _generate_search_queries(self, unknown_abbrs: List[str], context: Optional[str],
                                   inferred_domain: Optional[Domain]) -> List[Dict]:
@@ -538,6 +584,8 @@ class SlangDecoder:
             lines.append(f"上下文：{result['context']}")
         if result.get('inferred_domain'):
             lines.append(f"推断领域：{DOMAIN_CN.get(result['inferred_domain'], result['inferred_domain'])}")
+        if result.get('too_long'):
+            lines.append(f"⚠️ 输入超过阈值：{result.get('notice', '')}")
         lines.append("=" * 50)
 
         if result['found']:
@@ -556,9 +604,10 @@ class SlangDecoder:
                     if m.get('source') and m['source'] != 'builtin':
                         lines.append(f"    来源：{m['source']}")
                 else:
-                    lines.append(f"  发现 {len(matches)} 种可能（按置信度排序）：")
+                    lines.append(f"  发现 {len(matches)} 种可能（上下文消歧后排序）：")
                     for i, m in enumerate(matches, 1):
-                        lines.append(f"    {i}. {m['full_form']} - {m['meaning']}")
+                        tag = " ★推荐" if m.get('recommended') else ""
+                        lines.append(f"    {i}. {m['full_form']} - {m['meaning']}{tag}")
                         lines.append(f"       领域：{DOMAIN_CN.get(m['domain'], m['domain'])} | 置信度：{m['confidence']*100:.0f}%")
                 lines.append("")
 
@@ -568,7 +617,10 @@ class SlangDecoder:
                 lines.append(f"  - {abbr}")
             lines.append("\n💡 将通过搜索补充这些缩写的含义...")
 
-        if not result['found'] and not result['unknown']:
+        if result.get('truncated'):
+            lines.append("\n⚠️ 输入超过阈值，已按显式 truncate 仅解析前 500 字符。")
+
+        if not result['found'] and not result['unknown'] and not result.get('truncated'):
             lines.append("\n未发现明显缩写。")
 
         return "\n".join(lines)
@@ -647,15 +699,43 @@ def main():
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
     parser = argparse.ArgumentParser(description='互联网缩写解析器')
-    parser.add_argument('text', help='要解析的文本')
+    parser.add_argument('text', nargs='?', help='要解析的文本')
     parser.add_argument('--context', '-c', help='上下文领域')
     parser.add_argument('--json', '-j', action='store_true', help='JSON输出')
     parser.add_argument('--format', '-f', choices=['text', 'json', 'markdown'], default='text',
                         help='输出格式：text/json/markdown')
+    parser.add_argument('--truncate', action='store_true',
+                        help='超长输入时显式截断为前500字符（默认不做静默截断）')
+    parser.add_argument('--allow-partial', action='store_true',
+                        help='超长输入时按全文解析并仅提示，不返回阻断结果')
+    parser.add_argument('--add', nargs='+', metavar='ABBR_FULL_FORM_MEANING',
+                        help='向热词库添加词条（词条更新机制），例如 --add gd 搞对象 脱单/谈恋爱 --domain lifestyle --confidence 0.9')
+    parser.add_argument('--domain', default='unknown', help='词条领域（--add 使用）')
+    parser.add_argument('--confidence', type=float, default=0.7, help='词条置信度（--add 使用）')
+    parser.add_argument('--notes', help='词条备注（--add 使用）')
     args = parser.parse_args()
 
     decoder = SlangDecoder()
-    result = decoder.decode(args.text, args.context)
+
+    if args.add:
+        if len(args.add) < 3:
+            parser.error("--add 需要至少3个参数：ABBR FULL_FORM MEANING")
+        domain_map = {d.value: d for d in Domain}
+        domain = domain_map.get(args.domain.lower(), Domain.UNKNOWN)
+        entry = decoder.db.add_hotword(abbreviation=args.add[0], full_form=args.add[1],
+                                       meaning=args.add[2], domain=domain,
+                                       confidence=args.confidence, notes=args.notes)
+        print(f"✅ 已写入热词库：{entry.abbreviation} = {entry.full_form}（{DOMAIN_CN.get(entry.domain.value)}）")
+        return
+
+    if not args.text:
+        parser.error("缺少要解析的文本 text，或使用 --add 添加词条")
+
+    if args.truncate and args.allow_partial:
+        parser.error("--truncate 与 --allow-partial 不能同时使用")
+
+    result = decoder.decode(args.text, args.context,
+                             truncate=args.truncate, allow_partial=args.allow_partial)
 
     if args.json or args.format == 'json':
         print(json.dumps(result, ensure_ascii=False, indent=2, default=str))

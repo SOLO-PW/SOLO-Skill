@@ -22,7 +22,7 @@ description: |
 3. **MUST** 优先读取缓存，避免重复搜索
 4. **NEVER** 单次会话搜索超过 5 次（搜索预算硬上限）
 5. **NEVER** 对置信度 < 0.50 的结果直接输出，MUST 标注"不确定"并引导用户确认
-6. **MUST** 输入超过 500 字符时截断处理，提示用户精简输入
+6. **NEVER** 对超过 500 字符的输入做静默截断。超长输入 MUST 明确提示用户（`decoder.decode(..., truncate=True)` 可显式开启截断，`allow_partial=True` 可全文解析并仅提示），由用户决定处理方式
 
 ## 快速判断指南
 
@@ -91,8 +91,8 @@ WebSearch('"缩写A" "缩写B" 网络用语 缩写 含义')
 
 遇到 GG、OP、MVP、DM 等多义缩写时：
 1. 列举所有可能含义
-2. 按置信度排序
-3. 根据上下文提升相关领域权重
+2. 按「上下文消歧」排序（领域一致 + 简单词性先验优先），而不仅是置信度
+3. 根据上下文提升相关领域权重，多义结果会标注 `★推荐`
 4. 引导用户确认
 
 完整多义表见 [ambiguous-abbreviations.md](references/ambiguous-abbreviations.md)
@@ -117,7 +117,22 @@ WebSearch('"缩写A" "缩写B" 网络用语 缩写 含义')
 
 ## 工具脚本
 
-- `scripts/decoder.py` - 核心解析器（从 slang_db.json 加载 + 搜索回填 + 缓存）
+- `scripts/decoder.py` - 核心解析器（从 slang_db.json + hotwords.json 加载 + 搜索回填 + 缓存）
 - `scripts/search_slang.py` - 搜索工具（查询生成 + 结果解析 + 准确性验证）
 - `scripts/build_refs.py` - 从 JSON 生成 references/ 下的 .md 词典文件
-- `scripts/slang_db.json` - 词条数据源（Single Source of Truth，493条）
+- `scripts/slang_db.json` - 词条数据源（Single Source of Truth）
+- `scripts/common_words.json` - 小型英文词频字典（缩写识别时滤除常见英文单词，替代内联硬编码）
+- `scripts/hotwords.json` - 热词更新层（词条增量更新，避免主词库随网络迭代而过时）
+
+### 词条更新机制
+
+当 `slang_db.json` 需要新增/更新冷门词条时，**MUST 优先使用热词层而非直接改主词库**（直接改主词库需重跑 `build_refs.py`，成本高且易引发 references 口径漂移）：
+
+```bash
+# 新增热词
+python scripts/decoder.py --add gd 搞对象 脱单/谈恋爱 --domain lifestyle --confidence 0.9
+
+# 可选：--notes 附注、--domain 指定领域（entertainment/gaming/lifestyle/tech/anime/finance/academic/unknown）
+```
+
+热词加载时自动合入并覆盖主词库中同缩写+同全称的旧词条，`source` 标记为 `hotword`。

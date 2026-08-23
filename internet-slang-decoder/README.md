@@ -24,7 +24,9 @@ internet-slang-decoder/
 │   ├── decoder.py              # 核心解析器
 │   ├── search_slang.py         # 搜索验证工具
 │   ├── build_refs.py           # JSON → MD 生成器
-│   └── slang_db.json           # 词条数据源（493条）
+│   ├── slang_db.json           # 词条数据源（Single Source of Truth，493条）
+│   ├── common_words.json       # 小型英文词频字典（替代内联停用词表）
+│   └── hotwords.json           # 热词更新层（词条增量更新）
 └── references/
     ├── methodology.md          # 方法论（搜索闭环、验证机制）
     ├── result-schema.md        # 输出格式规范
@@ -77,3 +79,13 @@ python scripts/decoder.py "gg" --context "游戏"
 # 编辑 slang_db.json 后，重新生成 references/*.md
 python scripts/build_refs.py
 ```
+
+### 热词增量更新
+
+冷门/新出现词条建议通过热词层增量更新，避免直接改动主词库再重跑生成：
+
+```bash
+python scripts/decoder.py --add gd 搞对象 脱单/谈恋爱 --domain lifestyle --confidence 0.9
+```
+
+热词写入 `scripts/hotwords.json`，加载时自动合入并覆盖同缩写+同全称的旧词条。

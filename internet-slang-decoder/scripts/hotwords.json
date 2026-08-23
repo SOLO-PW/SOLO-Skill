@@ -1,0 +1,7 @@
+{
+  "version": "1.0.0",
+  "title": "Hotword update layer",
+  "description": "热词更新层：独立于 slang_db.json 主词库，用于增量添加/更新词条。通过 decoder.py 的 --add 参数写入，加载时自动合入，避免直接改动主词库导致 references 再生成冲突。词条条目遇网络迭代而需新增时，可随时通过 --add 追加。",
+  "updated_at": "2026-08-23",
+  "entries": []
+}
