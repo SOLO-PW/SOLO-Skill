@@ -57,7 +57,7 @@ description: |
 - 创作完成后的格律校验 → 读 `references/pingze-verification-manual.md`
 - 创作完成后的质量自评 → 读 `references/poetry-standards.md`
 
-> 格律校验**必须**按 `references/pingze-verification-manual.md` 的六步操作流程逐项人工核查，确保与删去的脚本同等级别的严谨度。
+> 格律校验**必须**按 `references/pingze-verification-manual.md` 的六步操作流程逐项人工核查，确保人工校验的严谨度。
 
 ### 第四步：构思与创作
 
@@ -94,6 +94,7 @@ description: |
 
 > 核查结果可记录在 `pingze-verification-manual.md` 末尾提供的核查表中。
 > 入声字以该文档的入声字表为准——凡在表中的字一律判为仄，这是AI平仄判断最重要的一步校正。
+> 可用 `scripts/pingze_check.py` 对作品做自动化初检（逐字平仄、孤平、三平调、押韵、字数），脚本从该手册自动读取入声字表与韵部表、改表即生效；但自动化结果**仅作初检**，仍须按上述六步流程逐项人工复核。
 
 ### 第六步：质量自评与复盘
 
