@@ -79,12 +79,35 @@ description: |
 
 如果链接无效或不是 GitHub 链接，提示用户提供正确的链接。
 
+## 数据获取通道（统一优先策略）
+
+为避免纯 GitHub REST API 触发速率限制（未认证约 60 次/时，超限返回 403），本 Skill 涉及的**所有**仓库元数据、目录/文件检测、内容获取，统一遵循以下通道优先级，任一通道失败自动降级，不中断流程：
+
+1. **gh CLI / GitHub MCP（优先，配额更高）**
+   - `gh` CLI 常用命令：
+     - `gh api repos/{owner}/{repo}` — 仓库元数据（等价 REST 接口，走已认证通道）
+     - `gh repo view {owner}/{repo} --json language,defaultBranchRef,stargazerCount,... ` — 仓库摘要
+     - `gh api repos/{owner}/{repo}/contents/{path}` — 判断文件是否存在并读取（base64 内容）
+     - `gh release list --repo {owner}/{repo}` / `gh api repos/{owner}/{repo}/releases/latest` — Releases
+     - `gh api repos/{owner}/{repo}/git/trees/{branch}?recursive=1` — 一次获取目录结构树
+     - `gh search code "{keyword}" --repo {owner}/{repo}` — 仓库内代码搜索（如搜 `torch`、``Makefile``）
+   - 或使用 GitHub MCP 工具完成等价操作：`search_repositories`、`get_file_contents`、`list_releases`、`search_code` 等。
+   - **可用性判定与降级**：`gh` 未安装、`gh auth status` 未登录或命令执行失败时，**不要报错**，静默回落到下一步 REST API；MCP 工具不可用/未授权时同样回落。
+2. **GitHub REST API（次选）**
+   - gh/MCP 均不可用时使用，即文档中示例的 `GET https://api.github.com/...`。
+   - 命中未认证速率限制（403）时，参考「第五步 B」进入回退链，或提示等待配额重置。
+3. **现有回退链（兜底）**
+   - 参考「第五步 B」：zread.ai → GitHub Wiki → GitHub Issues → GitHub Releases → GitHub Discussions。
+
+> 内部实现建议：统一封装 `fetch_metadata(owner, repo)` / `fetch_file(owner, repo, path)` / `fetch_releases(owner, repo)`，内部按「gh → MCP → REST」顺序尝试，任何一层失败都在下一层重试，全部失败才触发回退链。
+
 ## 第二步：获取仓库元数据与增强分析
 
-使用 GitHub API 获取仓库信息：
+获取仓库信息（优先走 gh CLI / GitHub MCP，其次 REST API，详见「数据获取通道」）：
 
 ```
-GET https://api.github.com/repos/{owner}/{repo}
+gh api repos/{owner}/{repo}        # gh 已登录
+GET https://api.github.com/repos/{owner}/{repo}   # REST 降级
 ```
 
 ### 基本信息提取
@@ -119,6 +142,8 @@ GET https://api.github.com/repos/{owner}/{repo}
 - **.env.example**：自动解析环境变量，生成配置表格
 - **项目健康度**：根据 Stars、最近更新时间评估维护状态
 
+> 上述增强检测在无 Releases / 无 Makefile / 无 .env.example / monorepo 等不同仓库形态下的健壮性处理与降级策略，参见 [advanced-detection.md](references/advanced-detection.md) 末尾「不同仓库形态下的健壮性处理」。
+
 ## 第三步：检测教程语言
 
 根据用户查询语言匹配教程输出语言：
@@ -130,7 +155,7 @@ GET https://api.github.com/repos/{owner}/{repo}
 
 ## 第四步：检测文档
 
-通过 GitHub API 按优先级检查以下路径：
+通过「数据获取通道」按优先级检查以下路径（优先用 gh CLI / GitHub MCP 的 `contents` 或目录树接口批量探测，减少 REST 调用次数以缓解 403）：
 
 1. `README.md` / `README.rst` / `README.txt` / `README`
 2. `INSTALL.md` / `INSTALL`
@@ -140,14 +165,16 @@ GET https://api.github.com/repos/{owner}/{repo}
 6. `CONTRIBUTING.md`（通常包含环境搭建说明）
 7. `SETUP.md`
 
-使用 GitHub API 检查文件是否存在：
+使用「数据获取通道」检查文件是否存在（gh/MCP → REST）：
 ```
-GET https://api.github.com/repos/{owner}/{repo}/contents/{path}
+gh api repos/{owner}/{repo}/contents/{path}        # gh 已登录
+GET https://api.github.com/repos/{owner}/{repo}/contents/{path}   # REST 降级
 ```
 
-获取已找到文件的原始内容：
+获取已找到文件的原始内容（gh/MCP → REST）：
 ```
-GET https://raw.githubusercontent.com/{owner}/{repo}/{branch}/{path}
+gh api repos/{owner}/{repo}/contents/{path} -q .content | base64 -d   # gh：读取后再解 base64
+GET https://raw.githubusercontent.com/{owner}/{repo}/{branch}/{path}   # REST 降级
 ```
 
 **判断：**
@@ -295,7 +322,7 @@ GET https://raw.githubusercontent.com/{owner}/{repo}/{branch}/{path}
 
 - **无效链接**：提示用户提供有效的 GitHub 仓库链接
 - **仓库未找到（404）**：提示用户仓库可能是私有的或已删除
-- **API 速率限制（403）**：直接回退到 zread.ai，然后 Wiki，然后 Issues
+- **API 速率限制（403）**：优先通过「数据获取通道」降级到 gh/MCP（若可用），否则直接回退到 zread.ai，然后 Wiki，然后 Issues
 - **zread.ai 不可用**：继续回退链中的下一个来源
 - **所有回退均失败**：提示用户并建议手动查找文档来源
 - **文档内容为空**：即使 README 存在但没有安装信息，也尝试回退链作为补充
