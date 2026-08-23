@@ -32,6 +32,8 @@ def parse_arguments():
   python analyze_up.py "https://space.bilibili.com/159285873"
   python analyze_up.py Jason_Shane --recent 20 --cache
   python analyze_up.py Jason_Shane --all --output ./reports/
+  python analyze_up.py 159285873 --all --cache --sessdata "你的SESSDATA值"
+  python analyze_up.py 159285873 --all --cache --resume
         """
     )
 
@@ -105,7 +107,65 @@ def parse_arguments():
         help="显示详细日志",
     )
 
+    # 登录态支持（提升获赞/粉丝等字段完整度）
+    parser.add_argument(
+        "--cookie",
+        type=str,
+        help="完整 Cookie 字符串（以 --sessdata 更安全）",
+    )
+    parser.add_argument(
+        "--sessdata",
+        type=str,
+        help="B站 SESSDATA 登录凭证，自动构造 Cookie 头（可提升 like_num/follower 字段完整度）",
+    )
+
+    # 断点续传（结合 --all）
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="从上次断点继续 --all 全量分析（需同时使用 --cache）",
+    )
+    parser.add_argument(
+        "--no-checkpoint",
+        action="store_true",
+        help="禁用断点续传，始终从头全量分析",
+    )
+
     return parser.parse_args()
+
+
+def _enrich_with_checkpoint(fetcher, uid, videos, args):
+    """
+    带断点续传的视频详情补充。
+
+    全量模式下将已补充详情的视频写入 checkpoint；中断后再次以
+    `--all --cache --resume` 运行时，复用已完成(带 stat)的视频详情，
+    跳过重复网络请求。返回 (videos, resumed_count)。
+    """
+    checkpoint = fetcher.load_checkpoint(uid)
+    done_meta = []
+    if checkpoint and checkpoint.get("uid") == uid:
+        done_meta = checkpoint.get("videos", [])
+    done_map = {v["bvid"]: v for v in done_meta if v.get("bvid")}
+
+    resumed = 0
+    for i, video in enumerate(videos):
+        prior = done_map.get(video.get("bvid"))
+        if prior and prior.get("stat"):
+            # 已完成的视频直接复用，跳过网络请求
+            video.update(prior)
+            resumed += 1
+            continue
+        fetcher.enrich_video_stat(video)
+        if args.verbose and (i + 1) % 20 == 0:
+            print(f"  已处理 {i + 1}/{len(videos)} 个视频")
+        if i < len(videos) - 1:
+            time.sleep(0.5)
+        # 定期写入进度，中断后可从最近 20 个视频处续传
+        if (i + 1) % 20 == 0 or i == len(videos) - 1:
+            fetcher.save_checkpoint(uid, {"uid": uid, "videos": videos[:i + 1]})
+    fetcher.save_checkpoint(uid, {"uid": uid, "videos": videos})
+    return videos, resumed
 
 
 def main():
@@ -116,7 +176,15 @@ def main():
     fetcher = BilibiliDataFetcher(
         cache_dir=args.cache_dir,
         enable_cache=args.cache,
+        cookie=args.cookie,
+        sessdata=args.sessdata,
     )
+    if (args.cookie or args.sessdata) and args.verbose:
+        print("已启用登录态，获赞/粉丝等字段完整度将提升")
+    if args.resume and not args.all:
+        print("警告: --resume 仅对 --all 生效，本次将忽略")
+    if args.all and not args.cache and not args.no_checkpoint:
+        print("提示: 断点续传依赖缓存。使用 --cache 可支持 --all 中断后续传。")
 
     # 预热（获取基础Cookie）
     if args.verbose:
@@ -169,15 +237,24 @@ def main():
     if args.verbose:
         print(f"获取到 {len(videos)} 个视频")
 
-    # 3. 补充视频详情数据
+    # 3. 补充视频详情数据（支持 --all 断点续传）
     if args.verbose:
         print("补充视频详情数据...")
-    for i, video in enumerate(videos):
-        fetcher.enrich_video_stat(video)
-        if args.verbose and (i + 1) % 20 == 0:
-            print(f"  已处理 {i + 1}/{len(videos)} 个视频")
-        if i < len(videos) - 1:
-            time.sleep(0.5)
+    enable_checkpoint = args.all and not args.no_checkpoint and fetcher.enable_cache
+    if enable_checkpoint:
+        videos, resumed = _enrich_with_checkpoint(fetcher, uid, videos, args)
+    else:
+        resumed = 0
+        for i, video in enumerate(videos):
+            fetcher.enrich_video_stat(video)
+            if args.verbose and (i + 1) % 20 == 0:
+                print(f"  已处理 {i + 1}/{len(videos)} 个视频")
+            if i < len(videos) - 1:
+                time.sleep(0.5)
+    if resumed and args.verbose:
+        print(f"  断点续传：跳过已完成 {resumed} 个视频")
+    if enable_checkpoint and args.verbose:
+        print(f"  全量处理完成，进度已写入 checkpoint（可用 --cache --resume 续传）")
 
     # 补充：从视频数据中累加总获赞数（未登录时API不返回like_num）
     if not up_info.get("like_num"):
